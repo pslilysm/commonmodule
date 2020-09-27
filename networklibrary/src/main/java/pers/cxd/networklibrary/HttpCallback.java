@@ -8,6 +8,7 @@ public interface HttpCallback<D> {
 
     void onSuccess(@NonNull D d);
     void addDisposable(Disposable disposable);
-    void onNetworkFailure(Throwable e, String errMsg);
+    void onNetworkError(Throwable e, String errMsg);
+    boolean handleAnotherError(Throwable e);
 
 }
