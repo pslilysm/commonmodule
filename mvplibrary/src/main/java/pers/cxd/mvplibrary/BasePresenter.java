@@ -21,7 +21,9 @@ public class BasePresenter<V extends BaseView, M extends BaseModel> {
 
         @Override
         public void addDisposable(Disposable disposable) {
-            mSubscription.add(disposable);
+            if (mSubscription != null){
+                mSubscription.add(disposable);
+            }
         }
 
         @Override

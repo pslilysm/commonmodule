@@ -37,11 +37,11 @@ public abstract class BaseHttpClient<I> {
         mApiInterface = (I) builder.build().create(getApiInterfaceClass());
     }
 
-    public <D> void doReq(Observable<D> observable, final HttpCallback<D> callback){
-        doReq(observable, callback, AndroidSchedulers.mainThread());
+    public <D> void doReq(final HttpCallback<D> callback, Observable<D> observable){
+        doReq(callback, observable, AndroidSchedulers.mainThread());
     }
 
-    public <D> void doReq(Observable<D> observable, final HttpCallback<D> callback, Scheduler observeScheduler){
+    public <D> void doReq(final HttpCallback<D> callback, Observable<D> observable, Scheduler observeScheduler){
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(observeScheduler)
@@ -55,12 +55,7 @@ public abstract class BaseHttpClient<I> {
 
                     @Override
                     public void onNext(@NonNull D d) {
-                        if (d == null){
-                            callback.onNetworkError(new NullPointerException("server return null data"),
-                                    "server return null data");
-                        }else {
-                            callback.onSuccess(d);
-                        }
+                        callback.onSuccess(d);
                     }
 
                     @Override
