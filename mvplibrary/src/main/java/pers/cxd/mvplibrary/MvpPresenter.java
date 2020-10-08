@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pers.cxd.networklibrary.HttpCallback;
 
-public class BasePresenter<V extends BaseView, M extends BaseModel> {
+public class MvpPresenter<V extends MvpView, M extends MvpModel> {
 
     protected V mView;
     protected M mModel;

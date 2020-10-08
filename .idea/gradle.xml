@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/baselibrary" />
             <option value="$PROJECT_DIR$/mvplibrary" />
             <option value="$PROJECT_DIR$/networklibrary" />
+            <option value="$PROJECT_DIR$/utillibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,4 +1,4 @@
-package pers.cxd.baselibrary;
+package pers.cxd.utillibrary;
 
 public abstract class Singleton<T> {
 

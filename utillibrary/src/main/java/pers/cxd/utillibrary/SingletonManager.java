@@ -1,4 +1,4 @@
-package pers.cxd.baselibrary;
+package pers.cxd.utillibrary;
 
 import androidx.collection.ArrayMap;
 
@@ -22,7 +22,7 @@ public class SingletonManager {
                         t = (T) constructor.newInstance();
                         sSingletonCache.put(clazz, t);
                     } catch (ReflectiveOperationException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                 }
             }
