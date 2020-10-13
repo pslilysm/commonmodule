@@ -77,7 +77,6 @@ public abstract class HttpClient<I> {
                                 errMsg = e.getMessage();
                             }
                             callback.onNetworkError(e, errMsg);
-                            dispose();
                         }else {
                             if (!callback.handleAnotherError(e)){
                                 // in release version, we normally use bugly or another sdk to report this error;
@@ -85,6 +84,7 @@ public abstract class HttpClient<I> {
                                 throw new RuntimeException(e);
                             }
                         }
+                        dispose();
                     }
 
                     @Override

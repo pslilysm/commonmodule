@@ -17,7 +17,7 @@ public class MvpPresenter<V extends MvpView, M extends MvpModel> {
         mSubscription = new CompositeDisposable();
     }
 
-    protected abstract class BaseHttpCallback<D> implements HttpCallback<D>{
+    protected abstract class MvpHttpCallback<D> implements HttpCallback<D>{
 
         @Override
         public void addDisposable(Disposable disposable) {

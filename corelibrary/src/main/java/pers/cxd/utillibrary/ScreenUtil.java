@@ -27,7 +27,6 @@ public class ScreenUtil {
         return result;
     }
 
-    // 获取整个屏幕宽度
     public static int getWidth() {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -35,7 +34,6 @@ public class ScreenUtil {
         return dm.widthPixels;
     }
 
-    //    // 获取整个屏幕高度
     public static int getHeight() {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -48,7 +46,7 @@ public class ScreenUtil {
         return (int)(dpValue * scale + 0.5f);
     }
 
-    public static int getNarBarHeight(){
+    public static int getNavBarHeight(){
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
@@ -73,11 +71,6 @@ public class ScreenUtil {
         }
         window.getDecorView().setSystemUiVisibility(flag);
         window.setStatusBarColor(Color.TRANSPARENT);
-    }
-
-    public static int dip2px(Context context,float dpValue){
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
     public static void keepScreenOn(Window window){
