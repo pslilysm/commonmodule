@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import pers.cxd.baselibrary.SingletonManager;
-import pers.cxd.networklibrary.BaseHttpClient;
 import pers.cxd.networklibrary.BuildConfig;
+import pers.cxd.networklibrary.HttpClient;
+import pers.cxd.corelibrary.SingletonManager;
 import retrofit2.Converter;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DemoHttpClient extends BaseHttpClient<DemoApiInterface> {
+public class DemoHttpClient extends HttpClient<DemoApiInterface> {
 
     public static DemoHttpClient get(){
         return SingletonManager.getInstance(DemoHttpClient.class);

@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import pers.cxd.corelibrary.Log;
+
 public abstract class BaseFmt extends Fragment {
+
+    protected final String TAG = Log.TAG + this.getClass().getSimpleName();
 
     protected abstract int getLayoutId();
     protected abstract void setUp();

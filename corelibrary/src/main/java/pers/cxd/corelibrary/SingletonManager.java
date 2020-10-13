@@ -1,4 +1,4 @@
-package pers.cxd.utillibrary;
+package pers.cxd.corelibrary;
 
 import androidx.collection.ArrayMap;
 

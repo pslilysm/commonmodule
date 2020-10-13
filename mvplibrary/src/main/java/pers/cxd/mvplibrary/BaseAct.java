@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import pers.cxd.utillibrary.Log;
+import pers.cxd.corelibrary.Log;
 
 public abstract class BaseAct extends AppCompatActivity {
 

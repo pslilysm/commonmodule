@@ -1,4 +1,4 @@
-package pers.cxd.utillibrary;
+package pers.cxd.corelibrary.util;
 
 import android.app.Application;
 import android.content.Context;
