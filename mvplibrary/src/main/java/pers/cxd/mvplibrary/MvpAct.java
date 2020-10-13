@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import pers.cxd.baselibrary.BaseAct;
-
 public abstract class MvpAct<P extends MvpPresenter, M extends MvpModel> extends BaseAct
         implements MvpView {
 

@@ -23,7 +23,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
+    implementation project(path: ":corelibrary")
     implementation project(path: ":networklibrary")
-    implementation project(path: ":baselibrary")
 
 }

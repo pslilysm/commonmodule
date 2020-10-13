@@ -1,5 +1,4 @@
-include ':utillibrary'
-include ':baselibrary'
+include ':corelibrary'
 include ':mvplibrary'
 include ':networklibrary'
 include ':app'

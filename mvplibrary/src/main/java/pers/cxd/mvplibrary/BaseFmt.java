@@ -1,4 +1,4 @@
-package pers.cxd.baselibrary;
+package pers.cxd.mvplibrary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
