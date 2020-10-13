@@ -13,7 +13,7 @@ import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 
-public abstract class BaseHttpClient<I> {
+public abstract class HttpClient<I> {
 
     private I mApiInterface;
 
