@@ -11,7 +11,7 @@ public abstract class SimpleHttpCallback<D> implements HttpCallback<D> {
 
     @Override
     public boolean handleAnotherError(Throwable e) {
-        return false;
+        return true;
     }
 
 }

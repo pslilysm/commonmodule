@@ -16,9 +16,8 @@ public class SingletonManager {
             synchronized (clazz){
                 if ((t = (T) sSingletonCache.get(clazz)) == null){
                     try {
-                        // why declared and no argument?
-                        // because for singleton we must make constructor modifies to private and no argument
                         Constructor<?> constructor = clazz.getDeclaredConstructor();
+                        constructor.setAccessible(true);
                         t = (T) constructor.newInstance();
                         sSingletonCache.put(clazz, t);
                     } catch (ReflectiveOperationException e) {

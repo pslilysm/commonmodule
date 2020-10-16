@@ -64,7 +64,7 @@ public abstract class HttpClient<I> {
                         if (e instanceof HttpException
                                 || errorClassName.startsWith("java.net")
                                 || errorClassName.startsWith("javax.net")){
-                            String errMsg = null;
+                            String errMsg = e.getMessage();
                             if (e instanceof HttpException){
                                 // read the errMsg from server
                                 try {
@@ -72,9 +72,6 @@ public abstract class HttpClient<I> {
                                 } catch (Exception ex) {
                                     // Empty
                                 }
-                            }
-                            if (errMsg == null){
-                                errMsg = e.getMessage();
                             }
                             callback.onNetworkError(e, errMsg);
                         }else {
