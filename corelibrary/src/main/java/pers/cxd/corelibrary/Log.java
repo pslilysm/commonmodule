@@ -2,7 +2,7 @@ package pers.cxd.corelibrary;
 
 public class Log {
 
-    public static boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = BuildConfig.DEBUG;
 
     public static final String TAG = "DEBUG_CXD_";
 

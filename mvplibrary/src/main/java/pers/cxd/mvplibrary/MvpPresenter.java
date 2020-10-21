@@ -21,18 +21,10 @@ public class MvpPresenter<V extends MvpView, M extends MvpModel> {
 
         @Override
         public void addDisposable(Disposable disposable) {
-            if (mSubscription != null){
+            if (mSubscription != null) {
                 mSubscription.add(disposable);
             }
         }
-
-        @Override
-        public boolean handleAnotherError(Throwable e) {
-            return true;
-        }
-
-        @Override
-        public void onComplete() {}
 
     }
 

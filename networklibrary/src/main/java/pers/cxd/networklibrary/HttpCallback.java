@@ -9,7 +9,11 @@ public interface HttpCallback<D> {
     void onSuccess(@NonNull D d);
     void addDisposable(Disposable disposable);
     void onNetworkError(Throwable e, String errMsg);
-    boolean handleAnotherError(Throwable e);
-    void onComplete();
+    default boolean handleAnotherError(Throwable e){
+        return true;
+    }
+    default void onComplete(){
+
+    }
 
 }
