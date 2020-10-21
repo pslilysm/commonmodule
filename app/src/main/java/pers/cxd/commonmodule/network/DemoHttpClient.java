@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import pers.cxd.networklibrary.BuildConfig;
+import pers.cxd.commonmodule.BuildConfig;
 import pers.cxd.networklibrary.HttpClient;
 import pers.cxd.corelibrary.SingletonManager;
 import retrofit2.Converter;
