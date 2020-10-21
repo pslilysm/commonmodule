@@ -7,7 +7,7 @@ class SplashPresenter extends SplashContract.Presenter{
 
     @Override
     void getSomeData(String arg1, String arg2) {
-        DemoHttpClient.get().doReq(new BaseHttpCallback<Object>() {
+        DemoHttpClient.get().doReq(new MvpHttpCallback<Object>() {
             @Override
             public void onSuccess(@NonNull Object o) {
                 if (mView != null){
