@@ -26,7 +26,7 @@ public abstract class HttpClient<I> {
     protected abstract Converter.Factory[] getConvertFactories();
     protected abstract OkHttpClient createHttpClient();
 
-    public void createRetrofitClient(){
+    protected void createRetrofitClient(){
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getBaseUrl())
                 .client(createHttpClient())
@@ -81,11 +81,12 @@ public abstract class HttpClient<I> {
                                 throw new RuntimeException(e);
                             }
                         }
-                        dispose();
+                        onComplete();
                     }
 
                     @Override
                     public void onComplete() {
+                        callback.onComplete();
                         dispose();
                     }
 

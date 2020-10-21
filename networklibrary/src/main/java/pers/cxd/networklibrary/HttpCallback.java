@@ -10,5 +10,6 @@ public interface HttpCallback<D> {
     void addDisposable(Disposable disposable);
     void onNetworkError(Throwable e, String errMsg);
     boolean handleAnotherError(Throwable e);
+    void onComplete();
 
 }

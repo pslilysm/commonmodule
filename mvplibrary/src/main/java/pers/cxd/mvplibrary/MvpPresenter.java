@@ -30,6 +30,10 @@ public class MvpPresenter<V extends MvpView, M extends MvpModel> {
         public boolean handleAnotherError(Throwable e) {
             return true;
         }
+
+        @Override
+        public void onComplete() {}
+
     }
 
     protected void detach(){

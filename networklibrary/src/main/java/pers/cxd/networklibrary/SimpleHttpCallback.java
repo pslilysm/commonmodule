@@ -14,4 +14,9 @@ public abstract class SimpleHttpCallback<D> implements HttpCallback<D> {
         return true;
     }
 
+    @Override
+    public void onComplete() {
+
+    }
+
 }
