@@ -21,7 +21,7 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
     }
 
     private DemoHttpClient(){
-        createRetrofitClient();
+        super();
     }
 
     @Override
