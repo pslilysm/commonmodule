@@ -1,4 +1,4 @@
-package pers.cxd.mvplibrary;
+package pers.cxd.corelibrary.base;
 
 import android.os.Bundle;
 
@@ -20,4 +20,5 @@ public abstract class BaseAct extends AppCompatActivity {
         setContentView(getLayoutId());
         setUp();
     }
+
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import pers.cxd.corelibrary.base.BaseAct;
+
 public abstract class MvpAct<P extends MvpPresenter, M extends MvpModel> extends BaseAct
         implements MvpView {
 
@@ -16,8 +18,8 @@ public abstract class MvpAct<P extends MvpPresenter, M extends MvpModel> extends
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mPresenter = createPresenter();
+        mModel = createModel();
         if (mPresenter != null){
-            mModel = createModel();
             mPresenter.attach(this, mModel);
         }
         super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package pers.cxd.mvplibrary;
+package pers.cxd.corelibrary.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ public abstract class BaseFmt extends Fragment {
 
     protected ViewGroup mContentView;
 
-    public <V extends View> V findViewVyId(int id){
+    protected  <V extends View> V findViewById(int id){
         return mContentView.findViewById(id);
     }
 

@@ -7,7 +7,7 @@ class SplashPresenter extends SplashContract.Presenter{
 
     @Override
     void getSomeData(String arg1, String arg2) {
-        DemoHttpClient.get().doReq(new MvpHttpCallback<Object>() {
+        DemoHttpClient.get().doReq(new BaseHttpCallbackImpl<Object>() {
             @Override
             public void onSuccess(@NonNull Object o) {
                 if (mView != null){
@@ -19,7 +19,7 @@ class SplashPresenter extends SplashContract.Presenter{
             public void onNetworkError(Throwable e, String errMsg) {
                 // handle error with yourself logic
             }
-        }, mModel.getSomeDataModel(arg1, arg2));
+        }, mModel.someDataModel(arg1, arg2));
     }
 
 }

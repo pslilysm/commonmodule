@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import pers.cxd.corelibrary.base.BaseFmt;
+
 public abstract class MvpFmt<P extends MvpPresenter, M extends MvpModel> extends BaseFmt
         implements MvpView {
 

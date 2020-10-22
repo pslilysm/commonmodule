@@ -1,8 +1,8 @@
 package pers.cxd.commonmodule.activities.splash;
 
 import io.reactivex.rxjava3.core.Observable;
+import pers.cxd.commonmodule.network.NetworkPresenter;
 import pers.cxd.mvplibrary.MvpModel;
-import pers.cxd.mvplibrary.MvpPresenter;
 import pers.cxd.mvplibrary.MvpView;
 
 interface SplashContract {
@@ -12,10 +12,10 @@ interface SplashContract {
     }
 
     interface Model extends MvpModel {
-        Observable<Object> getSomeDataModel(String arg1, String arg2);
+        Observable<Object> someDataModel(String arg1, String arg2);
     }
 
-    abstract class Presenter extends MvpPresenter<View, Model> {
+    abstract class Presenter extends NetworkPresenter<View, Model> {
         abstract void getSomeData(String arg1, String arg2);
     }
 
