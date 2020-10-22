@@ -14,10 +14,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        appkey {
+            storeFile rootProject.file('app/mykeys.jks')
+            storePassword "mykeys"
+            keyAlias "mykeys"
+            keyPassword "mykeys"
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.appkey
+            minifyEnabled false             // debug时，是否混淆
+            applicationIdSuffix ".debug"     //添加后缀
+        }
         release {
+            signingConfig signingConfigs.appkey
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

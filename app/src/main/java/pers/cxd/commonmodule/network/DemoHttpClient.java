@@ -20,10 +20,6 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
         return SingletonManager.getInstance(DemoHttpClient.class);
     }
 
-    private DemoHttpClient(){
-        super();
-    }
-
     @Override
     protected Class<?> getApiInterfaceClass() {
         return DemoApiInterface.class;
