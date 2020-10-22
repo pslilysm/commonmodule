@@ -26,7 +26,11 @@ public abstract class HttpClient<I> {
     protected abstract Converter.Factory[] getConvertFactories();
     protected abstract OkHttpClient createHttpClient();
 
-    protected void createRetrofitClient(){
+    protected HttpClient(){
+        createRetrofitClient();
+    }
+
+    private void createRetrofitClient(){
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getBaseUrl())
                 .client(createHttpClient())
