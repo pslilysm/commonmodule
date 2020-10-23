@@ -21,11 +21,6 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
     }
 
     @Override
-    protected Class<?> getApiInterfaceClass() {
-        return DemoApiInterface.class;
-    }
-
-    @Override
     protected String getBaseUrl() {
         return "http://www.your.domin.com/";
     }

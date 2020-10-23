@@ -1,5 +1,7 @@
 package pers.cxd.networklibrary;
 
+import java.lang.reflect.ParameterizedType;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
@@ -21,7 +23,6 @@ public abstract class HttpClient<I> {
         return mApiInterface;
     }
 
-    protected abstract Class<?> getApiInterfaceClass();
     protected abstract String getBaseUrl();
     protected abstract Converter.Factory[] getConvertFactories();
     protected abstract OkHttpClient createHttpClient();
@@ -38,7 +39,7 @@ public abstract class HttpClient<I> {
         for (Converter.Factory factory : getConvertFactories()){
             builder.addConverterFactory(factory);
         }
-        mApiInterface = (I) builder.build().create(getApiInterfaceClass());
+        mApiInterface = builder.build().create((Class<I>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
     public <D> void doReq(final HttpCallback<D> callback, Observable<D> observable){
