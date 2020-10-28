@@ -10,14 +10,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pers.cxd.commonmodule.BuildConfig;
 import pers.cxd.networklibrary.HttpClient;
-import pers.cxd.corelibrary.SingletonManager;
+import pers.cxd.corelibrary.SingletonFactory;
 import retrofit2.Converter;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DemoHttpClient extends HttpClient<DemoApiInterface> {
 
-    public static DemoHttpClient get(){
-        return SingletonManager.getInstance(DemoHttpClient.class);
+    public static DemoHttpClient getInstance(){
+        return SingletonFactory.findOrCreate(DemoHttpClient.class);
     }
 
     @Override

@@ -14,7 +14,7 @@ class SplashModel implements SplashContract.Model {
         Map<String, String> map = new ArrayMap<>(2);
         map.put("arg1", arg1);
         map.put("arg2", arg2);
-        return DemoHttpClient.get().getApiInterface().postSample(map);
+        return DemoHttpClient.getInstance().getApiInterface().postSample(map);
     }
 
 }

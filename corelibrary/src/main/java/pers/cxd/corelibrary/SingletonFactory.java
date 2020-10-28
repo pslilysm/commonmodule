@@ -5,11 +5,11 @@ import androidx.collection.ArrayMap;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
-public class SingletonManager {
+public class SingletonFactory {
 
     private static Map<Class<?>, Object> sSingletonCache;
 
-    public static <T> T getInstance(Class<T> clazz) {
+    public static <T> T findOrCreate(Class<T> clazz) {
         checkSingletonCache();
         T t = (T) sSingletonCache.get(clazz);
         if (t == null){
@@ -31,7 +31,7 @@ public class SingletonManager {
 
     private static void checkSingletonCache(){
         if (sSingletonCache == null){
-            synchronized (SingletonManager.class){
+            synchronized (SingletonFactory.class){
                 if (sSingletonCache == null){
                     sSingletonCache = new ArrayMap<>();
                 }
