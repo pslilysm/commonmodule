@@ -1,0 +1,73 @@
+package pers.cxd.corelibrary.util.reflection;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+public class ConstructorKey {
+
+    Class<?> clazz;
+    Class<?>[] parameterTypes;
+    private boolean inUse;
+    private ConstructorKey next;
+
+    private ConstructorKey(Class<?> clazz, Class<?>[] parameterTypes) {
+        this.clazz = clazz;
+        this.parameterTypes = parameterTypes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConstructorKey that = (ConstructorKey) o;
+        return Objects.equals(clazz, that.clazz) &&
+                Arrays.equals(parameterTypes, that.parameterTypes);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(clazz);
+        result = 31 * result + Arrays.hashCode(parameterTypes);
+        return result;
+    }
+
+    public void markInUse() {
+        inUse = true;
+    }
+
+    private static final Object sPoolSync = new Object();
+    private static ConstructorKey sPool;
+    private static int sPoolSize;
+    private static final int MAX_POOL_SIZE = 50;
+
+    public static ConstructorKey obtain(Class<?> clazz, Class<?>[] parameterTypes){
+        synchronized (sPoolSync) {
+            if (sPool != null) {
+                ConstructorKey m = sPool;
+                sPool = m.next;
+                m.next = null;
+                sPoolSize--;
+                m.clazz = clazz;
+                m.parameterTypes = parameterTypes;
+                return m;
+            }
+        }
+        return new ConstructorKey(clazz, parameterTypes);
+    }
+
+    public void recycle(){
+        if (inUse){
+            throw new IllegalStateException(this + " is in use, can't recycle");
+        }
+        clazz = null;
+        parameterTypes = null;
+        synchronized (sPoolSync) {
+            if (sPoolSize < MAX_POOL_SIZE) {
+                next = sPool;
+                sPool = this;
+                sPoolSize++;
+            }
+        }
+    }
+
+}
