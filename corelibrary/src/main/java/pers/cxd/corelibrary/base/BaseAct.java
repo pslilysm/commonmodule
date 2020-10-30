@@ -12,13 +12,13 @@ public abstract class BaseAct extends AppCompatActivity {
     protected final String TAG = Log.TAG + this.getClass().getSimpleName();
 
     protected abstract int getLayoutId();
-    protected abstract void setUp();
+    protected abstract void setUp(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        setUp();
+        setUp(savedInstanceState);
     }
 
 }

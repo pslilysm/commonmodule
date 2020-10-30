@@ -7,13 +7,15 @@ import java.util.Map;
 
 public class SingletonFactory {
 
-    private static Map<Class<?>, Object> sSingletonCache;
+    private static final Map<Class<?>, Object> sSingletonCache = new ArrayMap<>();;
 
     public static <T> T findOrCreate(Class<T> clazz) {
-        checkSingletonCache();
-        T t = (T) sSingletonCache.get(clazz);
+        T t;
+        synchronized (sSingletonCache){
+            t = (T) sSingletonCache.get(clazz);
+        }
         if (t == null){
-            synchronized (clazz){
+            synchronized (sSingletonCache){
                 if ((t = (T) sSingletonCache.get(clazz)) == null){
                     try {
                         Constructor<?> constructor = clazz.getDeclaredConstructor();
@@ -27,16 +29,6 @@ public class SingletonFactory {
             }
         }
         return t;
-    }
-
-    private static void checkSingletonCache(){
-        if (sSingletonCache == null){
-            synchronized (SingletonFactory.class){
-                if (sSingletonCache == null){
-                    sSingletonCache = new ArrayMap<>();
-                }
-            }
-        }
     }
 
 }
