@@ -12,7 +12,9 @@ interface SplashContract {
     }
 
     interface Model extends MvpModel {
+        boolean someDataModelAvailable();
         Observable<Object> someDataModel(String arg1, String arg2);
+        void clearSomeDataModel();
     }
 
     abstract class Presenter extends NetworkPresenter<View, Model> {

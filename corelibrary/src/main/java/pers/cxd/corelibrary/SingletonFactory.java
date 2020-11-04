@@ -2,6 +2,7 @@ package pers.cxd.corelibrary;
 
 import androidx.collection.ArrayMap;
 
+import java.lang.reflect.Constructor;
 import java.util.Map;
 
 import pers.cxd.corelibrary.util.reflection.ConstructorKey;
@@ -22,7 +23,9 @@ public class SingletonFactory {
             singleton = (T) sSingletonCache.get(constructorKey);
             if (singleton == null){
                 try {
-                    singleton = ReflectionUtil.newInstance(clazz, parameterTypes, args);
+                    Constructor<T> constructor = clazz.getConstructor(parameterTypes);
+                    constructor.setAccessible(true);
+                    singleton = constructor.newInstance(args);
                     constructorKey.markInUse();
                     sSingletonCache.put(constructorKey, singleton);
                 } catch (ReflectiveOperationException e) {
