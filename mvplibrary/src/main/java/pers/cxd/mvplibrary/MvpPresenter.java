@@ -15,4 +15,8 @@ public class MvpPresenter<V extends MvpView, M extends MvpModel> {
         mModel = null;
     }
 
+    protected boolean notDetach(){
+        return mView != null && mModel != null;
+    }
+
 }

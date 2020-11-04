@@ -34,7 +34,6 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
     protected OkHttpClient createHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(20, TimeUnit.SECONDS);
-        builder.retryOnConnectionFailure(true);
         if (BuildConfig.DEBUG){
             builder.addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 String TAG = DemoHttpClient.class.getSimpleName();

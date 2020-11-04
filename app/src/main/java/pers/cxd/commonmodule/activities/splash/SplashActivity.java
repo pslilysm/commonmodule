@@ -2,9 +2,7 @@ package pers.cxd.commonmodule.activities.splash;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Process;
 import android.os.SystemClock;
-import android.system.Os;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,7 +53,6 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
                     Toast.makeText(SplashActivity.this, "cao ni ma", Toast.LENGTH_SHORT).show();
                 }
             });
-            ReflectionUtil.setStaticFiled("android.app.ActivityThread", "sCurrentActivityThread", null);
             activityThread = ReflectionUtil.invokeStaticMethod("android.app.ActivityThread", "currentActivityThread");
             Log.i(TAG, "setUp: " + activityThread);
         } catch (ReflectiveOperationException e) {

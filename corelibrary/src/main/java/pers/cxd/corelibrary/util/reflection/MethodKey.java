@@ -38,13 +38,12 @@ public class MethodKey {
         inUse = true;
     }
 
-    private static final Object sPoolSync = new Object();
     private static MethodKey sPool;
     private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 50;
+    private static final int MAX_POOL_SIZE = 10;
 
     public static MethodKey obtain(Class<?> clazz, String methodName, Class<?>[] parameterTypes){
-        synchronized (sPoolSync) {
+        synchronized (MethodKey.class) {
             if (sPool != null) {
                 MethodKey mk = sPool;
                 sPool = mk.next;
@@ -66,7 +65,7 @@ public class MethodKey {
         clazz = null;
         methodName = null;
         parameterTypes = null;
-        synchronized (sPoolSync) {
+        synchronized (MethodKey.class) {
             if (sPoolSize < MAX_POOL_SIZE) {
                 next = sPool;
                 sPool = this;

@@ -35,13 +35,12 @@ public class ConstructorKey {
         inUse = true;
     }
 
-    private static final Object sPoolSync = new Object();
     private static ConstructorKey sPool;
     private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 50;
+    private static final int MAX_POOL_SIZE = 10;
 
     public static ConstructorKey obtain(Class<?> clazz, Class<?>[] parameterTypes){
-        synchronized (sPoolSync) {
+        synchronized (ConstructorKey.class) {
             if (sPool != null) {
                 ConstructorKey m = sPool;
                 sPool = m.next;
@@ -61,7 +60,7 @@ public class ConstructorKey {
         }
         clazz = null;
         parameterTypes = null;
-        synchronized (sPoolSync) {
+        synchronized (ConstructorKey.class) {
             if (sPoolSize < MAX_POOL_SIZE) {
                 next = sPool;
                 sPool = this;

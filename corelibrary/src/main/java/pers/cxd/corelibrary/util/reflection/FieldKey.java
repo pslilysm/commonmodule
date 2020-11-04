@@ -32,13 +32,12 @@ public class FieldKey {
         inUse = true;
     }
 
-    private static final Object sPoolSync = new Object();
     private static FieldKey sPool;
     private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 50;
+    private static final int MAX_POOL_SIZE = 10;
 
     public static FieldKey obtain(Class<?> clazz, String filedName){
-        synchronized (sPoolSync) {
+        synchronized (FieldKey.class) {
             if (sPool != null) {
                 FieldKey fk = sPool;
                 sPool = fk.next;
@@ -58,7 +57,7 @@ public class FieldKey {
         }
         clazz = null;
         filedName = null;
-        synchronized (sPoolSync) {
+        synchronized (FieldKey.class) {
             if (sPoolSize < MAX_POOL_SIZE) {
                 next = sPool;
                 sPool = this;
