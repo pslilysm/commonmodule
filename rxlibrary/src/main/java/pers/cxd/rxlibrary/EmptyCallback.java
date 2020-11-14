@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pers.cxd.corelibrary.Singleton;
 
-public abstract class EmptyCallback<D> implements RxCallback<D> {
+public abstract class EmptyCallback implements RxCallback {
 
-    private static Singleton<EmptyCallback> sEmptyCallback = new Singleton<EmptyCallback>() {
+    private static final Singleton<EmptyCallback> sEmptyCallback = new Singleton<EmptyCallback>() {
         @Override
         protected EmptyCallback create() {
             return new EmptyCallback() {

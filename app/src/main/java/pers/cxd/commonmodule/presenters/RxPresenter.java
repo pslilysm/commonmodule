@@ -30,24 +30,4 @@ public class RxPresenter<V, M> extends Presenter<V, M> {
         return super.notDetach() && mSubscription != null;
     }
 
-    protected class AddDisposableCallback<D> extends RxCallbackWrapper<D> {
-
-        public AddDisposableCallback() {
-            super();
-        }
-
-        public AddDisposableCallback(RxCallback<D> mBase) {
-            super(mBase);
-        }
-
-        @Override
-        public void onSubscribe(Disposable disposable) {
-            super.onSubscribe(disposable);
-            if (mSubscription != null) {
-                mSubscription.add(disposable);
-            }
-        }
-
-    }
-
 }

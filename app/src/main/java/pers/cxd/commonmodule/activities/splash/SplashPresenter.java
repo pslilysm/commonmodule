@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import io.reactivex.rxjava3.disposables.Disposable;
+import pers.cxd.rxlibrary.AddDisposableCallback;
 import pers.cxd.rxlibrary.HttpCallback;
 import pers.cxd.rxlibrary.RxUtil;
 
@@ -32,7 +32,7 @@ class SplashPresenter extends SplashContract.Presenter{
                 protected void onNetworkError(Throwable e, String errMsg) {
                     Log.d(TAG, "onNetworkError() called with: e = [" + e + "], errMsg = [" + errMsg + "]");
                 }
-            }), mModel.someDataModel(arg1, arg2), RxUtil.getIOToMainTransformer());
+            }, mSubscription), mModel.someDataModel(arg1, arg2), RxUtil.getIOToMainTransformer());
         }
     }
 
