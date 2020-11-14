@@ -23,7 +23,7 @@ public class SingletonFactory {
             singleton = (T) sSingletonCache.get(constructorKey);
             if (singleton == null){
                 try {
-                    Constructor<T> constructor = clazz.getConstructor(parameterTypes);
+                    Constructor<T> constructor = clazz.getDeclaredConstructor(parameterTypes);
                     constructor.setAccessible(true);
                     singleton = constructor.newInstance(args);
                     constructorKey.markInUse();
