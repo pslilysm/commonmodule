@@ -8,41 +8,34 @@ import io.reactivex.rxjava3.core.ObservableTransformer;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import pers.cxd.corelibrary.Singleton;
 
 public class RxUtil {
 
-    private static Singleton<ObservableTransformer> sIOToMainTransformer = new Singleton<ObservableTransformer>() {
-        @Override
-        protected ObservableTransformer create() {
-            return new ObservableTransformer() {
-                @Override
-                public @NonNull ObservableSource apply(@NonNull Observable upstream) {
-                    return upstream.subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread());
-                }
-            };
+    public static class TransFormers{
+
+        private static ObservableTransformer IOToMain = new ObservableTransformer() {
+            @Override
+            public @NonNull ObservableSource apply(@NonNull Observable upstream) {
+                return upstream.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+
+        private static ObservableTransformer IO = new ObservableTransformer() {
+            @Override
+            public @NonNull ObservableSource apply(@NonNull Observable upstream) {
+                return upstream.subscribeOn(Schedulers.io());
+            }
+        };
+
+        public static ObservableTransformer IOToMain(){
+            return IOToMain;
         }
-    };
 
-    private static Singleton<ObservableTransformer> sIOTransformer = new Singleton<ObservableTransformer>() {
-        @Override
-        protected ObservableTransformer create() {
-            return new ObservableTransformer() {
-                @Override
-                public @NonNull ObservableSource apply(@NonNull Observable upstream) {
-                    return upstream.subscribeOn(Schedulers.io());
-                }
-            };
+        public static ObservableTransformer IO(){
+            return IO;
         }
-    };
 
-    public static <T> ObservableTransformer<T, T> getIOToMainTransformer(){
-        return sIOToMainTransformer.getInstance();
-    }
-
-    public static <T> ObservableTransformer<T, T> getIOTransformer(){
-        return sIOTransformer.getInstance();
     }
 
     public static <D> void execute(RxCallback<D> callback, Observable<D> observable, ObservableTransformer transformer){

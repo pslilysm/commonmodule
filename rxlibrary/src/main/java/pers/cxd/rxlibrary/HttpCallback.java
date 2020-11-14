@@ -26,6 +26,7 @@ public abstract class HttpCallback<D> extends RxCallbackWrapper<D> {
                 }
             }
             onNetworkError(e, errMsg);
+            return true;
         }
         return super.handleError(e);
     }

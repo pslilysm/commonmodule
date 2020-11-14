@@ -2,9 +2,8 @@ package pers.cxd.commonmodule.activities.splash;
 
 import androidx.annotation.NonNull;
 
-import pers.cxd.rxlibrary.AddDisposableCallback;
 import pers.cxd.rxlibrary.HttpCallback;
-import pers.cxd.rxlibrary.RxCallback;
+import pers.cxd.rxlibrary.RxCallbackImpl;
 import pers.cxd.rxlibrary.RxUtil;
 
 class SplashPresenter extends SplashContract.Presenter{
@@ -12,7 +11,7 @@ class SplashPresenter extends SplashContract.Presenter{
     @Override
     void getSomeData(String arg1, String arg2) {
         if (mModel.someDataModelAvailable()){
-            RxUtil.execute(new AddDisposableCallback<>(new HttpCallback<Object>(new RxCallback<Object>() {
+            RxCallbackImpl<Object> callbackImpl = new RxCallbackImpl<Object>(mSubscription) {
                 @Override
                 public void onSuccess(@NonNull Object o) {
                     if (notDetach()){
@@ -26,12 +25,13 @@ class SplashPresenter extends SplashContract.Presenter{
                         mModel.clearSomeDataModel();
                     }
                 }
-            }) {
+            };
+            RxUtil.execute(new HttpCallback<Object>(callbackImpl) {
                 @Override
                 public void onNetworkError(Throwable e, String errMsg) {
 
                 }
-            }, mSubscription), mModel.someDataModel(arg1, arg2), RxUtil.getIOToMainTransformer());
+            }, mModel.someDataModel(arg1, arg2), RxUtil.TransFormers.IOToMain());
         }
     }
 
