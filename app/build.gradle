@@ -50,6 +50,6 @@ dependencies {
 
     implementation project(":corelibrary")
     implementation project(":mvplibrary")
-    implementation project(":networklibrary")
+    implementation project(':rxlibrary')
 
 }

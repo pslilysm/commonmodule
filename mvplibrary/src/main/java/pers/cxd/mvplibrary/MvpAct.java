@@ -6,8 +6,7 @@ import androidx.annotation.Nullable;
 
 import pers.cxd.corelibrary.base.BaseAct;
 
-public abstract class MvpAct<P extends MvpPresenter, M extends MvpModel> extends BaseAct
-        implements MvpView {
+public abstract class MvpAct<P extends Presenter, M> extends BaseAct {
 
     protected abstract P createPresenter();
     protected abstract M createModel();

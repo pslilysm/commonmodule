@@ -1,16 +1,19 @@
 package pers.cxd.commonmodule.activities.splash;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import io.reactivex.rxjava3.disposables.Disposable;
-import pers.cxd.commonmodule.network.DemoHttpClient;
+import pers.cxd.rxlibrary.HttpCallback;
+import pers.cxd.rxlibrary.RxUtil;
 
 class SplashPresenter extends SplashContract.Presenter{
 
     @Override
     void getSomeData(String arg1, String arg2) {
         if (mModel.someDataModelAvailable()){
-            DemoHttpClient.getInstance().doReq(new BaseHttpCallbackImpl<Object>() {
+            RxUtil.execute(new AddDisposableCallback<>(new HttpCallback<Object>() {
                 @Override
                 public void onSuccess(@NonNull Object o) {
                     if (notDetach()){
@@ -19,8 +22,8 @@ class SplashPresenter extends SplashContract.Presenter{
                 }
 
                 @Override
-                public void onNetworkError(Throwable e, String errMsg) {
-                    // handle error with yourself logic
+                public void onSubscribe(Disposable disposable) {
+
                 }
 
                 @Override
@@ -29,7 +32,12 @@ class SplashPresenter extends SplashContract.Presenter{
                         mModel.clearSomeDataModel();
                     }
                 }
-            }, mModel.someDataModel(arg1, arg2));
+
+                @Override
+                protected void onNetworkError(Throwable e, String errMsg) {
+                    Log.d(TAG, "onNetworkError() called with: e = [" + e + "], errMsg = [" + errMsg + "]");
+                }
+            }), mModel.someDataModel(arg1, arg2), RxUtil.getIOToMainTransformer());
         }
     }
 

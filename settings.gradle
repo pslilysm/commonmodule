@@ -1,5 +1,5 @@
 include ':corelibrary'
 include ':mvplibrary'
-include ':networklibrary'
+include ':rxlibrary'
 include ':app'
 rootProject.name = "commonmodule"

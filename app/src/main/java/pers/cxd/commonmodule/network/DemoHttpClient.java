@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pers.cxd.commonmodule.BuildConfig;
-import pers.cxd.networklibrary.HttpClient;
+import pers.cxd.rxlibrary.HttpClient;
 import pers.cxd.corelibrary.SingletonFactory;
 import retrofit2.Converter;
 import retrofit2.converter.gson.GsonConverterFactory;

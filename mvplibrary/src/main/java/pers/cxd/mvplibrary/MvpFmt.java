@@ -10,8 +10,7 @@ import androidx.annotation.Nullable;
 
 import pers.cxd.corelibrary.base.BaseFmt;
 
-public abstract class MvpFmt<P extends MvpPresenter, M extends MvpModel> extends BaseFmt
-        implements MvpView {
+public abstract class MvpFmt<P extends Presenter, M> extends BaseFmt {
 
     protected abstract P createPresenter();
     protected abstract M createModel();

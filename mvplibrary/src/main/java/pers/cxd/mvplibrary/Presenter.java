@@ -1,7 +1,10 @@
 package pers.cxd.mvplibrary;
 
-public class MvpPresenter<V extends MvpView, M extends MvpModel> {
+import pers.cxd.corelibrary.Log;
 
+public class Presenter<V, M> {
+
+    protected final String TAG = Log.TAG + this.getClass().getSimpleName();
     protected V mView;
     protected M mModel;
 

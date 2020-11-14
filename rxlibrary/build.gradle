@@ -36,9 +36,10 @@ dependencies {
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
     api 'io.reactivex.rxjava3:rxjava:3.0.6'
 
-
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     api 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    implementation project(':corelibrary')
 
 }
