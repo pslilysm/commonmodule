@@ -45,10 +45,8 @@ public class RxUtil {
     
     public static <D> Observer<D> aObserverInjectRxCallback(RxCallback<D> callback){
         return new Observer<D>() {
-            Disposable disposable;
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
                 callback.onSubscribe(d);
             }
 
@@ -70,14 +68,6 @@ public class RxUtil {
             @Override
             public void onComplete() {
                 callback.onComplete();
-                dispose();
-            }
-
-            private void dispose(){
-                if (disposable != null && !disposable.isDisposed()){
-                    disposable.dispose();
-                    disposable = null;
-                }
             }
 
         };

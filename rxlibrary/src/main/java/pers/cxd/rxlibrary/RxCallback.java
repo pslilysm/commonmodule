@@ -11,6 +11,6 @@ public interface RxCallback<D> {
     default boolean handleError(Throwable e){
         return true;
     }
-    default void onComplete(){}
+    void onComplete();
 
 }
