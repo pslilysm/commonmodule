@@ -8,10 +8,6 @@ public class RxCallbackWrapper<D> implements RxCallback<D> {
 
     private final RxCallback<D> mBase;
 
-    public RxCallbackWrapper(){
-        this(EmptyCallback.create());
-    }
-
     public RxCallbackWrapper(RxCallback<D> mBase) {
         this.mBase = mBase;
     }

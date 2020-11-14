@@ -37,53 +37,57 @@ public class RxUtil {
         }
     };
 
-    public static ObservableTransformer getIOToMainTransformer(){
+    public static <T> ObservableTransformer<T, T> getIOToMainTransformer(){
         return sIOToMainTransformer.getInstance();
     }
 
-    public static ObservableTransformer getIOTransformer(){
+    public static <T> ObservableTransformer<T, T> getIOTransformer(){
         return sIOTransformer.getInstance();
     }
 
     public static <D> void execute(RxCallback<D> callback, Observable<D> observable, ObservableTransformer transformer){
         observable.compose(transformer)
-                .subscribe(new Observer<D>() {
-                    Disposable disposable;
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        disposable = d;
-                        callback.onSubscribe(d);
-                    }
+                .subscribe(aObserverInjectRxCallback(callback));
+    }
+    
+    public static <D> Observer<D> aObserverInjectRxCallback(RxCallback<D> callback){
+        return new Observer<D>() {
+            Disposable disposable;
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                disposable = d;
+                callback.onSubscribe(d);
+            }
 
-                    @Override
-                    public void onNext(@NonNull D d) {
-                        callback.onSuccess(d);
-                    }
+            @Override
+            public void onNext(@NonNull D d) {
+                callback.onSuccess(d);
+            }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        if (!callback.handleError(e)){
-                            // in release version, we normally use bugly or another sdk to report this error;
-                            // so always make your handleAnotherError return true;
-                            throw new RuntimeException(e);
-                        }
-                        onComplete();
-                    }
+            @Override
+            public void onError(@NonNull Throwable e) {
+                if (!callback.handleError(e)){
+                    // in release version, we normally use bugly or another sdk to report this error;
+                    // so always make your handleAnotherError return true;
+                    throw new RuntimeException(e);
+                }
+                onComplete();
+            }
 
-                    @Override
-                    public void onComplete() {
-                        callback.onComplete();
-                        dispose();
-                    }
+            @Override
+            public void onComplete() {
+                callback.onComplete();
+                dispose();
+            }
 
-                    private void dispose(){
-                        if (disposable != null && !disposable.isDisposed()){
-                            disposable.dispose();
-                            disposable = null;
-                        }
-                    }
+            private void dispose(){
+                if (disposable != null && !disposable.isDisposed()){
+                    disposable.dispose();
+                    disposable = null;
+                }
+            }
 
-                });
+        };
     }
 
 }
