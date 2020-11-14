@@ -1,11 +1,31 @@
 package pers.cxd.rxlibrary;
 
-import pers.cxd.corelibrary.SingletonFactory;
+import androidx.annotation.NonNull;
 
-public abstract class EmptyCallback implements RxCallback {
+import io.reactivex.rxjava3.disposables.Disposable;
+import pers.cxd.corelibrary.Singleton;
+
+public abstract class EmptyCallback<D> implements RxCallback<D> {
+
+    private static Singleton<EmptyCallback> sEmptyCallback = new Singleton<EmptyCallback>() {
+        @Override
+        protected EmptyCallback create() {
+            return new EmptyCallback() {
+                @Override
+                public void onSubscribe(Disposable disposable) {
+
+                }
+
+                @Override
+                public void onSuccess(@NonNull Object o) {
+
+                }
+            };
+        }
+    };
 
     public static EmptyCallback create(){
-        return SingletonFactory.findOrCreate(EmptyCallback.class);
+        return sEmptyCallback.getInstance();
     }
 
 }

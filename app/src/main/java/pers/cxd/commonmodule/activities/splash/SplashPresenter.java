@@ -22,11 +22,6 @@ class SplashPresenter extends SplashContract.Presenter{
                 }
 
                 @Override
-                public void onSubscribe(Disposable disposable) {
-
-                }
-
-                @Override
                 public void onComplete() {
                     if (notDetach()){
                         mModel.clearSomeDataModel();
