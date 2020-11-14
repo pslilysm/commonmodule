@@ -20,7 +20,7 @@ public class RxPresenter<V, M> extends Presenter<V, M> {
     public void detach() {
         super.detach();
         if (mSubscription != null){
-            mSubscription.clear();
+            mSubscription.dispose();
         }
         mSubscription = null;
     }
