@@ -21,6 +21,7 @@ class SplashPresenter extends SplashContract.Presenter{
 
                 @Override
                 public void onComplete() {
+                    super.onComplete();
                     if (notDetach()){
                         mModel.clearSomeDataModel();
                     }
@@ -31,7 +32,7 @@ class SplashPresenter extends SplashContract.Presenter{
                 public void onNetworkError(Throwable e, String errMsg) {
 
                 }
-            }, mModel.someDataModel(arg1, arg2), RxUtil.TransFormers.IOToMain());
+            }, mModel.someDataModel(arg1, arg2), RxUtil.Transformers.IOToMain());
         }
     }
 

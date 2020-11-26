@@ -1,7 +1,6 @@
 package pers.cxd.rxlibrary;
 
-import androidx.annotation.NonNull;
-
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class RxCallbackWrapper<D> implements RxCallback<D> {
