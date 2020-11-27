@@ -6,7 +6,6 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 
 import pers.cxd.corelibrary.util.reflection.ConstructorKey;
-import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
 public class SingletonFactory {
 
@@ -18,22 +17,25 @@ public class SingletonFactory {
 
     public static <T> T findOrCreate(Class<T> clazz, Class<?>[] parameterTypes, Object... args) {
         ConstructorKey constructorKey = ConstructorKey.obtain(clazz, parameterTypes);
-        T singleton;
-        synchronized (sSingletonCache){
-            singleton = (T) sSingletonCache.get(constructorKey);
-            if (singleton == null){
-                try {
-                    Constructor<T> constructor = clazz.getDeclaredConstructor(parameterTypes);
-                    constructor.setAccessible(true);
-                    singleton = constructor.newInstance(args);
-                    constructorKey.markInUse();
-                    sSingletonCache.put(constructorKey, singleton);
-                } catch (ReflectiveOperationException e) {
-                    throw new RuntimeException(e);
+        T singleton = (T) sSingletonCache.get(constructorKey);
+        if (singleton == null){
+            synchronized (sSingletonCache){
+                if ((singleton = (T) sSingletonCache.get(constructorKey)) == null){
+                    try {
+                        Constructor<T> constructor = clazz.getDeclaredConstructor(parameterTypes);
+                        constructor.setAccessible(true);
+                        singleton = constructor.newInstance(args);
+                        constructorKey.markInUse();
+                        sSingletonCache.put(constructorKey, singleton);
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else{
+                    constructorKey.recycle();
                 }
-            }else {
-                constructorKey.recycle();
             }
+        }else {
+            constructorKey.recycle();
         }
         return singleton;
     }
