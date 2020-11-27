@@ -15,74 +15,83 @@ public class ReflectionUtil {
 
     private static <T> Constructor<T> findOrCreateConstructor(Class<T> clazz, Class<?>[] parameterTypes) throws ReflectiveOperationException{
         ConstructorKey constructorKey = ConstructorKey.obtain(clazz, parameterTypes);
-        Constructor<T> constructor;
-        synchronized (sConstructors){
-            constructor = (Constructor<T>) sConstructors.get(constructorKey);
-            if (constructor == null){
-                try {
-                    constructor = clazz.getDeclaredConstructor(parameterTypes);
-                }catch (NoSuchMethodException ex){
+        Constructor<T> constructor = (Constructor<T>) sConstructors.get(constructorKey);
+        if (constructor == null){
+            synchronized (sConstructors){
+                if ((constructor = (Constructor<T>) sConstructors.get(constructorKey)) == null){
+                    try {
+                        constructor = clazz.getDeclaredConstructor(parameterTypes);
+                    }catch (NoSuchMethodException ex){
+                        constructorKey.recycle();
+                        throw ex;
+                    }
+                    constructor.setAccessible(true);
+                    constructorKey.markInUse();
+                    sConstructors.put(constructorKey, constructor);
+                }else {
                     constructorKey.recycle();
-                    throw ex;
                 }
-                constructor.setAccessible(true);
-                constructorKey.markInUse();
-                sConstructors.put(constructorKey, constructor);
-            }else {
-                constructorKey.recycle();
             }
+        }else {
+            constructorKey.recycle();
         }
         return constructor;
     }
 
     private static Field findOrCreateField(Class<?> clazz, String fieldName) throws ReflectiveOperationException{
         FieldKey fieldKey = FieldKey.obtain(clazz, fieldName);
-        Field field;
-        synchronized (sFields){
-            field = sFields.get(fieldKey);
-            if (field == null){
-                try {
-                    field = clazz.getDeclaredField(fieldName);
-                }catch (NoSuchFieldException ex){
-                    fieldKey.recycle();
-                    if (clazz.getSuperclass() != Object.class){
-                        return findOrCreateField(clazz.getSuperclass(), fieldName);
-                    }else {
-                        throw ex;
+        Field field = sFields.get(fieldKey);
+        if (field == null){
+            synchronized (sFields){
+                if ((field = sFields.get(fieldKey)) == null){
+                    try {
+                        field = clazz.getDeclaredField(fieldName);
+                    }catch (NoSuchFieldException ex){
+                        fieldKey.recycle();
+                        if (clazz != Object.class){
+                            return findOrCreateField(clazz.getSuperclass(), fieldName);
+                        }else {
+                            throw ex;
+                        }
                     }
+                    field.setAccessible(true);
+                    fieldKey.markInUse();
+                    sFields.put(fieldKey, field);
+                }else {
+                    fieldKey.recycle();
                 }
-                field.setAccessible(true);
-                fieldKey.markInUse();
-                sFields.put(fieldKey, field);
-            }else {
-                fieldKey.recycle();
             }
+        }else {
+            fieldKey.recycle();
         }
         return field;
     }
 
     private static Method findOrCreateMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws ReflectiveOperationException{
         MethodKey methodKey = MethodKey.obtain(clazz, methodName, parameterTypes);
-        Method method;
-        synchronized (sMethods){
-            method = sMethods.get(methodKey);
-            if (method == null){
-                try {
-                    method = clazz.getDeclaredMethod(methodName, parameterTypes);
-                }catch (NoSuchMethodException ex){
-                    methodKey.recycle();
-                    if (clazz.getSuperclass() != Object.class){
-                        return findOrCreateMethod(clazz.getSuperclass(), methodName, parameterTypes);
-                    }else {
-                        throw ex;
+        Method method = sMethods.get(methodKey);
+        if (method == null){
+            synchronized (sMethods){
+                if ((method = sMethods.get(methodKey)) == null){
+                    try {
+                        method = clazz.getDeclaredMethod(methodName, parameterTypes);
+                    }catch (NoSuchMethodException ex){
+                        methodKey.recycle();
+                        if (clazz != Object.class){
+                            return findOrCreateMethod(clazz.getSuperclass(), methodName, parameterTypes);
+                        }else {
+                            throw ex;
+                        }
                     }
+                    method.setAccessible(true);
+                    methodKey.markInUse();
+                    sMethods.put(methodKey, method);
+                }else {
+                    methodKey.recycle();
                 }
-                method.setAccessible(true);
-                methodKey.markInUse();
-                sMethods.put(methodKey, method);
-            }else {
-                methodKey.recycle();
             }
+        }else {
+            methodKey.recycle();
         }
         return method;
     }
