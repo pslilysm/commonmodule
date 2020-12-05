@@ -11,12 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import pers.cxd.corelibrary.Log;
 
-public abstract class BaseFmt extends Fragment {
+public abstract class BaseFmt extends Fragment implements Component {
 
     protected final String TAG = Log.TAG + this.getClass().getSimpleName();
-
-    protected abstract int getLayoutId();
-    protected abstract void setUp();
 
     protected ViewGroup mContentView;
 
@@ -29,7 +26,7 @@ public abstract class BaseFmt extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mContentView == null){
             mContentView = (ViewGroup) inflater.inflate(getLayoutId(), container, false);
-            setUp();
+            setUp(savedInstanceState);
         }
         return mContentView;
     }

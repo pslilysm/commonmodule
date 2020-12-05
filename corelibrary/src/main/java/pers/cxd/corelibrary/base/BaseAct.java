@@ -7,12 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import pers.cxd.corelibrary.Log;
 
-public abstract class BaseAct extends AppCompatActivity {
+public abstract class BaseAct extends AppCompatActivity implements Component {
 
     protected final String TAG = Log.TAG + this.getClass().getSimpleName();
-
-    protected abstract int getLayoutId();
-    protected abstract void setUp(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
