@@ -6,6 +6,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import pers.cxd.commonmodule.R;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 import pers.cxd.mvplibrary.MvpAct;
@@ -24,12 +26,12 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.act_splash;
     }
 
     @Override
-    protected void setUp(Bundle savedInstanceState) {
+    public void setUp(@Nullable Bundle savedInstanceState) {
         mPresenter.getSomeData("1", "2");
         Object activityThread;
         Handler mH;

@@ -1,7 +1,5 @@
 package pers.cxd.rxlibrary;
 
-import androidx.annotation.Nullable;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
@@ -40,30 +38,26 @@ public class RxUtil {
 
     }
 
-    public static <D> void execute(@Nullable RxCallback<D> callback, Observable<D> observable, ObservableTransformer<D, D> transformer){
+    public static <D> void execute(@NonNull RxCallback<D> callback, Observable<D> observable, ObservableTransformer<D, D> transformer){
         observable.compose(transformer)
                 .subscribe(aObserverInjectRxCallback(callback));
     }
     
-    public static <D> Observer<D> aObserverInjectRxCallback(@Nullable RxCallback<D> callback){
+    public static <D> Observer<D> aObserverInjectRxCallback(@NonNull RxCallback<D> callback){
         return new Observer<D>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                if (callback != null) {
-                    callback.onSubscribe(d);
-                }
+                callback.onSubscribe(d);
             }
 
             @Override
             public void onNext(@NonNull D d) {
-                if (callback != null) {
-                    callback.onSuccess(d);
-                }
+                callback.onSuccess(d);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                if (callback != null && !callback.handleError(e)) {
+                if (!callback.handleError(e)) {
                     // in release version, we normally use bugly or another sdk to report this error;
                     // so always make your handleAnotherError return true;
                     throw new RuntimeException(e);
@@ -73,9 +67,7 @@ public class RxUtil {
 
             @Override
             public void onComplete() {
-                if (callback != null) {
-                    callback.onComplete();
-                }
+                callback.onComplete();
             }
 
         };
