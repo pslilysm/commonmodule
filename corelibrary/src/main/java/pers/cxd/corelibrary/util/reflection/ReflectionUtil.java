@@ -48,8 +48,9 @@ public class ReflectionUtil {
                         field = clazz.getDeclaredField(fieldName);
                     }catch (NoSuchFieldException ex){
                         fieldKey.recycle();
-                        if (clazz != Object.class){
-                            return findOrCreateField(clazz.getSuperclass(), fieldName);
+                        Class<?> superClazz = clazz.getSuperclass();
+                        if (superClazz != null && superClazz != Object.class){
+                            return findOrCreateField(superClazz, fieldName);
                         }else {
                             throw ex;
                         }
@@ -77,8 +78,9 @@ public class ReflectionUtil {
                         method = clazz.getDeclaredMethod(methodName, parameterTypes);
                     }catch (NoSuchMethodException ex){
                         methodKey.recycle();
-                        if (clazz != Object.class){
-                            return findOrCreateMethod(clazz.getSuperclass(), methodName, parameterTypes);
+                        Class<?> superClazz = clazz.getSuperclass();
+                        if (superClazz != null && superClazz != Object.class){
+                            return findOrCreateMethod(superClazz, methodName, parameterTypes);
                         }else {
                             throw ex;
                         }
