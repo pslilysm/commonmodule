@@ -74,7 +74,7 @@ public class EventHandler extends Handler {
         }
     }
 
-    public void unregisterEvent(EventCallback callback){
+    public void unregisterAllEvent(EventCallback callback){
         synchronized (mMultiCallbacks){
             for (int i = 0; i < mMultiCallbacks.size(); i++){
                 List<EventCallback> callbacks = mMultiCallbacks.valueAt(i);
