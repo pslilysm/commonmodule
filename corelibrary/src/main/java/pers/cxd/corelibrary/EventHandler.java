@@ -90,15 +90,15 @@ public class EventHandler extends Handler {
     }
 
     /**
-     * if current thread == the thread we bind, handle the msg directly
-     * @param msg to send
+     * if current thread == the thread we bind, handle the event directly
+     * @param event to send
      */
-    public void sendMessageOpted(Message msg){
+    public void sendEventOpted(Message event){
         if (Looper.myLooper() == getLooper()){
-            handleMessage(msg);
-            msg.recycle();
+            handleMessage(event);
+            event.recycle();
         }else {
-            sendMessage(msg);
+            sendMessage(event);
         }
     }
 
