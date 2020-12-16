@@ -10,44 +10,42 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import pers.cxd.corelibrary.ApplicationHolder;
+
 public class ScreenUtil {
 
-    private static Application context;
-
-    public static void init(Application application){
-        context = application;
-    }
+    private static final Application sApplication = ApplicationHolder.get();
 
     public static int getStatusBarHeight() {
         int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = sApplication.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+            result = sApplication.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }
 
     public static int getWidth() {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) sApplication.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         return dm.widthPixels;
     }
 
     public static int getHeight() {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) sApplication.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         return dm.heightPixels;
     }
 
     public static int dip2px(float dpValue){
-        final float scale = context.getResources().getDisplayMetrics().density;
+        final float scale = sApplication.getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5f);
     }
 
     public static int getNavBarHeight(){
-        Resources resources = context.getResources();
+        Resources resources = sApplication.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             return resources.getDimensionPixelSize(resourceId);
@@ -56,7 +54,7 @@ public class ScreenUtil {
     }
 
     public static int getScreenDensityDpi() {
-        return Resources.getSystem().getDisplayMetrics().densityDpi;
+        return sApplication.getResources().getDisplayMetrics().densityDpi;
     }
 
     public static void fullActAndTransparentStatusBar(Window window, boolean lightMode, boolean hideNav){
