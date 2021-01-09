@@ -22,7 +22,7 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
 
     @Override
     protected String getBaseUrl() {
-        return "http://www.your.domin.com/";
+        return "http://192.168.0.133/";
     }
 
     @Override

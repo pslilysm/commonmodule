@@ -13,10 +13,12 @@ interface SplashContract {
         boolean someDataModelAvailable();
         Observable<Object> someDataModel(String arg1, String arg2);
         void clearSomeDataModel();
+        Observable<Void> registerModel(String accountName, String password);
     }
 
     abstract class Presenter extends RxPresenter<View, Model> {
         abstract void getSomeData(String arg1, String arg2);
+        abstract void register(String accountName, String password);
     }
 
 }

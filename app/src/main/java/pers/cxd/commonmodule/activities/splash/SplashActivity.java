@@ -33,6 +33,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
     @Override
     public void setUp(@Nullable Bundle savedInstanceState) {
         mPresenter.getSomeData("1", "2");
+        mPresenter.register("admin","123456");
         Object activityThread;
         Handler mH;
         try {

@@ -32,4 +32,8 @@ class SplashModel implements SplashContract.Model {
         }
     }
 
+    @Override
+    public Observable<Void> registerModel(String accountName, String password) {
+        return DemoHttpClient.getInstance().getApiInterface().register(accountName, password);
+    }
 }

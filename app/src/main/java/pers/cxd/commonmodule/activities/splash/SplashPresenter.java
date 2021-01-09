@@ -1,10 +1,13 @@
 package pers.cxd.commonmodule.activities.splash;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import pers.cxd.rxlibrary.HttpCallback;
 import pers.cxd.rxlibrary.RxCallbackImpl;
 import pers.cxd.rxlibrary.RxUtil;
+import retrofit2.HttpException;
 
 class SplashPresenter extends SplashContract.Presenter{
 
@@ -36,4 +39,21 @@ class SplashPresenter extends SplashContract.Presenter{
         }
     }
 
+    @Override
+    void register(String accountName, String password) {
+        RxUtil.execute(new HttpCallback<Void>(new RxCallbackImpl<Void>(mSubscription) {
+            @Override
+            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Void aVoid) {
+
+            }
+        }) {
+            @Override
+            public void onNetworkError(Throwable e, String errMsg) {
+                if (e instanceof HttpException){
+                    Log.e(TAG, "onNetworkError: " + ((HttpException) e).code());
+                }
+                Log.e(TAG, "onNetworkError: " + errMsg, e);
+            }
+        }, mModel.registerModel(accountName, password), RxUtil.Transformers.IOToMain());
+    }
 }
