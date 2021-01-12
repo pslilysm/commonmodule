@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import pers.cxd.corelibrary.Log;
 
-public abstract class BaseFmt extends Fragment implements Component, FragmentFinder {
+public abstract class BaseFmt extends Fragment implements UiComponent, FragmentFinder {
 
     protected final String TAG = Log.TAG + this.getClass().getSimpleName();
 

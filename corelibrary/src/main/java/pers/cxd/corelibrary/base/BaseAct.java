@@ -1,5 +1,6 @@
 package pers.cxd.corelibrary.base;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -9,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import pers.cxd.corelibrary.Log;
 
-public abstract class BaseAct extends AppCompatActivity implements Component, FragmentFinder {
+public abstract class BaseAct extends AppCompatActivity implements UiComponent, FragmentFinder {
 
     protected final String TAG = Log.TAG + this.getClass().getSimpleName();
 
@@ -18,6 +19,11 @@ public abstract class BaseAct extends AppCompatActivity implements Component, Fr
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         setUp(savedInstanceState);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     @Nullable
