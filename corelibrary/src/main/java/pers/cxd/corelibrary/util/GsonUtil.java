@@ -10,4 +10,8 @@ public class GsonUtil {
         return sGson.toJson(obj);
     }
 
+    public static <T> T strToObject(String str, Class<T> tClass){
+        return sGson.fromJson(str, tClass);
+    }
+
 }

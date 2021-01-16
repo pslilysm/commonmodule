@@ -9,6 +9,7 @@ import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 public class ComponentPlugins {
 
     public static final FragmentFinder sSimpleFinder = new FragmentFinder() {
+        @Nullable
         @Override
         public <T extends Fragment> T findFragment(FragmentManager manager, Class<T> clazz, int position) {
             return (T) manager.findFragmentByTag(clazz.getName());
