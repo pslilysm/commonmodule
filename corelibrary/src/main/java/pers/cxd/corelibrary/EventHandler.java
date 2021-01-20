@@ -13,32 +13,17 @@ import java.util.List;
 
 public class EventHandler extends Handler {
 
-    private static EventHandler sDefault;
-
     public interface EventCallback {
         void handleEvent(@NonNull Message msg);
     }
+
+    private static final Class<?>[] sConstructorClasses = new Class[]{Looper.class};
 
     /**
      * @return a default EventHandler which bind MainLooper;
      */
     public static EventHandler getDefault(){
-        if (sDefault == null){
-            synchronized (EventHandler.class){
-                if (sDefault == null){
-                    sDefault = new EventHandler(Looper.getMainLooper());
-                }
-            }
-        }
-        return sDefault;
-    }
-
-    public EventHandler() {
-        super();
-    }
-
-    public EventHandler(@Nullable Handler.Callback callback) {
-        super(callback);
+        return SingletonFactory.findOrCreate(EventHandler.class, sConstructorClasses, Looper.getMainLooper());
     }
 
     public EventHandler(@NonNull Looper looper) {
@@ -81,7 +66,7 @@ public class EventHandler extends Handler {
                 if (callbacks != null){
                     callbacks.remove(callback);
                     if (callbacks.size() == 0){
-                        // why i--? because on the next loop we'll call size(), this method will do gc and move elements forward 1 index
+                        // why i--? because on the next loop we'll call mMultiCallbacks.size(), this method will do gc and move elements forward 1 index
                         mMultiCallbacks.removeAt(i--);
                     }
                 }

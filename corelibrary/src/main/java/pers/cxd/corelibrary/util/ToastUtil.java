@@ -1,6 +1,5 @@
 package pers.cxd.corelibrary.util;
 
-import android.app.Application;
 import android.os.Looper;
 import android.widget.Toast;
 
