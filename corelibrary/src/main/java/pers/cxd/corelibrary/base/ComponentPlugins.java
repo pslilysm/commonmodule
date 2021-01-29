@@ -1,5 +1,7 @@
 package pers.cxd.corelibrary.base;
 
+import pers.cxd.corelibrary.Log;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,8 +26,12 @@ public class ComponentPlugins {
         }
     };
 
+    private final static String TAG = pers.cxd.corelibrary.Log.TAG + ComponentPlugins.class.getSimpleName();
+
     protected static <T extends Fragment> T findOrCreateFmt(FragmentManager manager, Class<T> clazz, int position, FragmentFinder finder){
+        Log.d(TAG, "findOrCreateFmt() called with: manager = [" + manager + "], clazz = [" + clazz + "], position = [" + position + "], finder = [" + finder + "]");
         T fmt = finder.findFragment(manager, clazz, position);
+        Log.i(TAG, "findOrCreateFmt: " + fmt);
         if (fmt == null){
             try {
                 return ReflectionUtil.newInstance(clazz);

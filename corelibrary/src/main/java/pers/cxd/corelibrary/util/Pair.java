@@ -2,7 +2,7 @@ package pers.cxd.corelibrary.util;
 
 import java.util.Objects;
 
-public class Pair<F, S> {
+public class Pair<F, S> implements Recyclable {
 
     private F first;
     private S second;
@@ -12,6 +12,14 @@ public class Pair<F, S> {
     private Pair(F first, S second) {
         this.first = first;
         this.second = second;
+    }
+
+    public F first() {
+        return first;
+    }
+
+    public S second() {
+        return second;
     }
 
     @Override
@@ -46,6 +54,11 @@ public class Pair<F, S> {
             }
         }
         return new Pair<>(key, value);
+    }
+
+    @Override
+    public void recycle(){
+        recycle(true);
     }
 
     /**

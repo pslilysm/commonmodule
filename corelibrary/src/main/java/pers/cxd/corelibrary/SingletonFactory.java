@@ -32,11 +32,11 @@ public class SingletonFactory {
                         throw new RuntimeException(e);
                     }
                 }else{
-                    pair.recycle(true);
+                    pair.recycle();
                 }
             }
         }else {
-            pair.recycle(true);
+            pair.recycle();
         }
         return singleton;
     }

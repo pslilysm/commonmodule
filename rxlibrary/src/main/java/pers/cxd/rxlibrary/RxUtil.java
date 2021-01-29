@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.ObservableTransformer;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import pers.cxd.corelibrary.util.ExceptionUtil;
 
 public class RxUtil {
 
@@ -28,12 +29,23 @@ public class RxUtil {
             }
         };
 
+        private static final ObservableTransformer NON = new ObservableTransformer() {
+            @Override
+            public @NonNull ObservableSource apply(@NonNull Observable upstream) {
+                return upstream;
+            }
+        };
+
         public static <T> ObservableTransformer<T, T> IOToMain(){
             return IOToMain;
         }
 
         public static <T> ObservableTransformer<T, T> IO(){
             return IO;
+        }
+
+        public static <T> ObservableTransformer<T, T> NON(){
+            return NON;
         }
 
     }
@@ -60,7 +72,7 @@ public class RxUtil {
                 if (!callback.handleError(e)) {
                     // in release version, we normally use bugly or another sdk to report this error;
                     // so always make your handleAnotherError return true;
-                    throw new RuntimeException(e);
+                    ExceptionUtil.rethrow(e);
                 }
                 onComplete();
             }

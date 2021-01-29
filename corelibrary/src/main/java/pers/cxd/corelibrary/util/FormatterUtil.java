@@ -43,14 +43,47 @@ public class FormatterUtil {
     private static final Singleton<DecimalFormat> _0dot000Formatter = new Singleton<DecimalFormat>() {
         @Override
         protected DecimalFormat create() {
-            return new DecimalFormat("#.000");
+            return new DecimalFormat("0.000");
+        }
+    };
+
+    private static final Singleton<DecimalFormat> _0dot00Formatter = new Singleton<DecimalFormat>() {
+        @Override
+        protected DecimalFormat create() {
+            return new DecimalFormat("0.00");
+        }
+    };
+
+    private static final Singleton<DecimalFormat> _0dot0Formatter = new Singleton<DecimalFormat>() {
+        @Override
+        protected DecimalFormat create() {
+            return new DecimalFormat("0.0");
         }
     };
 
     /**
-     * @return the singleton of DecimalFormat with pattern {"#.00"}
+     * @return the singleton of DecimalFormat with pattern {"#.000"}
      */
     public static DecimalFormat get_0dot000Formatter() {
         return _0dot000Formatter.getInstance();
     }
+
+    /**
+     * @return the singleton of DecimalFormat with pattern {"#.00"}
+     */
+    public static DecimalFormat get_0dot00Formatter(){
+        return _0dot00Formatter.getInstance();
+    }
+
+    /**
+     * @return the singleton of DecimalFormat with pattern {"#.0"}
+     */
+    public static DecimalFormat get_0dot0Formatter(){
+        return _0dot0Formatter.getInstance();
+    }
+
+    public static double formatDoubleWith0dot000(double raw){
+        return Double.parseDouble(get_0dot000Formatter().format(raw));
+    }
+
 }
