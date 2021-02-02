@@ -74,7 +74,6 @@ public class RxUtil {
                     // so always make your handleAnotherError return true;
                     ExceptionUtil.rethrow(e);
                 }
-                onComplete();
             }
 
             @Override

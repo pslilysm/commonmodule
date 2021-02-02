@@ -82,8 +82,4 @@ public class FormatterUtil {
         return _0dot0Formatter.getInstance();
     }
 
-    public static double formatDoubleWith0dot000(double raw){
-        return Double.parseDouble(get_0dot000Formatter().format(raw));
-    }
-
 }

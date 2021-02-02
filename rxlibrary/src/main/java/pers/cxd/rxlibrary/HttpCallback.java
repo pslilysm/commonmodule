@@ -26,6 +26,8 @@ public abstract class HttpCallback<D> extends RxCallbackWrapper<D> {
                 }
             }
             onNetworkError(e, errMsg);
+            // retrofit will send a error event but not send complete event
+            onComplete();
             return true;
         }
         return super.handleError(e);
