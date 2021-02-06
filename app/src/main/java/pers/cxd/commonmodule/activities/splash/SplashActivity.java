@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import pers.cxd.commonmodule.R;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
-import pers.cxd.mvplibrary.MvpAct;
+import pers.cxd.corelibrary.mvp.MvpAct;
 
 public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContract.Model>
         implements SplashContract.View {

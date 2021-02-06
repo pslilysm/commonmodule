@@ -35,12 +35,12 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
     @Nullable
     @Override
     public <T extends Fragment> T findFragment(FragmentManager manager, Class<T> clazz, int position) {
-        return ComponentPlugins.sSimpleFinder.findFragment(manager, clazz, position);
+        return UiComponentPlugins.sSimpleFinder.findFragment(manager, clazz, position);
     }
 
     @Override
     public <T extends Fragment> T findOrCreateFmt(Class<T> clazz, int position) {
-        return ComponentPlugins.findOrCreateFmt(getChildFragmentManager(), clazz, position, this);
+        return UiComponentPlugins.findOrCreateFmt(getChildFragmentManager(), clazz, position, this);
     }
 
 }

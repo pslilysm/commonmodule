@@ -29,12 +29,12 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     @Nullable
     @Override
     public <T extends Fragment> T findFragment(FragmentManager manager, Class<T> clazz, int position) {
-        return ComponentPlugins.sSimpleFinder.findFragment(manager, clazz, position);
+        return UiComponentPlugins.sSimpleFinder.findFragment(manager, clazz, position);
     }
 
     @Override
     public <T extends Fragment> T findOrCreateFmt(Class<T> clazz, int position) {
-        return ComponentPlugins.findOrCreateFmt(getSupportFragmentManager(), clazz, position, this);
+        return UiComponentPlugins.findOrCreateFmt(getSupportFragmentManager(), clazz, position, this);
     }
 
 }

@@ -1,4 +1,4 @@
-package pers.cxd.mvplibrary;
+package pers.cxd.corelibrary.mvp;
 
 import pers.cxd.corelibrary.Log;
 

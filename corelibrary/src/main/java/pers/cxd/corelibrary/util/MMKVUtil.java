@@ -31,24 +31,24 @@ public class MMKVUtil {
     }
 
     private static void encode(String key, Object value, Class<?> valueClass){
-        Class<?> clazz = value == null ? valueClass : value.getClass();
-        if (clazz == int.class || clazz == Integer.class){
-            sDefault.encode(key, (int) value);
-        } else if (clazz == float.class || clazz == Float.class){
-            sDefault.encode(key, (float)value);
-        } else if (clazz == double.class || clazz == Double.class){
-            sDefault.encode(key, (double)value);
-        } else if (clazz == long.class || clazz == Long.class){
-            sDefault.encode(key, (long)value);
-        } else if (clazz == boolean.class || clazz == Boolean.class){
-            sDefault.encode(key, (boolean)value);
+        Class<?> clazz = value != null ? value.getClass() : valueClass;
+        if (clazz == Integer.class){
+            sDefault.encode(key, (Integer) value);
+        } else if (clazz == Float.class){
+            sDefault.encode(key, (Float)value);
+        } else if (clazz == Double.class){
+            sDefault.encode(key, (Double)value);
+        } else if (clazz == Long.class){
+            sDefault.encode(key, (Long)value);
+        } else if (clazz == Boolean.class){
+            sDefault.encode(key, (Boolean)value);
         } else if (clazz == String.class){
             sDefault.encode(key, (String)value);
-        } else if (value instanceof Set){
+        } else if (clazz == Set.class){
             sDefault.encode(key, (Set<String>) value);
         } else if (clazz == byte[].class){
             sDefault.encode(key, (byte[]) value);
-        } else if (value instanceof Parcelable){
+        } else if (clazz == Parcelable.class){
             sDefault.encode(key, (Parcelable) value);
         } else {
             throw new UnsupportedOperationException(clazz + " can't encode");
@@ -74,17 +74,17 @@ public class MMKVUtil {
     }
 
     private static <T> T decode(String key, T defaultValue, Class<T> valueClass){
-        Class<?> clazz = defaultValue == null ? valueClass : defaultValue.getClass();
-        if (clazz == int.class || clazz == Integer.class){
-            return (T) Integer.valueOf(sDefault.decodeInt(key, (Integer) defaultValue));
-        } else if (clazz == float.class || clazz == Float.class){
-            return (T) Float.valueOf(sDefault.decodeFloat(key, (Float) defaultValue));
-        } else if (clazz == double.class || clazz == Double.class){
-            return (T) Double.valueOf(sDefault.decodeDouble(key, (Double) defaultValue));
-        } else if (clazz == long.class || clazz == Long.class){
-            return (T) Long.valueOf(sDefault.decodeLong(key, (Long) defaultValue));
-        } else if (clazz == boolean.class || clazz == Boolean.class){
-            return (T) Boolean.valueOf(sDefault.decodeBool(key, (Boolean) defaultValue));
+        Class<?> clazz = defaultValue != null ? defaultValue.getClass() : valueClass;
+        if (clazz == Integer.class){
+            return (T) Integer.valueOf(sDefault.decodeInt(key, defaultValue == null ? 0 : (Integer) defaultValue));
+        } else if (clazz == Float.class){
+            return (T) Float.valueOf(sDefault.decodeFloat(key, defaultValue == null ? 0 : (Float) defaultValue));
+        } else if (clazz == Double.class){
+            return (T) Double.valueOf(sDefault.decodeDouble(key, defaultValue == null ? 0 : (Double) defaultValue));
+        } else if (clazz == Long.class){
+            return (T) Long.valueOf(sDefault.decodeLong(key, defaultValue == null ? 0 : (Long) defaultValue));
+        } else if (clazz == Boolean.class){
+            return (T) Boolean.valueOf(sDefault.decodeBool(key, defaultValue == null ? false : (Boolean) defaultValue));
         } else if (clazz == String.class){
             return (T) sDefault.decodeString(key, (String) defaultValue);
         } else if (defaultValue instanceof Set){
