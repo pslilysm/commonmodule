@@ -40,6 +40,36 @@ public class FormatterUtil {
         return syyyyMMdd.getInstance();
     }
 
+    @SuppressLint("ConstantLocale")
+    private static final Singleton<SimpleDateFormat> sMMdd = new Singleton<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat create() {
+            return new SimpleDateFormat("MM-dd", Locale.getDefault());
+        }
+    };
+
+    /**
+     * @return the singleton of DateFormatter with pattern {"MM-dd"}
+     */
+    public static SimpleDateFormat getMMddFormatter(){
+        return sMMdd.getInstance();
+    }
+
+    @SuppressLint("ConstantLocale")
+    private static final Singleton<SimpleDateFormat> sHHmmss = new Singleton<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat create() {
+            return new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        }
+    };
+
+    /**
+     * @return the singleton of DateFormatter with pattern {"HH:mm:ss"}
+     */
+    public static SimpleDateFormat getHHmmssFormatter(){
+        return sHHmmss.getInstance();
+    }
+
     private static final Singleton<DecimalFormat> _0dot000Formatter = new Singleton<DecimalFormat>() {
         @Override
         protected DecimalFormat create() {

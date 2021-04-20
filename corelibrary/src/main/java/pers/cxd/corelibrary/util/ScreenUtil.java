@@ -2,10 +2,12 @@ package pers.cxd.corelibrary.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +17,11 @@ import pers.cxd.corelibrary.ApplicationHolder;
 public class ScreenUtil {
 
     private static final Application sApplication = ApplicationHolder.get();
+
+    public static boolean isDarkMode(){
+        return (sApplication.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+    }
 
     public static int getStatusBarHeight() {
         int result = 0;
@@ -42,6 +49,10 @@ public class ScreenUtil {
     public static int dip2px(float dpValue){
         final float scale = sApplication.getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5f);
+    }
+
+    public static int spToPx(float sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, sApplication.getResources().getDisplayMetrics());
     }
 
     public static int getNavBarHeight(){

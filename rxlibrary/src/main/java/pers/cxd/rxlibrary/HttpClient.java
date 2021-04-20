@@ -9,10 +9,10 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 
 public abstract class HttpClient<I> {
 
-    private I mApiInterface;
+    private I mApi;
 
-    public I getApiInterface(){
-        return mApiInterface;
+    public I getApi(){
+        return mApi;
     }
 
     protected abstract String getBaseUrl();
@@ -31,7 +31,7 @@ public abstract class HttpClient<I> {
         for (Converter.Factory factory : getConvertFactories()){
             builder.addConverterFactory(factory);
         }
-        mApiInterface = builder.build().create((Class<I>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        mApi = builder.build().create((Class<I>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
 }

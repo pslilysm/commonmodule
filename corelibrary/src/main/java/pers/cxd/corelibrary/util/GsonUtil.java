@@ -1,12 +1,18 @@
 package pers.cxd.corelibrary.util;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GsonUtil {
 
@@ -33,6 +39,22 @@ public class GsonUtil {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static <T> Map<String, T> jsonStrToMap(String json, Class<T> tClass) {
+        return strToMap(json, String.class, tClass);
+    }
+
+    public static <K, V> LinkedHashMap<K, V> strToMap(String json, Class<K> kClass, Class<V> vClass) {
+        Map<K, K> map = null;
+        Type empMapType = new TypeToken<LinkedHashMap<K, V>>() {}.getType();
+        try{
+            map = sGson.fromJson(json, empMapType);
+        }catch (Exception e){
+            Log.e("GsonUtil", "strToMap: " + e.getMessage());
+        }
+        if (map == null) map = new LinkedHashMap<>();
+        return (LinkedHashMap<K, V>) map;
     }
 
 }

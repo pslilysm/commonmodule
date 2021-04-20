@@ -9,23 +9,23 @@ public class DataStructureUtil {
         return collection == null || collection.isEmpty();
     }
 
-    public static boolean hasElement(Collection<?> collection){
+    public static boolean haveElement(Collection<?> collection){
         return !isEmpty(collection);
     }
 
-    public static boolean hasElement(Map<?, ?> map){
+    public static boolean haveElement(Map<?, ?> map){
         return map != null && !map.isEmpty();
     }
 
-    public static boolean hasElement(int[] arr){
+    public static boolean haveElement(int[] arr){
         return arr != null && arr.length > 0;
     }
 
-    public static boolean hasElement(Object[] arr){
+    public static boolean haveElement(Object[] arr){
         return arr != null && arr.length > 0;
     }
 
-    public static boolean hasElement(double[] arr) {
+    public static boolean haveElement(double[] arr) {
         return arr != null && arr.length > 0;
     }
 }

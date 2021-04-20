@@ -50,38 +50,38 @@ public class RxUtil {
 
     }
 
-    public static <D> void execute(@NonNull RxCallback<D> callback, Observable<D> observable, ObservableTransformer<D, D> transformer){
+    public static <D> void execute(@NonNull Observer<D> observer, Observable<D> observable, ObservableTransformer<D, D> transformer){
         observable.compose(transformer)
-                .subscribe(aObserverInjectRxCallback(callback));
+                .subscribe(observer);
     }
     
-    public static <D> Observer<D> aObserverInjectRxCallback(@NonNull RxCallback<D> callback){
-        return new Observer<D>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                callback.onSubscribe(d);
-            }
-
-            @Override
-            public void onNext(@NonNull D d) {
-                callback.onSuccess(d);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                if (!callback.handleError(e)) {
-                    // in release version, we normally use bugly or another sdk to report this error;
-                    // so always make your handleAnotherError return true;
-                    ExceptionUtil.rethrow(e);
-                }
-            }
-
-            @Override
-            public void onComplete() {
-                callback.onComplete();
-            }
-
-        };
-    }
+//    public static <D> Observer<D> aObserverInjectRxCallback(@NonNull RxCallback<D> callback){
+//        return new Observer<D>() {
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//                callback.onSubscribe(d);
+//            }
+//
+//            @Override
+//            public void onNext(@NonNull D d) {
+//                callback.onSuccess(d);
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Throwable e) {
+//                if (!callback.handleError(e)) {
+//                    // in release version, we normally use bugly or another sdk to report this error;
+//                    // so always make your handleAnotherError return true;
+//                    ExceptionUtil.rethrow(e);
+//                }
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                callback.onComplete();
+//            }
+//
+//        };
+//    }
 
 }

@@ -41,19 +41,19 @@ public class Pair<F, S> implements Recyclable {
     private static final int sMaxPoolSize = 10;
     private static final Object sPoolLock = new Object();
 
-    public static <K, V> Pair<K, V> obtain(K key, V value){
+    public static <F, S> Pair<F, S> obtain(F first, S second){
         synchronized (sPoolLock){
             if (sPool != null){
-                Pair<K, V> pair = (Pair<K, V>) sPool;
+                Pair<F, S> pair = (Pair<F, S>) sPool;
                 sPool = pair.next;
                 pair.next = null;
-                pair.first = key;
-                pair.second = value;
+                pair.first = first;
+                pair.second = second;
                 sPoolSize--;
                 return pair;
             }
         }
-        return new Pair<>(key, value);
+        return new Pair<>(first, second);
     }
 
     @Override
