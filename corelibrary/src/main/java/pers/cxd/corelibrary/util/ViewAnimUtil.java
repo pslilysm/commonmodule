@@ -6,11 +6,13 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 public class ViewAnimUtil {
+    
+    private static final int DEFAULT_ANIM_DURATION = 250;
 
     public static void showViewWithAlpha(View v){
         if (v.getVisibility() != View.VISIBLE){
             AlphaAnimation alphaAnim = new AlphaAnimation(0, 1);
-            alphaAnim.setDuration(280);
+            alphaAnim.setDuration(DEFAULT_ANIM_DURATION);
             alphaAnim.setFillAfter(true);
             v.startAnimation(alphaAnim);
         }
@@ -19,8 +21,8 @@ public class ViewAnimUtil {
     public static void hideViewWithAlpha(View v){
         if (v.getVisibility() == View.VISIBLE){
             AlphaAnimation alphaAnim = new AlphaAnimation(1, 0);
-            alphaAnim.setDuration(280);
-            alphaAnim.setFillAfter(true);
+            alphaAnim.setDuration(DEFAULT_ANIM_DURATION);
+//            alphaAnim.setFillAfter(true);
             v.startAnimation(alphaAnim);
         }
     }
@@ -29,7 +31,7 @@ public class ViewAnimUtil {
         if (v.getVisibility() != View.VISIBLE){
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
-            transAnim.setDuration(280);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
             transAnim.setFillAfter(true);
             v.startAnimation(transAnim);
         }
@@ -39,7 +41,59 @@ public class ViewAnimUtil {
         if (v.getVisibility() == View.VISIBLE){
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
-            transAnim.setDuration(280);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
+            v.startAnimation(transAnim);
+        }
+    }
+
+    public static void translateFromLeftToRight(View v){
+        TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+        transAnim.setDuration(DEFAULT_ANIM_DURATION);
+        transAnim.setFillAfter(true);
+        v.startAnimation(transAnim);
+    }
+
+    public static void translateFromRightToLeft(View v){
+        TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+        transAnim.setDuration(DEFAULT_ANIM_DURATION);
+        transAnim.setFillAfter(true);
+        v.startAnimation(transAnim);
+    }
+
+    public static void hideViewWithTranslateFromRightToLeft(View v){
+        if (v.getVisibility() == View.VISIBLE){
+            TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, -1,
+                    Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
+            v.startAnimation(transAnim);
+        }
+    }
+
+    public static void showViewWithTranslateFromRightToLeft(View v){
+        if (v.getVisibility() != View.VISIBLE){
+            TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0,
+                    Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
+            v.startAnimation(transAnim);
+        }
+    }
+
+    public static void hideViewWithTranslateFromLeftToRight(View v){
+        if (v.getVisibility() == View.VISIBLE){
+            TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
+                    Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
+            v.startAnimation(transAnim);
+        }
+    }
+
+    public static void showViewWithTranslateFromLeftToRight(View v){
+        if (v.getVisibility() != View.VISIBLE){
+            TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1, Animation.RELATIVE_TO_SELF, 0,
+                    Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+            transAnim.setDuration(DEFAULT_ANIM_DURATION);
             v.startAnimation(transAnim);
         }
     }
