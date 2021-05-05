@@ -1,25 +1,25 @@
 package pers.cxd.commonmodule.activities.splash;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import pers.cxd.rxlibrary.HttpCallback;
-import pers.cxd.rxlibrary.RxCallbackImpl;
+import io.reactivex.rxjava3.annotations.NonNull;
+import pers.cxd.rxlibrary.BaseObserverImpl;
 import pers.cxd.rxlibrary.RxUtil;
-import retrofit2.HttpException;
 
 class SplashPresenter extends SplashContract.Presenter{
 
     @Override
     void getSomeData(String arg1, String arg2) {
         if (mModel.someDataModelAvailable()){
-            RxCallbackImpl<Object> callbackImpl = new RxCallbackImpl<Object>(mSubscription) {
+            RxUtil.execute(new BaseObserverImpl<Object>(mSubscription) {
                 @Override
-                public void onSuccess(@NonNull Object o) {
+                public void onNext(@io.reactivex.rxjava3.annotations.NonNull Object o) {
                     if (notDetach()){
                         mView.onSomeDataGotten(o);
                     }
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+
                 }
 
                 @Override
@@ -29,30 +29,21 @@ class SplashPresenter extends SplashContract.Presenter{
                         mModel.clearSomeDataModel();
                     }
                 }
-            };
-            RxUtil.execute(new HttpCallback<Object>(callbackImpl) {
-                @Override
-                public void onNetworkError(Throwable e, String errMsg) {
-
-                }
             }, mModel.someDataModel(arg1, arg2), RxUtil.Transformers.IOToMain());
         }
     }
 
     @Override
     void register(String accountName, String password) {
-        RxUtil.execute(new HttpCallback<Void>(new RxCallbackImpl<Void>(mSubscription) {
+        RxUtil.execute(new BaseObserverImpl<Void>(mSubscription) {
             @Override
-            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Void aVoid) {
+            public void onNext(@NonNull Void aVoid) {
 
             }
-        }) {
+
             @Override
-            public void onNetworkError(Throwable e, String errMsg) {
-                if (e instanceof HttpException){
-                    Log.e(TAG, "onNetworkError: " + ((HttpException) e).code());
-                }
-                Log.e(TAG, "onNetworkError: " + errMsg, e);
+            public void onError(@NonNull Throwable e) {
+
             }
         }, mModel.registerModel(accountName, password), RxUtil.Transformers.IOToMain());
     }
