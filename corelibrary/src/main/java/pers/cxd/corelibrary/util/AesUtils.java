@@ -12,13 +12,13 @@ import pers.cxd.corelibrary.Singleton;
 
 public class AesUtils {
 
-    private static final String sAesKey = "NV9MCANO5VVCMUASPSLILYSM19990127";
+    public static final String sAesKey = "NV9MCANO5VVCMUASPSLILYSM19990127";
 
     private static final String sIvKey =  "PSLILYSM19990127";
 
     private static final String sAesMode = "AES/CFB/NOPadding";
 
-    private static final Singleton<Cipher> sEncryptCipher = new Singleton<Cipher>() {
+    private static final Singleton<Cipher> sDefaultEncryptCipher = new Singleton<Cipher>() {
         @Override
         protected Cipher create() {
             try {
@@ -31,7 +31,7 @@ public class AesUtils {
         }
     };
 
-    private static final Singleton<Cipher> sDecryptCipher = new Singleton<Cipher>() {
+    private static final Singleton<Cipher> sDefaultDecryptCipher = new Singleton<Cipher>() {
         @Override
         protected Cipher create() {
             try {
@@ -50,8 +50,8 @@ public class AesUtils {
      */
     public static String encrypt(String str){
         try {
-            byte[] bytes = sEncryptCipher.getInstance().doFinal(str.getBytes(StandardCharsets.UTF_8));
-            return Base64.encodeToString(bytes, Base64.DEFAULT);
+            byte[] bytes = sDefaultEncryptCipher.getInstance().doFinal(str.getBytes(StandardCharsets.UTF_8));
+            return Base64.encodeToString(bytes, Base64.NO_WRAP);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -63,10 +63,27 @@ public class AesUtils {
      */
     public static String decrypt(String str){
         try {
-            return new String(sDecryptCipher.getInstance().doFinal(Base64.decode(str, Base64.DEFAULT)), StandardCharsets.UTF_8);
+            return new String(sDefaultDecryptCipher.getInstance().doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8);
         } catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    public static String encrypt(String str, String key){
+        try {
+            Cipher cipher = Cipher.getInstance(sAesMode);
+            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(sIvKey.getBytes()));
+            byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
+            return Base64.encodeToString(bytes, Base64.NO_WRAP);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String decrypt(String str, String key) throws Exception {
+        Cipher cipher = Cipher.getInstance(sAesMode);
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(sIvKey.getBytes()));
+        return new String(cipher.doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8);
     }
 
 

@@ -69,10 +69,16 @@ public class ScreenUtil {
     }
 
     public static void fullActAndTransparentStatusBar(Window window, boolean lightMode, boolean hideNav){
-        int flag = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        fullActAndTransparentStatusBar(true, window, lightMode, hideNav);
+    }
+
+    public static void fullActAndTransparentStatusBar(boolean fullScreen, Window window, boolean lightMode, boolean hideNav){
+        int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (fullScreen){
+            flag |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        }
         if (hideNav) flag |=  View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         if (lightMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
