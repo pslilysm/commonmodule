@@ -21,7 +21,7 @@ class SplashModel implements SplashContract.Model {
         someDataMap = new ArrayMap<>(4);
         someDataMap.put("arg1", arg1);
         someDataMap.put("arg2", arg2);
-        return DemoHttpClient.getInstance().getApiInterface().postSample(someDataMap);
+        return DemoHttpClient.getInstance().getApi().postSample(someDataMap);
     }
 
     @Override
@@ -34,6 +34,6 @@ class SplashModel implements SplashContract.Model {
 
     @Override
     public Observable<Void> registerModel(String accountName, String password) {
-        return DemoHttpClient.getInstance().getApiInterface().register(accountName, password);
+        return DemoHttpClient.getInstance().getApi().register(accountName, password);
     }
 }
