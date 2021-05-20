@@ -1,14 +1,25 @@
 package pers.cxd.commonmodule.activities.splash;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pers.cxd.commonmodule.R;
+import pers.cxd.corelibrary.util.ScreenUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 import pers.cxd.corelibrary.mvp.MvpAct;
 
@@ -60,6 +71,50 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
             Log.i(TAG, "setUp: " + activityThread);
         } catch (ReflectiveOperationException e) {
             Log.w(TAG, e);
+        }
+
+        RecyclerView rv = findViewById(R.id.rv);
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            data.add(String.valueOf(i));
+        }
+        rv.setAdapter(new Adapter(data));
+        rv.scrollToPosition(15);
+    }
+
+    private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {
+
+        final List<String> data;
+
+        public Adapter(List<String> data) {
+            this.data = data;
+        }
+
+        static class VH extends RecyclerView.ViewHolder{
+            public VH(@NonNull View itemView) {
+                super(itemView);
+            }
+        }
+
+        @NonNull
+        @Override
+        public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            TextView tv = new TextView(parent.getContext());
+            tv.setGravity(Gravity.CENTER);
+            tv.setPaddingRelative(0, ScreenUtil.dip2px(8), 0, ScreenUtil.dip2px(8));
+            tv.setTextColor(Color.BLACK);
+            tv.setWidth(ScreenUtil.getWidth());
+            return new VH(tv);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull VH holder, int position) {
+            ((TextView) holder.itemView).setText(data.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
         }
     }
 

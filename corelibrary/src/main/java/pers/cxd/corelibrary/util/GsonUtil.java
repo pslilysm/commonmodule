@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.collection.ArraySet;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -19,12 +20,18 @@ import java.util.Set;
 
 public class GsonUtil {
 
-    private static final Gson sGson = new Gson();
+    private static final Gson sPrettyGson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+
+    private static final Gson sGson = new GsonBuilder().disableHtmlEscaping().create();
 
     private static final JsonParser sJsonParser = new JsonParser();
 
     public static String objToString(Object obj){
-        return sGson.toJson(obj);
+        return objToString(obj, true);
+    }
+
+    public static String objToString(Object obj, boolean pretty){
+        return pretty ? sPrettyGson.toJson(obj) : sGson.toJson(obj);
     }
 
     public static <T> T strToObject(String str, Class<T> tClass){
@@ -61,8 +68,8 @@ public class GsonUtil {
         return strToMap(json, String.class, tClass);
     }
 
-    public static <K, V> LinkedHashMap<K, V> strToMap(String json, Class<K> kClass, Class<V> vClass) {
-        Map<K, K> map = null;
+    public static <K, V> Map<K, V> strToMap(String json, Class<K> kClass, Class<V> vClass) {
+        Map<K, V> map = null;
         Type empMapType = new TypeToken<LinkedHashMap<K, V>>() {}.getType();
         try{
             map = sGson.fromJson(json, empMapType);
@@ -70,7 +77,12 @@ public class GsonUtil {
             Log.e("GsonUtil", "strToMap: " + e.getMessage());
         }
         if (map == null) map = new LinkedHashMap<>();
-        return (LinkedHashMap<K, V>) map;
+        return map;
+    }
+
+    public static String prettyJson(String jsonStr){
+        JsonElement je = sJsonParser.parse(jsonStr);
+        return sPrettyGson.toJson(je);
     }
 
 }

@@ -50,5 +50,6 @@ dependencies {
 
     implementation project(":corelibrary")
     implementation project(':rxlibrary')
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
 }

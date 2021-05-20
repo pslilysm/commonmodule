@@ -46,6 +46,20 @@ public class ScreenUtil {
         return dm.heightPixels;
     }
 
+    public static int getRealWidth() {
+        WindowManager wm = (WindowManager) sApplication.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getRealMetrics(dm);
+        return dm.widthPixels;
+    }
+
+    public static int getRealHeight() {
+        WindowManager wm = (WindowManager) sApplication.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getRealMetrics(dm);
+        return dm.heightPixels;
+    }
+
     public static int dip2px(float dpValue){
         final float scale = sApplication.getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5f);
@@ -69,15 +83,19 @@ public class ScreenUtil {
     }
 
     public static void fullActAndTransparentStatusBar(Window window, boolean lightMode, boolean hideNav){
-        fullActAndTransparentStatusBar(true, window, lightMode, hideNav);
+        fullActAndTransparentStatusBar(true, false, window, lightMode, hideNav);
     }
 
-    public static void fullActAndTransparentStatusBar(boolean fullScreen, Window window, boolean lightMode, boolean hideNav){
+    public static void fullActAndTransparentStatusBar(boolean layoutFullScreen, boolean fullScreen, Window window, boolean lightMode, boolean hideNav){
         int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        if (fullScreen){
+        if (layoutFullScreen){
             flag |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        }
+        if (fullScreen){
+            flag |= View.SYSTEM_UI_FLAG_LOW_PROFILE
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
         }
         if (hideNav) flag |=  View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
