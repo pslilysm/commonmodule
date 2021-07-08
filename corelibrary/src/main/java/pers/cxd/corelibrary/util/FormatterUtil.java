@@ -2,70 +2,55 @@ package pers.cxd.corelibrary.util;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.Nullable;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class FormatterUtil {
 
-    @SuppressLint("ConstantLocale")
-    private static final ThreadLocal<SimpleDateFormat> syyyyMMddHHmmssTLS = new ThreadLocal<SimpleDateFormat>() {
+    private static final ThreadLocal<SimpleDateFormat> sDateFormatTLS = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return new SimpleDateFormat("", Locale.getDefault());
         }
     };
+
+    private static final String syyyyMMddHHmmssPatter = "yyyy-MM-dd HH:mm:ss";
+
+    private static final String sMMddPattern = "MM-dd";
+
+    private static final String sHHmmssPattern = "HH:mm:ss";
 
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd HH:mm:ss"}
      */
     public static SimpleDateFormat getyyyyMMddHHmmssFormatter(){
-        return syyyyMMddHHmmssTLS.get();
+        SimpleDateFormat sdf = sDateFormatTLS.get();
+        assert sdf != null;
+        sdf.applyPattern(syyyyMMddHHmmssPatter);
+        return sdf;
     }
-
-    @SuppressLint("ConstantLocale")
-    private static final ThreadLocal<SimpleDateFormat> syyyyMMdd = new ThreadLocal<SimpleDateFormat>() {
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        }
-    };
-
-    /**
-     * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd"}
-     */
-    public static SimpleDateFormat getyyyyMMddFormatter(){
-        return syyyyMMdd.get();
-    }
-
-    @SuppressLint("ConstantLocale")
-    private static final ThreadLocal<SimpleDateFormat> sMMdd = new ThreadLocal<SimpleDateFormat>() {
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("MM-dd", Locale.getDefault());
-        }
-    };
 
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"MM-dd"}
      */
     public static SimpleDateFormat getMMddFormatter(){
-        return sMMdd.get();
+        SimpleDateFormat sdf = sDateFormatTLS.get();
+        assert sdf != null;
+        sdf.applyPattern(sMMddPattern);
+        return sdf;
     }
-
-    @SuppressLint("ConstantLocale")
-    private static final ThreadLocal<SimpleDateFormat> sHHmmss = new ThreadLocal<SimpleDateFormat>() {
-        @Override
-        protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        }
-    };
 
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"HH:mm:ss"}
      */
     public static SimpleDateFormat getHHmmssFormatter(){
-        return sHHmmss.get();
+        SimpleDateFormat sdf = sDateFormatTLS.get();
+        assert sdf != null;
+        sdf.applyPattern(sHHmmssPattern);
+        return sdf;
     }
 
     private static final ThreadLocal<DecimalFormat> _0dot000Formatter = new ThreadLocal<DecimalFormat>() {
