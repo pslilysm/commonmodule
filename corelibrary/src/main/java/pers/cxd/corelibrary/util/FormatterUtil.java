@@ -11,9 +11,9 @@ import pers.cxd.corelibrary.Singleton;
 public class FormatterUtil {
 
     @SuppressLint("ConstantLocale")
-    private static final Singleton<SimpleDateFormat> syyyyMMddHHmmss = new Singleton<SimpleDateFormat>() {
+    private static final ThreadLocal<SimpleDateFormat> syyyyMMddHHmmssTLS = new ThreadLocal<SimpleDateFormat>() {
         @Override
-        protected SimpleDateFormat create() {
+        protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         }
     };
@@ -22,13 +22,13 @@ public class FormatterUtil {
      * @return the singleton of DateFormatter with pattern {"yyyy-MM-dd HH:mm:ss"}
      */
     public static SimpleDateFormat getyyyyMMddHHmmssFormatter(){
-        return syyyyMMddHHmmss.getInstance();
+        return syyyyMMddHHmmssTLS.get();
     }
 
     @SuppressLint("ConstantLocale")
-    private static final Singleton<SimpleDateFormat> syyyyMMdd = new Singleton<SimpleDateFormat>() {
+    private static final ThreadLocal<SimpleDateFormat> syyyyMMdd = new ThreadLocal<SimpleDateFormat>() {
         @Override
-        protected SimpleDateFormat create() {
+        protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         }
     };
@@ -37,13 +37,13 @@ public class FormatterUtil {
      * @return the singleton of DateFormatter with pattern {"yyyy-MM-dd"}
      */
     public static SimpleDateFormat getyyyyMMddFormatter(){
-        return syyyyMMdd.getInstance();
+        return syyyyMMdd.get();
     }
 
     @SuppressLint("ConstantLocale")
-    private static final Singleton<SimpleDateFormat> sMMdd = new Singleton<SimpleDateFormat>() {
+    private static final ThreadLocal<SimpleDateFormat> sMMdd = new ThreadLocal<SimpleDateFormat>() {
         @Override
-        protected SimpleDateFormat create() {
+        protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("MM-dd", Locale.getDefault());
         }
     };
@@ -52,13 +52,13 @@ public class FormatterUtil {
      * @return the singleton of DateFormatter with pattern {"MM-dd"}
      */
     public static SimpleDateFormat getMMddFormatter(){
-        return sMMdd.getInstance();
+        return sMMdd.get();
     }
 
     @SuppressLint("ConstantLocale")
-    private static final Singleton<SimpleDateFormat> sHHmmss = new Singleton<SimpleDateFormat>() {
+    private static final ThreadLocal<SimpleDateFormat> sHHmmss = new ThreadLocal<SimpleDateFormat>() {
         @Override
-        protected SimpleDateFormat create() {
+        protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         }
     };
@@ -67,26 +67,26 @@ public class FormatterUtil {
      * @return the singleton of DateFormatter with pattern {"HH:mm:ss"}
      */
     public static SimpleDateFormat getHHmmssFormatter(){
-        return sHHmmss.getInstance();
+        return sHHmmss.get();
     }
 
-    private static final Singleton<DecimalFormat> _0dot000Formatter = new Singleton<DecimalFormat>() {
+    private static final ThreadLocal<DecimalFormat> _0dot000Formatter = new ThreadLocal<DecimalFormat>() {
         @Override
-        protected DecimalFormat create() {
+        protected DecimalFormat initialValue() {
             return new DecimalFormat("0.000");
         }
     };
 
-    private static final Singleton<DecimalFormat> _0dot00Formatter = new Singleton<DecimalFormat>() {
+    private static final ThreadLocal<DecimalFormat> _0dot00Formatter = new ThreadLocal<DecimalFormat>() {
         @Override
-        protected DecimalFormat create() {
+        protected DecimalFormat initialValue() {
             return new DecimalFormat("0.00");
         }
     };
 
-    private static final Singleton<DecimalFormat> _0dot0Formatter = new Singleton<DecimalFormat>() {
+    private static final ThreadLocal<DecimalFormat> _0dot0Formatter = new ThreadLocal<DecimalFormat>() {
         @Override
-        protected DecimalFormat create() {
+        protected DecimalFormat initialValue() {
             return new DecimalFormat("0.0");
         }
     };
@@ -95,21 +95,21 @@ public class FormatterUtil {
      * @return the singleton of DecimalFormat with pattern {"#.000"}
      */
     public static DecimalFormat get_0dot000Formatter() {
-        return _0dot000Formatter.getInstance();
+        return _0dot000Formatter.get();
     }
 
     /**
      * @return the singleton of DecimalFormat with pattern {"#.00"}
      */
     public static DecimalFormat get_0dot00Formatter(){
-        return _0dot00Formatter.getInstance();
+        return _0dot00Formatter.get();
     }
 
     /**
      * @return the singleton of DecimalFormat with pattern {"#.0"}
      */
     public static DecimalFormat get_0dot0Formatter(){
-        return _0dot0Formatter.getInstance();
+        return _0dot0Formatter.get();
     }
 
 }
