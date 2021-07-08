@@ -6,8 +6,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import pers.cxd.corelibrary.Singleton;
-
 public class FormatterUtil {
 
     @SuppressLint("ConstantLocale")
@@ -19,7 +17,7 @@ public class FormatterUtil {
     };
 
     /**
-     * @return the singleton of DateFormatter with pattern {"yyyy-MM-dd HH:mm:ss"}
+     * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd HH:mm:ss"}
      */
     public static SimpleDateFormat getyyyyMMddHHmmssFormatter(){
         return syyyyMMddHHmmssTLS.get();
@@ -34,7 +32,7 @@ public class FormatterUtil {
     };
 
     /**
-     * @return the singleton of DateFormatter with pattern {"yyyy-MM-dd"}
+     * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd"}
      */
     public static SimpleDateFormat getyyyyMMddFormatter(){
         return syyyyMMdd.get();
@@ -49,7 +47,7 @@ public class FormatterUtil {
     };
 
     /**
-     * @return the singleton of DateFormatter with pattern {"MM-dd"}
+     * @return a Thread-Safely SimpleDateFormat with pattern {"MM-dd"}
      */
     public static SimpleDateFormat getMMddFormatter(){
         return sMMdd.get();
@@ -64,7 +62,7 @@ public class FormatterUtil {
     };
 
     /**
-     * @return the singleton of DateFormatter with pattern {"HH:mm:ss"}
+     * @return a Thread-Safely SimpleDateFormat with pattern {"HH:mm:ss"}
      */
     public static SimpleDateFormat getHHmmssFormatter(){
         return sHHmmss.get();
@@ -92,21 +90,21 @@ public class FormatterUtil {
     };
 
     /**
-     * @return the singleton of DecimalFormat with pattern {"#.000"}
+     * @return a Thread-Safely DecimalFormat with pattern {"#.000"}
      */
     public static DecimalFormat get_0dot000Formatter() {
         return _0dot000Formatter.get();
     }
 
     /**
-     * @return the singleton of DecimalFormat with pattern {"#.00"}
+     * @return a Thread-Safely DecimalFormat with pattern {"#.00"}
      */
     public static DecimalFormat get_0dot00Formatter(){
         return _0dot00Formatter.get();
     }
 
     /**
-     * @return the singleton of DecimalFormat with pattern {"#.0"}
+     * @return a Thread-Safely DecimalFormat with pattern {"#.0"}
      */
     public static DecimalFormat get_0dot0Formatter(){
         return _0dot0Formatter.get();

@@ -2,6 +2,8 @@ package pers.cxd.corelibrary.util;
 
 import java.util.Objects;
 
+import pers.cxd.corelibrary.util.function.Recyclable;
+
 public class Pair<F, S> implements Recyclable {
 
     private F first;
