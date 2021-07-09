@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pers.cxd.commonmodule.R;
+import pers.cxd.corelibrary.mvp.MvpAct;
 import pers.cxd.corelibrary.util.ScreenUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
-import pers.cxd.corelibrary.mvp.MvpAct;
 
 public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContract.Model>
         implements SplashContract.View {
