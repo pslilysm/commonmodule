@@ -1,10 +1,8 @@
 package pers.cxd.corelibrary.mvp;
 
-import pers.cxd.corelibrary.Log;
-
 public class Presenter<V, M> {
 
-    protected final String TAG = Log.TAG + this.getClass().getSimpleName();
+    protected final String TAG = "DEBUG_CXD_" + this.getClass().getSimpleName();
     protected V mView;
     protected M mModel;
 

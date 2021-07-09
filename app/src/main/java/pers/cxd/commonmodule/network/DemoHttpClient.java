@@ -36,7 +36,7 @@ public class DemoHttpClient extends HttpClient<DemoApiInterface> {
         builder.connectTimeout(20, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG){
             builder.addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                String TAG = DemoHttpClient.class.getSimpleName();
+                final String TAG = DemoHttpClient.class.getSimpleName();
                 @Override
                 public void log(@NotNull String s) {
                     Log.d(TAG, s);

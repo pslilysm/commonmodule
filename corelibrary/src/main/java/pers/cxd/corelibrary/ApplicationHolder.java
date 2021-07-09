@@ -22,7 +22,7 @@ public class ApplicationHolder {
                     } catch (ReflectiveOperationException e) {
                         throw new RuntimeException("Unable to get application by reflection, " +
                                 "maybe the mInitialApplication or sCurrentActivityThread field in ActivityThread is denied to access by android system, " +
-                                    "you can check your phone log for more detail and call set() manually", e);
+                                "you can check your phone log for more detail and call set() manually", e);
                     }
                 }
             }

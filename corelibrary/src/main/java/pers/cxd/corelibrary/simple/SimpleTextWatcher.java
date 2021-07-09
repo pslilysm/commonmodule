@@ -3,15 +3,15 @@ package pers.cxd.corelibrary.simple;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-public abstract class SimpleTextWatcher implements TextWatcher {
+public interface SimpleTextWatcher extends TextWatcher {
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    default void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
+    default void afterTextChanged(Editable s) {
 
     }
 

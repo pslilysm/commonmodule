@@ -1,6 +1,7 @@
 package pers.cxd.corelibrary.base;
 
-import pers.cxd.corelibrary.Log;
+import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,8 +27,9 @@ public class UiComponentPlugins {
         }
     };
 
-    private final static String TAG = pers.cxd.corelibrary.Log.TAG + UiComponentPlugins.class.getSimpleName();
+    private static final String TAG = "DEBUG_CXD_UiComponentPlugins";
 
+    @SuppressLint("LongLogTag")
     protected static <T extends Fragment> T findOrCreateFmt(FragmentManager manager, Class<T> clazz, int position, FragmentFinder finder){
         Log.d(TAG, "findOrCreateFmt() called with: manager = [" + manager + "], clazz = [" + clazz + "], position = [" + position + "], finder = [" + finder + "]");
         T fmt = finder.findFragment(manager, clazz, position);

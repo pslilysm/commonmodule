@@ -2,20 +2,20 @@ package pers.cxd.corelibrary.simple;
 
 import android.view.animation.Animation;
 
-public abstract class SimpleAnimationListener implements Animation.AnimationListener {
+public interface SimpleAnimationListener extends Animation.AnimationListener {
 
     @Override
-    public void onAnimationStart(Animation animation) {
+    default void onAnimationStart(Animation animation) {
 
     }
 
     @Override
-    public void onAnimationEnd(Animation animation) {
+    default void onAnimationEnd(Animation animation) {
 
     }
 
     @Override
-    public void onAnimationRepeat(Animation animation) {
+    default void onAnimationRepeat(Animation animation) {
 
     }
 }

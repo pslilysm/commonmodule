@@ -10,11 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import pers.cxd.corelibrary.Log;
-
 public abstract class BaseFmt extends Fragment implements UiComponent, FragmentFinder {
 
-    protected final String TAG = Log.TAG + this.getClass().getSimpleName();
+    protected final String TAG = "DEBUG_CXD_" + this.getClass().getSimpleName();
 
     protected ViewGroup mContentView;
 

@@ -8,11 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import pers.cxd.corelibrary.Log;
-
 public abstract class BaseAct extends AppCompatActivity implements UiComponent, FragmentFinder {
 
-    protected final String TAG = Log.TAG + this.getClass().getSimpleName();
+    protected final String TAG = "DEBUG_CXD_"+ this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

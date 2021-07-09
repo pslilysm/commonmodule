@@ -84,6 +84,8 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {
 
+        private static final String TAG = "DEBUG_CXD_Adapter";
+
         final List<String> data;
 
         public Adapter(List<String> data) {
@@ -96,9 +98,12 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
             }
         }
 
+        int i;
+
         @NonNull
         @Override
         public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            Log.d(TAG, "onCreateViewHolder() called i  = " + (++i));
             TextView tv = new TextView(parent.getContext());
             tv.setGravity(Gravity.CENTER);
             tv.setPaddingRelative(0, ScreenUtil.dip2px(8), 0, ScreenUtil.dip2px(8));
@@ -109,6 +114,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
 
         @Override
         public void onBindViewHolder(@NonNull VH holder, int position) {
+            Log.d(TAG, "onBindViewHolder() called with: position = [" + position + "]");
             ((TextView) holder.itemView).setText(data.get(position));
         }
 
