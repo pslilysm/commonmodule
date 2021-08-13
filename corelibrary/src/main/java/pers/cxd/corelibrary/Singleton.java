@@ -2,7 +2,7 @@ package pers.cxd.corelibrary;
 
 public abstract class Singleton<T> {
 
-    T instance;
+    volatile T instance;
 
     protected abstract T create();
 
