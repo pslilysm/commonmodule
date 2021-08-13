@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Gson工具类
+ */
 public class GsonUtil {
 
     private static final Gson sPrettyGson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

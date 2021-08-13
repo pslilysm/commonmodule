@@ -51,15 +51,15 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
             long o = SystemClock.elapsedRealtimeNanos();
             activityThread = ReflectionUtil.invokeStaticMethod("android.app.ActivityThread", "currentActivityThread");
             Log.i(TAG, "setUp: " + activityThread);
-            mH = ReflectionUtil.getField(activityThread, "mH");
+            mH = ReflectionUtil.getFieldValue(activityThread, "mH");
             Log.i(TAG, "setUp: 1 " + (SystemClock.elapsedRealtimeNanos() - o));
             o = SystemClock.elapsedRealtimeNanos();
             activityThread = ReflectionUtil.invokeStaticMethod("android.app.ActivityThread", "currentActivityThread");
-            mH = ReflectionUtil.getField(activityThread, "mH");
+            mH = ReflectionUtil.getFieldValue(activityThread, "mH");
             Log.i(TAG, "setUp: 2 " + (SystemClock.elapsedRealtimeNanos() - o));
             o = SystemClock.elapsedRealtimeNanos();
             activityThread = ReflectionUtil.invokeStaticMethod("android.app.ActivityThread", "currentActivityThread");
-            mH = ReflectionUtil.getField(activityThread, "mH");
+            mH = ReflectionUtil.getFieldValue(activityThread, "mH");
             Log.i(TAG, "setUp: 3 " + (SystemClock.elapsedRealtimeNanos() - o));
             mH.post(new Runnable() {
                 @Override

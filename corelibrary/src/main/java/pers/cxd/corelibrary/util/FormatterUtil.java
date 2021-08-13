@@ -1,9 +1,5 @@
 package pers.cxd.corelibrary.util;
 
-import android.annotation.SuppressLint;
-
-import androidx.annotation.Nullable;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -22,6 +18,13 @@ public class FormatterUtil {
     private static final String sMMddPattern = "MM-dd";
 
     private static final String sHHmmssPattern = "HH:mm:ss";
+
+    /**
+     * @return a Thread-Safely SimpleDateFormat
+     */
+    public static SimpleDateFormat getSimpleDateFormatter() {
+        return sDateFormatTLS.get();
+    }
 
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd HH:mm:ss"}

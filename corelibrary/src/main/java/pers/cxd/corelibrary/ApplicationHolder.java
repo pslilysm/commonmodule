@@ -17,8 +17,8 @@ public class ApplicationHolder {
             synchronized (ApplicationHolder.class){
                 if (sApplication == null){
                     try {
-                        Object activityThread = ReflectionUtil.getStaticField("android.app.ActivityThread", "sCurrentActivityThread");
-                        sApplication = ReflectionUtil.getField(activityThread, "mInitialApplication");
+                        Object activityThread = ReflectionUtil.getStaticFieldValue("android.app.ActivityThread", "sCurrentActivityThread");
+                        sApplication = ReflectionUtil.getFieldValue(activityThread, "mInitialApplication");
                     } catch (ReflectiveOperationException e) {
                         throw new RuntimeException("Unable to get application by reflection, " +
                                 "maybe the mInitialApplication or sCurrentActivityThread field in ActivityThread is denied to access by android system, " +

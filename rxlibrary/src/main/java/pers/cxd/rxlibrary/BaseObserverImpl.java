@@ -1,7 +1,5 @@
 package pers.cxd.rxlibrary;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.annotations.Nullable;
 import io.reactivex.rxjava3.core.Observer;
@@ -18,7 +16,7 @@ public abstract class BaseObserverImpl<D> implements Observer<D> {
     }
     
     @Override
-    public void onSubscribe(@NotNull Disposable disposable) {
+    public void onSubscribe(@NonNull Disposable disposable) {
         this.disposable = disposable;
         if (mSubscription != null){
             mSubscription.add(disposable);

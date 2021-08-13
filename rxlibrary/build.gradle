@@ -26,8 +26,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    api 'com.squareup.okhttp3:okhttp:4.9.0'
-    api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    api 'com.squareup.okhttp3:okhttp:3.14.9'
+    api 'com.squareup.okhttp3:logging-interceptor:3.14.9'
 
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     // Because RxAndroid releases are few and far between, it is recommended you also
