@@ -13,7 +13,7 @@ import pers.cxd.rxlibrary.HttpClient;
 import retrofit2.Converter;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DemoHttpClient extends HttpClient<DemoApiInterface> {
+public class DemoHttpClient extends HttpClient {
 
     public static DemoHttpClient getInstance(){
         return SingletonFactory.findOrCreate(DemoHttpClient.class);

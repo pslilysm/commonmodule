@@ -5,6 +5,7 @@ import androidx.collection.ArrayMap;
 import java.util.Map;
 
 import io.reactivex.rxjava3.core.Observable;
+import pers.cxd.commonmodule.network.DemoApiInterface;
 import pers.cxd.commonmodule.network.DemoHttpClient;
 
 class SplashModel implements SplashContract.Model {
@@ -21,7 +22,7 @@ class SplashModel implements SplashContract.Model {
         someDataMap = new ArrayMap<>(4);
         someDataMap.put("arg1", arg1);
         someDataMap.put("arg2", arg2);
-        return DemoHttpClient.getInstance().getApi().postSample(someDataMap);
+        return DemoHttpClient.getInstance().getApi(DemoApiInterface.class).postSample(someDataMap);
     }
 
     @Override
@@ -34,6 +35,6 @@ class SplashModel implements SplashContract.Model {
 
     @Override
     public Observable<Void> registerModel(String accountName, String password) {
-        return DemoHttpClient.getInstance().getApi().register(accountName, password);
+        return DemoHttpClient.getInstance().getApi(DemoApiInterface.class).register(accountName, password);
     }
 }
