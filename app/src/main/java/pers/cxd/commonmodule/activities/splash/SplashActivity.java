@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -79,7 +80,9 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
             data.add(String.valueOf(i));
         }
         rv.setAdapter(new Adapter(data));
-        rv.scrollToPosition(15);
+//        rv.scrollToPosition(15);
+        Log.i(TAG, "setUp: android_id -> " + Settings.Secure.getString(getContentResolver(), "android_id"));
+
     }
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {
@@ -103,7 +106,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
         @NonNull
         @Override
         public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            Log.d(TAG, "onCreateViewHolder() called i  = " + (++i));
+//            Log.d(TAG, "onCreateViewHolder() called i  = " + (++i));
             TextView tv = new TextView(parent.getContext());
             tv.setGravity(Gravity.CENTER);
             tv.setPaddingRelative(0, ScreenUtil.dip2px(8), 0, ScreenUtil.dip2px(8));
@@ -114,7 +117,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
 
         @Override
         public void onBindViewHolder(@NonNull VH holder, int position) {
-            Log.d(TAG, "onBindViewHolder() called with: position = [" + position + "]");
+//            Log.d(TAG, "onBindViewHolder() called with: position = [" + position + "]");
             ((TextView) holder.itemView).setText(data.get(position));
         }
 
