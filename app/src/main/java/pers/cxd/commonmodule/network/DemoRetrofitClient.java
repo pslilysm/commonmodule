@@ -9,14 +9,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pers.cxd.commonmodule.BuildConfig;
 import pers.cxd.corelibrary.SingletonFactory;
-import pers.cxd.rxlibrary.HttpClient;
+import pers.cxd.rxlibrary.RetrofitClient;
+import retrofit2.CallAdapter;
 import retrofit2.Converter;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class DemoHttpClient extends HttpClient {
+public class DemoRetrofitClient extends RetrofitClient {
 
-    public static DemoHttpClient getInstance(){
-        return SingletonFactory.findOrCreate(DemoHttpClient.class);
+    public static DemoRetrofitClient getInstance(){
+        return SingletonFactory.findOrCreate(DemoRetrofitClient.class);
     }
 
     @Override
@@ -25,17 +28,22 @@ public class DemoHttpClient extends HttpClient {
     }
 
     @Override
-    protected Converter.Factory[] getConvertFactories() {
-        return new Converter.Factory[]{GsonConverterFactory.create()};
+    protected CallAdapter.Factory[] getCallAdapterFactories() {
+        return new CallAdapter.Factory[]{RxJava3CallAdapterFactory.createSynchronous()};
     }
 
     @Override
-    protected OkHttpClient createHttpClient() {
+    protected Converter.Factory[] getConvertFactories() {
+        return new Converter.Factory[]{ScalarsConverterFactory.create(), GsonConverterFactory.create()};
+    }
+
+    @Override
+    protected OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(20, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG){
             builder.addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                final String TAG = DemoHttpClient.class.getSimpleName();
+                final String TAG = DemoRetrofitClient.class.getSimpleName();
                 @Override
                 public void log(@NonNull String s) {
                     Log.d(TAG, s);

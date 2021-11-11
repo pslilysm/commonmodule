@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import pers.cxd.corelibrary.util.ExceptionUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
 public class UiComponentPlugins {
@@ -38,7 +39,7 @@ public class UiComponentPlugins {
             try {
                 return ReflectionUtil.newInstance(clazz);
             } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e);
+                ExceptionUtil.rethrow(e);
             }
         }
         return fmt;

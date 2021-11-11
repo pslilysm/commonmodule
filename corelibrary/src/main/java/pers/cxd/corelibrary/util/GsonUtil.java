@@ -1,7 +1,5 @@
 package pers.cxd.corelibrary.util;
 
-import android.util.Log;
-
 import androidx.collection.ArraySet;
 
 import com.google.gson.Gson;
@@ -9,11 +7,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,64 +25,47 @@ public class GsonUtil {
 
     private static final Gson sGson = new GsonBuilder().disableHtmlEscaping().create();
 
-    private static final JsonParser sJsonParser = new JsonParser();
-
-    public static String objToString(Object obj){
-        return objToString(obj, true);
+    public static String objToJson(Object obj){
+        return objToJson(obj, true);
     }
 
-    public static String objToString(Object obj, boolean pretty){
+    public static String objToJson(Object obj, boolean pretty){
         return pretty ? sPrettyGson.toJson(obj) : sGson.toJson(obj);
     }
 
-    public static <T> T strToObject(String str, Class<T> tClass){
-        return sGson.fromJson(str, tClass);
+    public static <T> T jsonToObject(String json, Class<T> tClass){
+        return sGson.fromJson(json, tClass);
     }
 
-    public static <T> Set<T> strToSet(String str, Class<T> tClass){
+    public static <T> Set<T> jsonToSet(String str, Class<T> tClass){
         Set<T> list = new ArraySet<>();
-        try {
-            JsonArray array = sJsonParser.parse(str).getAsJsonArray();
-            for (final JsonElement elem : array) {
-                list.add(sGson.fromJson(elem, tClass));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        JsonArray array = JsonParser.parseString(str).getAsJsonArray();
+        for (final JsonElement elem : array) {
+            list.add(sGson.fromJson(elem, tClass));
         }
         return list;
     }
 
-    public static <T> List<T> strToList(String str, Class<T> tClass){
+    public static <T> List<T> jsonToList(String str, Class<T> tClass){
         List<T> list = new ArrayList<>();
-        try {
-            JsonArray array = sJsonParser.parse(str).getAsJsonArray();
-            for (final JsonElement elem : array) {
-                list.add(sGson.fromJson(elem, tClass));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        JsonArray array = JsonParser.parseString(str).getAsJsonArray();
+        for (final JsonElement elem : array) {
+            list.add(sGson.fromJson(elem, tClass));
         }
         return list;
     }
 
-    public static <T> Map<String, T> jsonStrToMap(String json, Class<T> tClass) {
-        return strToMap(json, String.class, tClass);
+    public static <T> Map<String, T> jsonToMap(String json, Class<T> tClass) {
+        return jsonToMap(json, String.class, tClass);
     }
 
-    public static <K, V> Map<K, V> strToMap(String json, Class<K> kClass, Class<V> vClass) {
-        Map<K, V> map = null;
-        Type empMapType = new TypeToken<LinkedHashMap<K, V>>() {}.getType();
-        try{
-            map = sGson.fromJson(json, empMapType);
-        }catch (Exception e){
-            Log.e("GsonUtil", "strToMap: " + e.getMessage());
-        }
-        if (map == null) map = new LinkedHashMap<>();
-        return map;
+    public static <K, V> Map<K, V> jsonToMap(String json, Class<K> kClass, Class<V> vClass) {
+        Type empMapType = new TypeToken<LinkedTreeMap<K, V>>() {}.getType();
+        return sGson.fromJson(json, empMapType);
     }
 
     public static String prettyJson(String jsonStr){
-        JsonElement je = sJsonParser.parse(jsonStr);
+        JsonElement je = JsonParser.parseString(jsonStr);
         return sPrettyGson.toJson(je);
     }
 

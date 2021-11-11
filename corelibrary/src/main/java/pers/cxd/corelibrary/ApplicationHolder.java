@@ -6,7 +6,7 @@ import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
 public class ApplicationHolder {
 
-    private static Application sApplication;
+    private static volatile Application sApplication;
 
     public static void set(Application sApplication) {
         ApplicationHolder.sApplication = sApplication;
