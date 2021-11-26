@@ -5,7 +5,10 @@ import androidx.collection.ArrayMap;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Map;
+
+import pers.cxd.corelibrary.util.Pair;
 
 /**
  * 反射工具类
@@ -16,6 +19,39 @@ public class ReflectionUtil {
     private static final Map<ConstructorKey, Constructor<?>> sConstructors = new ArrayMap<>();
     private static final Map<FieldKey, Field> sFields = new ArrayMap<>();
     private static final Map<MethodKey, Method> sMethods = new ArrayMap<>();
+
+    private static final Object[] sEmptyParameterTypesAndArgs = new Object[0];
+
+    /**
+     * 对参数类型和参数进行分割
+     *
+     * @param classLoader 用来加载String类型的参数类型
+     * @param parameterTypesAndArgs 参数类型和参数
+     * @return 一个包装好的Pair
+     * @throws ClassNotFoundException String类型的参数类型不正确
+     */
+    private static Pair<Class<?>[], Object[]> splitParameterTypesAndArgs(ClassLoader classLoader, Object... parameterTypesAndArgs) throws ClassNotFoundException {
+        if (parameterTypesAndArgs.length % 2 != 0) {
+            throw new IllegalArgumentException("check your parameterTypesAndArgs length -> " + parameterTypesAndArgs.length);
+        }
+        if (parameterTypesAndArgs.length == 0) {
+            return Pair.obtain(null, null);
+        }
+        Object[] mixedParameterTypes = Arrays.copyOf(parameterTypesAndArgs, parameterTypesAndArgs.length / 2);
+        Object[] args = Arrays.copyOfRange(parameterTypesAndArgs, parameterTypesAndArgs.length / 2, parameterTypesAndArgs.length);
+        Class<?>[] parameterTypes = new Class[mixedParameterTypes.length];
+        for (int i = 0; i < mixedParameterTypes.length; i++) {
+            Object pt = mixedParameterTypes[i];
+            if (pt instanceof String) {
+                parameterTypes[i] = classLoader.loadClass((String) pt);
+            } else if (pt instanceof Class) {
+                parameterTypes[i] = (Class<?>) pt;
+            } else {
+                throw new IllegalArgumentException("check your parameterTypes at pos " + i + ", type is " + pt.getClass());
+            }
+        }
+        return Pair.obtain(parameterTypes, args);
+    }
 
     /**
      * 递归查找或创建Constructor
@@ -112,27 +148,35 @@ public class ReflectionUtil {
     }
 
     public static <T> T newInstance(String className) throws ReflectiveOperationException{
-        return (T) newInstance(Class.forName(className));
+        return (T) newInstance(className, ClassLoader.getSystemClassLoader(), sEmptyParameterTypesAndArgs);
     }
 
     public static <T> T newInstance(String className, ClassLoader classLoader) throws ReflectiveOperationException{
-        return (T) newInstance(classLoader.loadClass(className));
+        return (T) newInstance(className, classLoader, sEmptyParameterTypesAndArgs);
+    }
+
+    public static <T> T newInstance(String className, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+        return (T) newInstance(className, ClassLoader.getSystemClassLoader(), parameterTypesAndArgs);
+    }
+
+    public static <T> T newInstance(String className, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+        return (T) newInstance(classLoader.loadClass(className), classLoader, parameterTypesAndArgs);
     }
 
     public static <T> T newInstance(Class<T> clazz) throws ReflectiveOperationException{
-        return newInstance(clazz, null);
+        return newInstance(clazz, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(String className, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return (T) newInstance(Class.forName(className), parameterTypes, args);
+    public static <T> T newInstance(Class<T> clazz, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
+        ClassLoader classLoader = clazz.getClassLoader() == null ? ClassLoader.getSystemClassLoader() : clazz.getClassLoader();
+        return newInstance(clazz, classLoader, parameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(String className, ClassLoader classLoader, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return (T) newInstance(classLoader.loadClass(className), parameterTypes, args);
-    }
-
-    public static <T> T newInstance(Class<T> clazz, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException {
-        return findOrCreateConstructor(clazz, parameterTypes).newInstance(args);
+    public static <T> T newInstance(Class<T> clazz, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+        Pair<Class<?>[], Object[]> splitParameterTypesAndArgs = splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs);
+        T instance = findOrCreateConstructor(clazz, splitParameterTypesAndArgs.first()).newInstance(splitParameterTypesAndArgs.second());
+        splitParameterTypesAndArgs.recycle();
+        return instance;
     }
 
     public static <T> T getFieldValue(Object object, String fieldName) throws ReflectiveOperationException {
@@ -144,15 +188,16 @@ public class ReflectionUtil {
     }
 
     public static <T> T invokeMethod(Object object, String methodName) throws ReflectiveOperationException{
-        return invokeMethod(object, methodName, null);
+        return invokeMethod(object, methodName, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T invokeMethod(Object object, String methodName, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return (T) findOrCreateMethod(object.getClass(), methodName, parameterTypes).invoke(object, args);
-    }
-
-    public static <T> T invokeMethod(Class<?> clazz, Object object, String methodName, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return (T) findOrCreateMethod(clazz, methodName, parameterTypes).invoke(object, args);
+    public static <T> T invokeMethod(Object object, String methodName, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
+        Class<?> clazz = object.getClass();
+        ClassLoader classLoader = clazz.getClassLoader() == null ? ClassLoader.getSystemClassLoader() : clazz.getClassLoader();
+        Pair<Class<?>[], Object[]> splitParameterTypesAndArgs = splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs);
+        T result = (T) findOrCreateMethod(clazz, methodName, splitParameterTypesAndArgs.first()).invoke(object, splitParameterTypesAndArgs.second());
+        splitParameterTypesAndArgs.recycle();
+        return result;
     }
 
     public static <T> T getStaticFieldValue(String className, String fieldName) throws ReflectiveOperationException {
@@ -179,24 +224,28 @@ public class ReflectionUtil {
         findOrCreateField(clazz, fieldName).set(null, fieldValue);
     }
 
-    public static <T> T invokeStaticMethod(String className, String methodName) throws ReflectiveOperationException{
-        return invokeStaticMethod(Class.forName(className), methodName, null);
+    public static <T> T invokeStaticMethod(String className, String methodName) throws ReflectiveOperationException {
+        return invokeStaticMethod(ClassLoader.getSystemClassLoader().loadClass(className), methodName, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T invokeStaticMethod(String className, ClassLoader classLoader, String methodName) throws ReflectiveOperationException{
-        return invokeStaticMethod(className, classLoader, methodName, null);
+    public static <T> T invokeStaticMethod(String className, ClassLoader classLoader, String methodName) throws ReflectiveOperationException {
+        return invokeStaticMethod(classLoader.loadClass(className), methodName, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T invokeStaticMethod(Class<?> clazz, String methodName) throws ReflectiveOperationException{
-        return invokeStaticMethod(clazz, methodName, null);
+    public static <T> T invokeStaticMethod(Class<?> clazz, String methodName) throws ReflectiveOperationException {
+        return invokeStaticMethod(clazz, methodName, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T invokeStaticMethod(String className, ClassLoader classLoader, String methodName, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return invokeStaticMethod(classLoader.loadClass(className), methodName, parameterTypes, args);
+    public static <T> T invokeStaticMethod(String className, ClassLoader classLoader, String methodName, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
+        return invokeStaticMethod(classLoader.loadClass(className), methodName, parameterTypesAndArgs);
     }
 
-    public static <T> T invokeStaticMethod(Class<?> clazz, String methodName, Class<?>[] parameterTypes, Object... args) throws ReflectiveOperationException{
-        return (T) findOrCreateMethod(clazz, methodName, parameterTypes).invoke(null, args);
+    public static <T> T invokeStaticMethod(Class<?> clazz, String methodName, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
+        ClassLoader classLoader = clazz.getClassLoader() == null ? ClassLoader.getSystemClassLoader() : clazz.getClassLoader();
+        Pair<Class<?>[], Object[]> splitParameterTypesAndArgs = splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs);
+        T result = (T) findOrCreateMethod(clazz, methodName, splitParameterTypesAndArgs.first()).invoke(null, splitParameterTypesAndArgs.second());
+        splitParameterTypesAndArgs.recycle();
+        return result;
     }
 
 
