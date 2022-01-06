@@ -34,4 +34,8 @@ public class ResourcePoolImpl<R> implements ResourcePool<R> {
     public Queue<R> getResourceQueue() {
         return mResourceQueue;
     }
+
+    public Queue<Thread> getWaitQueue() {
+        return mWaitQueue;
+    }
 }
