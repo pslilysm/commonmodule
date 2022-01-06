@@ -48,7 +48,7 @@ public class MMKVUtil {
             sDefault.encode(key, (Set<String>) value);
         } else if (clazz == byte[].class){
             sDefault.encode(key, (byte[]) value);
-        } else if (clazz == Parcelable.class){
+        } else if (Parcelable.class.isAssignableFrom(clazz)){
             sDefault.encode(key, (Parcelable) value);
         } else {
             throw new UnsupportedOperationException(clazz + " can't encode");

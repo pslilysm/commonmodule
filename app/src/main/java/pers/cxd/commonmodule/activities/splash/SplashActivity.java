@@ -22,6 +22,7 @@ import java.util.List;
 import pers.cxd.commonmodule.R;
 import pers.cxd.corelibrary.mvp.MvpAct;
 import pers.cxd.corelibrary.util.ScreenUtil;
+import pers.cxd.corelibrary.util.ToastUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
 public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContract.Model>
@@ -65,7 +66,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
             mH.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(SplashActivity.this, "cao ni ma", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SplashActivity.this, "cao ni ma", Toast.LENGTH_SHORT).show();
                 }
             });
             activityThread = ReflectionUtil.invokeStaticMethod("android.app.ActivityThread", "currentActivityThread");
@@ -82,7 +83,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
         rv.setAdapter(new Adapter(data));
 //        rv.scrollToPosition(15);
         Log.i(TAG, "setUp: android_id -> " + Settings.Secure.getString(getContentResolver(), "android_id"));
-
+        ToastUtil.showShort(Settings.Secure.getString(getContentResolver(), "android_id"));
     }
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {

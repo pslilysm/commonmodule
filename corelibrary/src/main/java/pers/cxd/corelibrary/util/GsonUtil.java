@@ -1,7 +1,11 @@
 package pers.cxd.corelibrary.util;
 
+import android.text.TextUtils;
+
 import androidx.collection.ArraySet;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -16,17 +20,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import pers.cxd.corelibrary.annotation.GsonExclude;
+
 /**
  * Gson工具类
  */
 public class GsonUtil {
 
-    private static final Gson sPrettyGson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    static {
+        ExclusionStrategy strategy = new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f) {
+                GsonExclude gsonExclude = f.getAnnotation(GsonExclude.class);
+                return gsonExclude != null;
+            }
 
-    private static final Gson sGson = new GsonBuilder().disableHtmlEscaping().create();
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        };
+        sPrettyGson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setExclusionStrategies(strategy).create();
+        sGson = new GsonBuilder().disableHtmlEscaping().setExclusionStrategies(strategy).create();
+    }
+
+    private static final Gson sPrettyGson;
+
+    private static final Gson sGson;
 
     public static String objToJson(Object obj){
-        return objToJson(obj, true);
+        return objToJson(obj, false);
     }
 
     public static String objToJson(Object obj, boolean pretty){
@@ -39,18 +62,22 @@ public class GsonUtil {
 
     public static <T> Set<T> jsonToSet(String str, Class<T> tClass){
         Set<T> list = new ArraySet<>();
-        JsonArray array = JsonParser.parseString(str).getAsJsonArray();
-        for (final JsonElement elem : array) {
-            list.add(sGson.fromJson(elem, tClass));
+        if (!TextUtils.isEmpty(str)) {
+            JsonArray array = JsonParser.parseString(str).getAsJsonArray();
+            for (final JsonElement elem : array) {
+                list.add(sGson.fromJson(elem, tClass));
+            }
         }
         return list;
     }
 
     public static <T> List<T> jsonToList(String str, Class<T> tClass){
         List<T> list = new ArrayList<>();
-        JsonArray array = JsonParser.parseString(str).getAsJsonArray();
-        for (final JsonElement elem : array) {
-            list.add(sGson.fromJson(elem, tClass));
+        if (!TextUtils.isEmpty(str)) {
+            JsonArray array = JsonParser.parseString(str).getAsJsonArray();
+            for (final JsonElement elem : array) {
+                list.add(sGson.fromJson(elem, tClass));
+            }
         }
         return list;
     }
@@ -60,6 +87,9 @@ public class GsonUtil {
     }
 
     public static <K, V> Map<K, V> jsonToMap(String json, Class<K> kClass, Class<V> vClass) {
+        if (TextUtils.isEmpty(json)) {
+            return new LinkedTreeMap<>();
+        }
         Type empMapType = new TypeToken<LinkedTreeMap<K, V>>() {}.getType();
         return sGson.fromJson(json, empMapType);
     }

@@ -31,7 +31,6 @@ public class FormatterUtil {
      */
     public static SimpleDateFormat getyyyyMMddHHmmssFormatter(){
         SimpleDateFormat sdf = sDateFormatTLS.get();
-        assert sdf != null;
         sdf.applyPattern(syyyyMMddHHmmssPatter);
         return sdf;
     }
@@ -41,7 +40,6 @@ public class FormatterUtil {
      */
     public static SimpleDateFormat getMMddFormatter(){
         SimpleDateFormat sdf = sDateFormatTLS.get();
-        assert sdf != null;
         sdf.applyPattern(sMMddPattern);
         return sdf;
     }
@@ -51,51 +49,49 @@ public class FormatterUtil {
      */
     public static SimpleDateFormat getHHmmssFormatter(){
         SimpleDateFormat sdf = sDateFormatTLS.get();
-        assert sdf != null;
         sdf.applyPattern(sHHmmssPattern);
         return sdf;
     }
 
-    private static final ThreadLocal<DecimalFormat> _0dot000Formatter = new ThreadLocal<DecimalFormat>() {
+    private static final ThreadLocal<DecimalFormat> sDecimalFormatTLS = new ThreadLocal<DecimalFormat>() {
         @Override
         protected DecimalFormat initialValue() {
-            return new DecimalFormat("0.000");
+            return new DecimalFormat();
         }
     };
 
-    private static final ThreadLocal<DecimalFormat> _0dot00Formatter = new ThreadLocal<DecimalFormat>() {
-        @Override
-        protected DecimalFormat initialValue() {
-            return new DecimalFormat("0.00");
-        }
-    };
-
-    private static final ThreadLocal<DecimalFormat> _0dot0Formatter = new ThreadLocal<DecimalFormat>() {
-        @Override
-        protected DecimalFormat initialValue() {
-            return new DecimalFormat("0.0");
-        }
-    };
+    /**
+     * @return a Thread-Safely DecimalFormat
+     */
+    public static DecimalFormat getDecimalFormat() {
+        return sDecimalFormatTLS.get();
+    }
 
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.000"}
      */
     public static DecimalFormat get_0dot000Formatter() {
-        return _0dot000Formatter.get();
+        DecimalFormat decimalFormat = sDecimalFormatTLS.get();
+        decimalFormat.applyPattern("0.000");
+        return decimalFormat;
     }
 
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.00"}
      */
     public static DecimalFormat get_0dot00Formatter(){
-        return _0dot00Formatter.get();
+        DecimalFormat decimalFormat = sDecimalFormatTLS.get();
+        decimalFormat.applyPattern("0.00");
+        return decimalFormat;
     }
 
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.0"}
      */
     public static DecimalFormat get_0dot0Formatter(){
-        return _0dot0Formatter.get();
+        DecimalFormat decimalFormat = sDecimalFormatTLS.get();
+        decimalFormat.applyPattern("0.0");
+        return decimalFormat;
     }
 
 }

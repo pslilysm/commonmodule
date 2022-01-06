@@ -8,11 +8,11 @@ import pers.cxd.corelibrary.EventHandler;
 
 public class ToastUtil {
 
-    public static void showShortToast(CharSequence text){
+    public static void showShort(CharSequence text){
         showToast(text, Toast.LENGTH_SHORT);
     }
 
-    public static void showLongToast(CharSequence text){
+    public static void showLong(CharSequence text){
         showToast(text, Toast.LENGTH_LONG);
     }
 

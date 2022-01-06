@@ -9,7 +9,15 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class EventHandler extends Handler {
 
@@ -27,51 +35,33 @@ public class EventHandler extends Handler {
     }
 
     public EventHandler(@NonNull Looper looper) {
-        super(looper);
+        this(looper, null);
     }
 
     public EventHandler(@NonNull Looper looper, @Nullable Handler.Callback callback) {
         super(looper, callback);
     }
 
-    private final SparseArrayCompat<List<EventCallback>> mMultiCallbacks = new SparseArrayCompat<>();
+    private final ConcurrentMap<Integer, List<EventCallback>> mMultiCallbacks = new ConcurrentHashMap<>();
 
     public void registerEvent(int eventCode, EventCallback callback){
-        synchronized (mMultiCallbacks){
-            List<EventCallback> callbacks = mMultiCallbacks.get(eventCode);
-            if (callbacks == null){
-                callbacks = new ArrayList<>();
-                mMultiCallbacks.put(eventCode, callbacks);
-            }
-            callbacks.add(callback);
-        }
+//        synchronized (mMultiCallbacks){
+//            List<EventCallback> callbacks = mMultiCallbacks.get(eventCode);
+//            if (callbacks == null){
+//                callbacks = new ArrayList<>();
+//                mMultiCallbacks.put(eventCode, callbacks);
+//            }
+//            callbacks.add(callback);
+//        }
+        mMultiCallbacks.computeIfAbsent(eventCode, i -> new CopyOnWriteArrayList<>()).add(callback);
     }
 
     public void unregisterEvent(int eventCode, EventCallback callback){
-        synchronized (mMultiCallbacks){
-            List<EventCallback> callbacks = mMultiCallbacks.get(eventCode);
-            if (callbacks != null){
-                callbacks.remove(callback);
-                if (callbacks.size() == 0){
-                    mMultiCallbacks.remove(eventCode);
-                }
-            }
-        }
+        mMultiCallbacks.getOrDefault(eventCode, Collections.emptyList()).removeIf(eventCallback -> eventCallback == callback);
     }
 
     public void unregisterAllEvent(EventCallback callback){
-        synchronized (mMultiCallbacks){
-            for (int i = 0; i < mMultiCallbacks.size(); i++){
-                List<EventCallback> callbacks = mMultiCallbacks.valueAt(i);
-                if (callbacks != null){
-                    callbacks.remove(callback);
-                    if (callbacks.size() == 0){
-                        // why i--? because on the next loop we'll call mMultiCallbacks.size(), this method will do gc and move elements forward 1 index
-                        mMultiCallbacks.removeAt(i--);
-                    }
-                }
-            }
-        }
+        mMultiCallbacks.values().forEach(eventCallbacks -> eventCallbacks.remove(callback));
     }
 
     /**
@@ -89,15 +79,8 @@ public class EventHandler extends Handler {
 
     @Override
     public void handleMessage(@NonNull Message msg) {
-        synchronized (mMultiCallbacks){
-            for (int i = 0; i < mMultiCallbacks.size(); i++){
-                if (msg.what == mMultiCallbacks.keyAt(i)){
-                    for (EventCallback callback : mMultiCallbacks.valueAt(i)){
-                        callback.handleEvent(msg);
-                    }
-                }
-            }
-        }
+        List<EventCallback> callbacks = mMultiCallbacks.getOrDefault(msg.what, Collections.emptyList());
+        callbacks.forEach(eventCallback -> eventCallback.handleEvent(msg));
     }
     
 }
