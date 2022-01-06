@@ -17,9 +17,9 @@ allprojects {
 ```groovy
 dependencies {
     // add core lib to your dependencies
-    implementation 'com.github.Pslilysm.commonmodule:corelibrary:1.0.1'
+    implementation 'com.github.pslilysm.commonmodule:corelibrary:1.0.1'
     // add rx lib to your dependencies
-    implementation 'com.github.Pslilysm.commonmodule:rxlibrary:1.0.1'
+    implementation 'com.github.pslilysm.commonmodule:rxlibrary:1.0.1'
 }
 ```
 
