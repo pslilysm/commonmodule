@@ -7,11 +7,11 @@ Check out app module to know how to use.
 * step 1
 ```groovy
 allprojects {
-		repositories {
-            // Add it in your root build.gradle at the end of repositories:
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        // Add it in your root build.gradle at the end of repositories:
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 * step 2
 ```groovy
