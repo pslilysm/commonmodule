@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -88,7 +87,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {
 
-        private static final String TAG = "DEBUG_CXD_Adapter";
+        private static final String TAG = "DEBUG_Adapter";
 
         final List<String> data;
 

@@ -13,6 +13,6 @@ import androidx.fragment.app.FragmentManager;
 public interface FragmentFinder {
 
     @Nullable
-    <T extends Fragment> T findFragment(FragmentManager manager, Class<T> clazz, int position);
+    <T extends Fragment> T findFragment(Class<? extends Fragment> fmtClass, Object... args);
 
 }

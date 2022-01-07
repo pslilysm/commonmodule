@@ -18,11 +18,19 @@ import androidx.fragment.app.Fragment;
 public interface UiComponent {
 
     int getLayoutId();
+
     void setUp(@Nullable Bundle savedInstanceState);
-    <T extends Fragment> T findOrCreateFmt(Class<T> clazz, int position);
+
+    <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args);
+
     Context getContext();
+
     void startActivity(Intent intent);
+
     void startActivityForResult(Intent intent, int requestCode);
+
     LayoutInflater getLayoutInflater();
+
+    void registerActivityResultCallback(OnActivityResultCallback callback);
 
 }
