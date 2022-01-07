@@ -29,6 +29,6 @@ dependencies {
 
     api 'com.google.code.gson:gson:2.8.9'
 
-    implementation 'com.tencent:mmkv-static:1.2.10'
+    api 'com.tencent:mmkv-static:1.2.10'
 
 }

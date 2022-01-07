@@ -22,7 +22,10 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        int layoutId = getLayoutId();
+        if (layoutId != 0) {
+            setContentView(getLayoutId());
+        }
         setUp(savedInstanceState);
     }
 
