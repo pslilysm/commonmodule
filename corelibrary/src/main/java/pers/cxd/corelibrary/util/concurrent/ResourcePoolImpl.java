@@ -4,6 +4,13 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.LockSupport;
 
+/**
+ * Default implementation of {@link ResourcePool}
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ * @param <R> the type of resource
+ */
 public class ResourcePoolImpl<R> implements ResourcePool<R> {
 
     private final Queue<R> mResourceQueue = new ConcurrentLinkedQueue<>();
@@ -16,6 +23,10 @@ public class ResourcePoolImpl<R> implements ResourcePool<R> {
             Thread curTh = Thread.currentThread();
             mWaitQueue.offer(curTh);
             LockSupport.park(mResourceQueue);
+            if (curTh.isInterrupted()) {
+                mWaitQueue.remove(curTh);
+                return null;
+            }
             r = mResourceQueue.poll();
         }
         return r == null ? getResource() : r;
@@ -30,7 +41,6 @@ public class ResourcePoolImpl<R> implements ResourcePool<R> {
         }
     }
 
-    @Override
     public Queue<R> getResourceQueue() {
         return mResourceQueue;
     }
@@ -38,4 +48,5 @@ public class ResourcePoolImpl<R> implements ResourcePool<R> {
     public Queue<Thread> getWaitQueue() {
         return mWaitQueue;
     }
+
 }

@@ -10,6 +10,14 @@ import androidx.annotation.Nullable;
 
 import pers.cxd.corelibrary.base.BaseFmt;
 
+/**
+ * The MvpFmt is designed by Model-View-Presenter architecture
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ * @param <P> the presenter is responsible for the interaction between the view and the model
+ * @param <M> the model provide data source
+ */
 public abstract class MvpFmt<P extends Presenter, M> extends BaseFmt {
 
     protected abstract P createPresenter();

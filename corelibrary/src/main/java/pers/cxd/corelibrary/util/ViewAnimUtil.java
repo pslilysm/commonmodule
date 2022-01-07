@@ -5,6 +5,12 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
+/**
+ * Miscellaneous {@link Animation} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class ViewAnimUtil {
     
     private static final int DEFAULT_ANIM_DURATION = 250;

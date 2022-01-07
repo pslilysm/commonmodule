@@ -19,6 +19,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+/**
+ * EventHandler is designed to send event between {@link pers.cxd.corelibrary.base.UiComponent}
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class EventHandler extends Handler {
 
     public interface EventCallback {
@@ -45,14 +51,6 @@ public class EventHandler extends Handler {
     private final ConcurrentMap<Integer, List<EventCallback>> mMultiCallbacks = new ConcurrentHashMap<>();
 
     public void registerEvent(int eventCode, EventCallback callback){
-//        synchronized (mMultiCallbacks){
-//            List<EventCallback> callbacks = mMultiCallbacks.get(eventCode);
-//            if (callbacks == null){
-//                callbacks = new ArrayList<>();
-//                mMultiCallbacks.put(eventCode, callbacks);
-//            }
-//            callbacks.add(callback);
-//        }
         mMultiCallbacks.computeIfAbsent(eventCode, i -> new CopyOnWriteArrayList<>()).add(callback);
     }
 

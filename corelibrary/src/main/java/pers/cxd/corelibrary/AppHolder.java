@@ -4,17 +4,23 @@ import android.app.Application;
 
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
-public class ApplicationHolder {
+/**
+ * Application instance's holder
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
+public class AppHolder {
 
     private static volatile Application sApplication;
 
     public static void set(Application sApplication) {
-        ApplicationHolder.sApplication = sApplication;
+        AppHolder.sApplication = sApplication;
     }
 
     public static Application get(){
         if (sApplication == null){
-            synchronized (ApplicationHolder.class){
+            synchronized (AppHolder.class){
                 if (sApplication == null){
                     try {
                         Object activityThread = ReflectionUtil.getStaticFieldValue("android.app.ActivityThread", "sCurrentActivityThread");

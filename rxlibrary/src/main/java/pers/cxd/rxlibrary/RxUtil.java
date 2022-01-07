@@ -8,6 +8,12 @@ import io.reactivex.rxjava3.core.ObservableTransformer;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * Miscellaneous {@code RxJava} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class RxUtil {
 
     public static class Transformers {

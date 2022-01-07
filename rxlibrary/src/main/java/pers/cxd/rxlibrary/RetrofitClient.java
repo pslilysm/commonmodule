@@ -8,6 +8,12 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
+/**
+ * This class simplified the step when build {@link Retrofit}
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public abstract class RetrofitClient {
 
     protected Retrofit mRetrofitClient;
@@ -17,6 +23,13 @@ public abstract class RetrofitClient {
         mRetrofitClient = createRetrofitClient();
     }
 
+    /**
+     * Provide api service by {@code apiClass}
+     *
+     * @param apiClass the class of api service
+     * @param <I> the type of {@code apiClass}
+     * @return A created or cached api service by Retrofit
+     */
     public <I> I getApi(Class<I> apiClass) {
         return (I) mApiMap.computeIfAbsent(apiClass, aClass -> mRetrofitClient.create(aClass));
     }
@@ -25,6 +38,13 @@ public abstract class RetrofitClient {
     protected abstract CallAdapter.Factory[] getCallAdapterFactories();
     protected abstract Converter.Factory[] getConvertFactories();
     protected abstract OkHttpClient createOkHttpClient();
+
+    /**
+     * Subclass calling this method at the appropriate time
+     */
+    protected void buildRetrofit() {
+        mRetrofitClient = createRetrofitClient();
+    }
 
     protected Retrofit createRetrofitClient(){
         Retrofit.Builder builder = new Retrofit.Builder()

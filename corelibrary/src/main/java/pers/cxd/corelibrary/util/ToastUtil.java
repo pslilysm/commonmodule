@@ -3,9 +3,15 @@ package pers.cxd.corelibrary.util;
 import android.os.Looper;
 import android.widget.Toast;
 
-import pers.cxd.corelibrary.ApplicationHolder;
+import pers.cxd.corelibrary.AppHolder;
 import pers.cxd.corelibrary.EventHandler;
 
+/**
+ * Miscellaneous {@link Toast} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class ToastUtil {
 
     public static void showShort(CharSequence text){
@@ -37,7 +43,7 @@ public class ToastUtil {
 
         @Override
         public void run() {
-            Toast.makeText(ApplicationHolder.get(), text, length).show();
+            Toast.makeText(AppHolder.get(), text, length).show();
         }
 
     }

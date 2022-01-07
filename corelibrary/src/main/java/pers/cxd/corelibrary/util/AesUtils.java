@@ -10,6 +10,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import pers.cxd.corelibrary.Singleton;
 
+/**
+ * Miscellaneous {@link Cipher} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class AesUtils {
 
     public static final String sAesKey = "NV9MCANO5VVCMUASPSLILYSM19990127";

@@ -3,6 +3,12 @@ package pers.cxd.corelibrary.util;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Miscellaneous {@code Collection} and {@code Map} and {@code Array} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class DataStructureUtil {
 
     public static boolean isEmpty(Collection<?> collection){

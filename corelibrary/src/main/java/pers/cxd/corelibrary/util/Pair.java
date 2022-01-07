@@ -4,6 +4,18 @@ import java.util.Objects;
 
 import pers.cxd.corelibrary.util.function.Recyclable;
 
+/**
+ * Container to ease passing around a tuple of two objects. This object provides a sensible
+ * implementation of equals(), returning true if equals() is true on each of the contained
+ * objects.
+ * This object also implements a recyclable interface.
+ * When it is reclaimed, if the tuple of two objects can be reclaimed, the tuple will also be reclaimed.
+ *
+ * @param <F> the type of the first object
+ * @param <S> the type of the second object
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class Pair<F, S> implements Recyclable {
 
     private F first;

@@ -11,8 +11,11 @@ import java.util.Map;
 import pers.cxd.corelibrary.util.Pair;
 
 /**
- * 反射工具类
- * 对Constructor Field Method加了缓存，空间换速度。
+ * A util for reflection,
+ * Cache is added to Constructor Field Method, memory is changed for speed.
+ *
+ * @author pslilysm
+ * @since 1.0.0
  */
 public class ReflectionUtil {
 
@@ -23,12 +26,13 @@ public class ReflectionUtil {
     private static final Object[] sEmptyParameterTypesAndArgs = new Object[0];
 
     /**
-     * 对参数类型和参数进行分割
+     * Split parameter types and args, their size of the two is always the same,
+     * otherwise the {@code IllegalArgumentException} will throw
      *
-     * @param classLoader 用来加载String类型的参数类型
-     * @param parameterTypesAndArgs 参数类型和参数
-     * @return 一个包装好的Pair
-     * @throws ClassNotFoundException String类型的参数类型不正确
+     * @param classLoader for load class by {@code String}
+     * @param parameterTypesAndArgs their size of the two is always the same
+     * @return A wrapped {@code Pair}, {@link Pair#first()} is parameter types, {@link Pair#second()} is args
+     * @throws ClassNotFoundException when classloader load class failure
      */
     private static Pair<Class<?>[], Object[]> splitParameterTypesAndArgs(ClassLoader classLoader, Object... parameterTypesAndArgs) throws ClassNotFoundException {
         if (parameterTypesAndArgs.length % 2 != 0) {
@@ -54,7 +58,7 @@ public class ReflectionUtil {
     }
 
     /**
-     * 递归查找或创建Constructor
+     * Find in the cache or create {@code Constructor} by class and parameterTypes
      */
     private static <T> Constructor<T> findOrCreateConstructor(Class<T> clazz, Class<?>[] parameterTypes) throws ReflectiveOperationException{
         ConstructorKey constructorKey = ConstructorKey.obtain(clazz, parameterTypes);
@@ -82,7 +86,7 @@ public class ReflectionUtil {
     }
 
     /**
-     * 递归查找或创建Field
+     * Recursive find in the cache or create {@code Field} by class and fieldName
      */
     private static Field findOrCreateField(Class<?> clazz, String fieldName) throws ReflectiveOperationException{
         FieldKey fieldKey = FieldKey.obtain(clazz, fieldName);
@@ -115,7 +119,7 @@ public class ReflectionUtil {
     }
 
     /**
-     * 递归查找或创建Method
+     * Recursive find in the cache or create {@code Method} by class and methodName and parameterTypes
      */
     private static Method findOrCreateMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws ReflectiveOperationException{
         MethodKey methodKey = MethodKey.obtain(clazz, methodName, parameterTypes);

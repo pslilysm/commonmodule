@@ -2,6 +2,12 @@ package pers.cxd.corelibrary.util;
 
 import android.text.TextUtils;
 
+/**
+ * Miscellaneous text utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class TextUtil {
 
     public static String cleanWhiteSpace(String str){

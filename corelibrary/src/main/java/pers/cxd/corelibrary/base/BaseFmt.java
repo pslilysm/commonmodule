@@ -10,6 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+/**
+ * A Base Fragment extends Fragment which implements UiComponent, FragmentFinder.
+ * Support to find fragment when our fragment has been low-memory-killed.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public abstract class BaseFmt extends Fragment implements UiComponent, FragmentFinder {
 
     protected final String TAG = "DEBUG_CXD_" + this.getClass().getSimpleName();

@@ -12,11 +12,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import pers.cxd.corelibrary.ApplicationHolder;
+import pers.cxd.corelibrary.AppHolder;
 
+/**
+ * Miscellaneous screen utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class ScreenUtil {
 
-    private static final Application sApplication = ApplicationHolder.get();
+    private static final Application sApplication = AppHolder.get();
 
     public static boolean isDarkMode(){
         return (sApplication.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
@@ -82,11 +88,7 @@ public class ScreenUtil {
         return sApplication.getResources().getDisplayMetrics().densityDpi;
     }
 
-    public static void fullActAndTransparentStatusBar(Window window, boolean lightMode, boolean hideNav){
-        fullActAndTransparentStatusBar(true, false, window, lightMode, hideNav);
-    }
-
-    public static void fullActAndTransparentStatusBar(boolean layoutFullScreen, boolean fullScreen, Window window, boolean lightMode, boolean hideNav){
+    public static void setSystemUiFlag(Window window, boolean layoutFullScreen, boolean fullScreen,  boolean lightMode, boolean hideNav){
         int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;

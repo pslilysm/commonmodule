@@ -1,5 +1,11 @@
 package pers.cxd.corelibrary.util;
 
+/**
+ * Miscellaneous {@link Exception} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class ExceptionUtil {
 
     public static Throwable getRealCause(Throwable throwable){

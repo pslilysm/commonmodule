@@ -10,6 +10,12 @@ import androidx.fragment.app.FragmentManager;
 import pers.cxd.corelibrary.util.ExceptionUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
+/**
+ * Provide some default UiComponent interface implementation
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class UiComponentPlugins {
 
     public static final FragmentFinder sSimpleFinder = new FragmentFinder() {
@@ -28,7 +34,7 @@ public class UiComponentPlugins {
         }
     };
 
-    private static final String TAG = "DEBUG_CXD_UiComponentPlugins";
+    private static final String TAG = "DEBUG_UiComponentPlugins";
 
     @SuppressLint("LongLogTag")
     protected static <T extends Fragment> T findOrCreateFmt(FragmentManager manager, Class<T> clazz, int position, FragmentFinder finder){

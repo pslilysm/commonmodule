@@ -6,6 +6,13 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+/**
+ * Default implementation of the {@link Observer}
+ *
+ * @param <D> the type of item the Observer expects to observe
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public abstract class BaseObserverImpl<D> implements Observer<D> {
 
     private final CompositeDisposable mSubscription;
@@ -31,7 +38,7 @@ public abstract class BaseObserverImpl<D> implements Observer<D> {
     /**
      * cancel the subscribe to prevent mem leak;
      */
-    protected void dispose(){
+    protected void  dispose(){
         if (disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }

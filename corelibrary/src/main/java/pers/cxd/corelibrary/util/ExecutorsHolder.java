@@ -7,6 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import pers.cxd.corelibrary.Singleton;
 
+/**
+ * A global executors holder
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class ExecutorsHolder {
 
     private static final AtomicInteger sIONum = new AtomicInteger();

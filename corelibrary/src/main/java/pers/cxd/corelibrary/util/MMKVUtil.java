@@ -6,18 +6,28 @@ import com.tencent.mmkv.MMKV;
 
 import java.util.Set;
 
-import pers.cxd.corelibrary.ApplicationHolder;
+import pers.cxd.corelibrary.AppHolder;
 
+/**
+ * Miscellaneous {@link MMKV} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class MMKVUtil {
 
     static {
-        MMKV.initialize(ApplicationHolder.get());
+        MMKV.initialize(AppHolder.get());
     }
 
     private static final MMKV sDefault = MMKV.defaultMMKV();
 
     /**
      * encode a non-null value
+     * @see #encode(String, Object, Class)
+     *
+     * @param key mapped value
+     * @param value mapped key
      */
     public static void encode(String key, Object value){
         encode(key, value, null);
@@ -25,6 +35,10 @@ public class MMKVUtil {
 
     /**
      * encode a null value
+     * @see #encode(String, Object, Class)
+     *
+     * @param key mapped value
+     * @param valueClass value's class(such as String, Integer, Double}
      */
     public static void encode(String key, Class<?> valueClass){
         encode(key, null, valueClass);
@@ -56,6 +70,9 @@ public class MMKVUtil {
     }
 
     /**
+     * Decode the value mapped by the {@code key}
+     * @see #decode(String, Object, Class)
+     *
      * @param key mapped value
      * @param defaultValue will be return if not find the key
      * @return saved value by key
@@ -65,6 +82,9 @@ public class MMKVUtil {
     }
 
     /**
+     * Decode the value mapped by the {@code key}
+     * @see #decode(String, Object, Class)
+     *
      * @param key mapped value
      * @param valueClass the returned value will instance of valueClass
      * @return null if not found the key
@@ -96,10 +116,28 @@ public class MMKVUtil {
         }
     }
 
+    /**
+     * Decode {@link Parcelable} by the key
+     * @see #decodeParcelable(String, Class, Parcelable)
+     *
+     * @param key mapped parcelable value
+     * @param tClass value's class
+     * @param <T> the type of the value and must extends {@link Parcelable}
+     * @return a parcelable value by the key
+     */
     public static <T extends Parcelable> T decodeParcelable(String key, Class<T> tClass){
         return decodeParcelable(key, tClass, null);
     }
 
+    /**
+     * Decode {@link Parcelable} by the key
+     *
+     * @param key mapped parcelable value
+     * @param tClass value's class
+     * @param defaultValue if we didn't find the value by the key, then {@code defaultValue} returned
+     * @param <T> the type of the value and must extends {@link Parcelable}
+     * @return a parcelable value by the key
+     */
     public static <T extends Parcelable> T decodeParcelable(String key, Class<T> tClass, T defaultValue){
         return sDefault.decodeParcelable(key, tClass, defaultValue);
     }

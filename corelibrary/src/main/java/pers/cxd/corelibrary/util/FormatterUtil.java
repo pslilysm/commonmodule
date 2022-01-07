@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+/**
+ * Miscellaneous {@link SimpleDateFormat} and {@link DecimalFormat} utility methods.
+ *
+ * @author pslilysm
+ * @since 1.0.0
+ */
 public class FormatterUtil {
 
     private static final ThreadLocal<SimpleDateFormat> sDateFormatTLS = new ThreadLocal<SimpleDateFormat>() {
