@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 /**
  * UI components are usually implemented by Activity, Fragment, and Dialog.
@@ -20,8 +19,6 @@ public interface UiComponent {
     int getLayoutId();
 
     void setUp(@Nullable Bundle savedInstanceState);
-
-    <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args);
 
     Context getContext();
 

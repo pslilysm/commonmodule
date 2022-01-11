@@ -46,21 +46,18 @@ public class UiComponentPlugins {
 
     private static final Map<UiComponent, List<OnActivityResultCallback>> sComponentCallbackMap = new ArrayMap<>();
 
-    protected static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args) {
-        return findOrCreateFmt(fmtClass, finder, new FragmentCreator<T>() {
-            @Override
-            public T create(Class<T> fmtClazz) {
-                try {
-                    return ReflectionUtil.newInstance(fmtClazz);
-                } catch (ReflectiveOperationException e) {
-                    ExceptionUtil.rethrow(e);
-                }
-                return null;
+    public static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args) {
+        return findOrCreateFmt(fmtClass, finder, fmtClazz -> {
+            try {
+                return ReflectionUtil.newInstance(fmtClazz);
+            } catch (ReflectiveOperationException e) {
+                ExceptionUtil.rethrow(e);
             }
+            return null;
         }, args);
     }
 
-    protected static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, FragmentCreator<T> creator, Object... args) {
+    public static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, FragmentCreator<T> creator, Object... args) {
         T fmt = finder.findFragment(fmtClass, args);
         Log.i(TAG, "findOrCreateFmt: " + fmt);
         if (fmt == null){

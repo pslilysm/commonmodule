@@ -40,11 +40,6 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
         return mContentView;
     }
 
-    @Override
-    public <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args) {
-        return UiComponentPlugins.findOrCreateFmt(fmtClass, finder, args);
-    }
-
     @Nullable
     @Override
     public <T extends Fragment> T findFragment(Class<? extends Fragment> fmtClass, Object... args) {

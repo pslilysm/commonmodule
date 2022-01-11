@@ -30,11 +30,6 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     }
 
     @Override
-    public <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args) {
-        return UiComponentPlugins.findOrCreateFmt(fmtClass, finder, args);
-    }
-
-    @Override
     public Context getContext() {
         return this;
     }
