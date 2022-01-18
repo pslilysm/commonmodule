@@ -9,7 +9,7 @@ class SplashPresenter extends SplashContract.Presenter{
     @Override
     void getSomeData(String arg1, String arg2) {
         if (mModel.someDataModelAvailable()){
-            RxUtil.execute(new BaseObserverImpl<Object>(mSubscription) {
+            RxUtil.execute(mModel.someDataModel(arg1, arg2), new BaseObserverImpl<Object>(mSubscription) {
                 @Override
                 public void onNext(@io.reactivex.rxjava3.annotations.NonNull Object o) {
                     if (notDetach()){
@@ -29,13 +29,13 @@ class SplashPresenter extends SplashContract.Presenter{
                         mModel.clearSomeDataModel();
                     }
                 }
-            }, mModel.someDataModel(arg1, arg2), RxUtil.Transformers.IOToMain());
+            }, RxUtil.Transformers.IOToMain());
         }
     }
 
     @Override
     void register(String accountName, String password) {
-        RxUtil.execute(new BaseObserverImpl<Void>(mSubscription) {
+        RxUtil.execute(mModel.registerModel(accountName, password), new BaseObserverImpl<Void>(mSubscription) {
             @Override
             public void onNext(@NonNull Void aVoid) {
 
@@ -45,6 +45,6 @@ class SplashPresenter extends SplashContract.Presenter{
             public void onError(@NonNull Throwable e) {
 
             }
-        }, mModel.registerModel(accountName, password), RxUtil.Transformers.IOToMain());
+        }, RxUtil.Transformers.IOToMain());
     }
 }

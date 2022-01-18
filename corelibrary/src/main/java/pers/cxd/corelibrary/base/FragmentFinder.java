@@ -2,10 +2,9 @@ package pers.cxd.corelibrary.base;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 /**
- * A interface support to find Fragment by {@link FragmentManager}、 {@link Class}、 {@code position}
+ * A interface support to finding fragments in AMS cache
  *
  * @author pslilysm
  * @since 1.0.0

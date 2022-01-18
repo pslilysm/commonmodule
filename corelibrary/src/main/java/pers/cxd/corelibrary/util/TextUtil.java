@@ -10,7 +10,7 @@ import android.text.TextUtils;
  */
 public class TextUtil {
 
-    public static String cleanWhiteSpace(String str){
+    public static String cleanSpace(String str){
         return str.replaceAll("\\s+", "");
     }
 

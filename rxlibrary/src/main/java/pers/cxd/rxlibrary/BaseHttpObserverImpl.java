@@ -2,7 +2,6 @@ package pers.cxd.rxlibrary;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.annotations.Nullable;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
@@ -19,7 +18,7 @@ public abstract class BaseHttpObserverImpl<D> extends BaseObserverImpl<D> {
     }
 
     /**
-     * when onError, will calling {@code onComplete()}
+     * calling {@code onComplete()} while error occurs
      */
     @Override
     public void onError(@NonNull Throwable e) {

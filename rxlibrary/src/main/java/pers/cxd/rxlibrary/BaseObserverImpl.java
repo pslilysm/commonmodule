@@ -38,7 +38,7 @@ public abstract class BaseObserverImpl<D> implements Observer<D> {
     /**
      * cancel the subscribe to prevent mem leak;
      */
-    protected void  dispose(){
+    protected void dispose(){
         if (disposable != null && !disposable.isDisposed()){
             disposable.dispose();
         }

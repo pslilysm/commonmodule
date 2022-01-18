@@ -25,7 +25,7 @@ public class SingletonFactory {
      *
      * @param clazz singleton's class
      * @param <T> the type of singleton
-     * @return a cached of created singleton
+     * @return a cached or created singleton
      */
     public static <T> T findOrCreate(Class<T> clazz){
         return findOrCreate(clazz, null);
@@ -38,7 +38,7 @@ public class SingletonFactory {
      * @param parameterTypes singleton's constructor parameterTypes
      * @param args for init singleton's constructor
      * @param <T> the type of singleton
-     * @return a cached of created singleton
+     * @return a cached or created singleton
      */
     public static <T> T findOrCreate(Class<T> clazz, Class<?>[] parameterTypes, Object... args) {
         Pair<ConstructorKey, ArgsKey> pair = Pair.obtain(ConstructorKey.obtain(clazz, parameterTypes), ArgsKey.obtain(args));
