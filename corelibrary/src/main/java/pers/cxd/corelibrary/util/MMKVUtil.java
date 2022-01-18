@@ -58,7 +58,7 @@ public class MMKVUtil {
             sDefault.encode(key, (Boolean)value);
         } else if (clazz == String.class){
             sDefault.encode(key, (String)value);
-        } else if (clazz == Set.class){
+        } else if (Set.class.isAssignableFrom(clazz)){
             sDefault.encode(key, (Set<String>) value);
         } else if (clazz == byte[].class){
             sDefault.encode(key, (byte[]) value);
@@ -107,8 +107,8 @@ public class MMKVUtil {
             return (T) Boolean.valueOf(sDefault.decodeBool(key, defaultValue == null ? false : (Boolean) defaultValue));
         } else if (clazz == String.class){
             return (T) sDefault.decodeString(key, (String) defaultValue);
-        } else if (defaultValue instanceof Set){
-            return (T) sDefault.decodeStringSet(key, (Set<String>) defaultValue);
+        } else if (Set.class.isAssignableFrom(clazz)){
+            return (T) sDefault.decodeStringSet(key, (Set<String>) defaultValue, (Class<? extends Set>) clazz);
         } else if (clazz == byte[].class){
             return (T) sDefault.decodeBytes(key, (byte[]) defaultValue);
         } else {
