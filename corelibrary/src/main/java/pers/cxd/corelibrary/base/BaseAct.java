@@ -58,5 +58,6 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     protected void onDestroy() {
         super.onDestroy();
         UiComponentPlugins.removeActivityResultCallbacks(this);
+        performOnDestroy();
     }
 }

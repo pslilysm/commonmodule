@@ -30,4 +30,10 @@ public interface UiComponent {
 
     void registerActivityResultCallback(OnActivityResultCallback callback);
 
+    default void performOnDestroy() {
+        if (this instanceof BaseView) {
+            ((BaseView) this).releaseView();
+        }
+    }
+
 }

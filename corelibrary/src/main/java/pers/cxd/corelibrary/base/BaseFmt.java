@@ -61,6 +61,7 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
     public void onDestroy() {
         super.onDestroy();
         UiComponentPlugins.removeActivityResultCallbacks(this);
+        performOnDestroy();
     }
 
 }
