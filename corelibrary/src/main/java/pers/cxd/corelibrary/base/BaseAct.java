@@ -44,11 +44,6 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     }
 
     @Override
-    public void registerActivityResultCallback(OnActivityResultCallback callback) {
-        UiComponentPlugins.registerActivityResultCallback(this, callback);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UiComponentPlugins.getActivityResultCallbacks(this).forEach(callback -> callback.onActivityResult(requestCode, resultCode, data));
@@ -57,7 +52,6 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        UiComponentPlugins.removeActivityResultCallbacks(this);
         performOnDestroy();
     }
 }

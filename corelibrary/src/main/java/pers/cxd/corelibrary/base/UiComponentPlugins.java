@@ -76,7 +76,7 @@ public class UiComponentPlugins {
         return sComponentCallbackMap.computeIfAbsent(component, o -> new ArrayList<>());
     }
 
-    public static void removeActivityResultCallbacks(UiComponent component) {
+    public static void unregisterActivityResultCallbacks(UiComponent component) {
         ThreadUtil.checkMainThread();
         sComponentCallbackMap.remove(component);
     }

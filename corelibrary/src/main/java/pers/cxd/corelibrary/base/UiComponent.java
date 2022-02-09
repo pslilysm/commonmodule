@@ -28,9 +28,12 @@ public interface UiComponent {
 
     LayoutInflater getLayoutInflater();
 
-    void registerActivityResultCallback(OnActivityResultCallback callback);
+    default void registerActivityResultCallback(OnActivityResultCallback callback) {
+        UiComponentPlugins.registerActivityResultCallback(this, callback);
+    }
 
     default void performOnDestroy() {
+        UiComponentPlugins.unregisterActivityResultCallbacks(this);
         if (this instanceof BaseView) {
             ((BaseView) this).releaseView();
         }

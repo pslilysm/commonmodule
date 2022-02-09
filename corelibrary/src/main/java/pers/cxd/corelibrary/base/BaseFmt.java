@@ -47,11 +47,6 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
     }
 
     @Override
-    public void registerActivityResultCallback(OnActivityResultCallback callback) {
-        UiComponentPlugins.registerActivityResultCallback(this, callback);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UiComponentPlugins.getActivityResultCallbacks(this).forEach(callback -> callback.onActivityResult(requestCode, resultCode, data));
@@ -60,7 +55,6 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
     @Override
     public void onDestroy() {
         super.onDestroy();
-        UiComponentPlugins.removeActivityResultCallbacks(this);
         performOnDestroy();
     }
 
