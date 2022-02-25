@@ -1,0 +1,1 @@
+-keep class pers.cxd.corelibrary.util.GsonUtil {*;}

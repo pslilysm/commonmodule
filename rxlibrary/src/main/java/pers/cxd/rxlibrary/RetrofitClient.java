@@ -20,7 +20,7 @@ public abstract class RetrofitClient {
     private final Map<Class<?>, Object> mApiMap = new ConcurrentHashMap<>();
 
     protected RetrofitClient(){
-        mRetrofitClient = createRetrofitClient();
+        buildRetrofit();
     }
 
     /**
