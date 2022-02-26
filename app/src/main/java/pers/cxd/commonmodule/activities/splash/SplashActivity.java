@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import pers.cxd.commonmodule.R;
 import pers.cxd.corelibrary.mvp.MvpAct;
+import pers.cxd.corelibrary.util.GsonUtil;
 import pers.cxd.corelibrary.util.ScreenUtil;
 import pers.cxd.corelibrary.util.ToastUtil;
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
@@ -83,6 +85,21 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
 //        rv.scrollToPosition(15);
         Log.i(TAG, "setUp: android_id -> " + Settings.Secure.getString(getContentResolver(), "android_id"));
         ToastUtil.showShort(Settings.Secure.getString(getContentResolver(), "android_id"));
+        String jsonString = "{'Bob' : 112,"
+                + "'Jenny' : \"1123\", "
+                + "'Steve' : 123.0123" +
+                "}";
+        Map<String, Object> map = GsonUtil.jsonToMap(jsonString, Object.class);
+        Log.i(TAG, "setUp: " + map.size());
+        Log.i(TAG, "setUp: " + map.getClass());
+        map.forEach((s, obj) -> {
+            Log.i(TAG, "accept: " + s);
+            Log.i(TAG, "accept: " + obj.getClass());
+        });
+    }
+
+    private static class Person {
+        String name;
     }
 
     private static class Adapter extends RecyclerView.Adapter<Adapter.VH> {

@@ -33,7 +33,7 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
         if (mContentView == null){
             int layoutId = getLayoutId();
             if (layoutId != 0) {
-                mContentView = (ViewGroup) inflater.inflate(getLayoutId(), container, false);
+                mContentView = (ViewGroup) inflater.inflate(layoutId, container, false);
             }
             setUp(savedInstanceState);
         }

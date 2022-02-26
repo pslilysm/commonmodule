@@ -1,4 +1,7 @@
--keep class pers.cxd.corelibrary.util.GsonUtil {*;}
+#-keep class pers.cxd.corelibrary.util.GsonUtil {*;}
+-keepclassmembernames class com.google.gson.JsonObject {
+    private final com.google.gson.internal.LinkedTreeMap members;
+}
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard

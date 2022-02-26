@@ -10,19 +10,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import pers.cxd.corelibrary.annotation.GsonExclude;
+import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
 
 /**
  * Miscellaneous {@link Gson} utility methods.
@@ -36,13 +34,12 @@ public class GsonUtil {
         ExclusionStrategy strategy = new ExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes f) {
-                GsonExclude gsonExclude = f.getAnnotation(GsonExclude.class);
-                return gsonExclude != null;
+                return f.getAnnotation(GsonExclude.class) != null;
             }
 
             @Override
             public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
+                return clazz.getAnnotation(GsonExclude.class) != null;
             }
         };
         sPrettyGson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().setExclusionStrategies(strategy).create();
@@ -125,33 +122,25 @@ public class GsonUtil {
 
     /**
      * Deserialize json to {@link Map}
-     * @see #jsonToMap(String, Class, Class)
      *
      * @param json json string
-     * @param tClass Map's value class
-     * @param <T> the type of the Map's value
-     * @return a empty Map if json is empty
-     */
-    public static <T> Map<String, T> jsonToMap(String json, Class<T> tClass) {
-        return jsonToMap(json, String.class, tClass);
-    }
-
-    /**
-     * Deserialize json to {@link Map}
-     *
-     * @param json json string
-     * @param kClass Map's key class
-     * @param vClass Map's value class
-     * @param <K>> the type of the Map's key
      * @param <V>> the type of the Map's value
      * @return a empty Map if json is empty
      */
-    public static <K, V> Map<K, V> jsonToMap(String json, Class<K> kClass, Class<V> vClass) {
+    public static <V> Map<String, V> jsonToMap(String json, Class<V> vClass) {
+        Map<String, V> result = new LinkedTreeMap<>();
         if (TextUtils.isEmpty(json)) {
-            return new LinkedTreeMap<>();
+            return result;
         }
-        Type empMapType = new TypeToken<LinkedTreeMap<K, V>>() {}.getType();
-        return sGson.fromJson(json, empMapType);
+        JsonObject jsonObject = sGson.fromJson(json, JsonObject.class);
+        try {
+            LinkedTreeMap<String, JsonElement> members = ReflectionUtil.getFieldValue(jsonObject, "members");
+            members.forEach((s, jsonElement) -> result.put(s, sGson.fromJson(jsonElement, vClass)));
+        } catch (ReflectiveOperationException e) {
+            // never happen
+            throw new RuntimeException();
+        }
+        return result;
     }
 
     /**

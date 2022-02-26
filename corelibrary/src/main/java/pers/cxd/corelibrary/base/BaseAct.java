@@ -24,7 +24,7 @@ public abstract class BaseAct extends AppCompatActivity implements UiComponent, 
         super.onCreate(savedInstanceState);
         int layoutId = getLayoutId();
         if (layoutId != 0) {
-            setContentView(getLayoutId());
+            setContentView(layoutId);
         }
         setUp(savedInstanceState);
     }

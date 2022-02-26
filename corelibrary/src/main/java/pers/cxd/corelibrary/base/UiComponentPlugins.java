@@ -67,17 +67,17 @@ public class UiComponentPlugins {
     }
 
     public static void registerActivityResultCallback(UiComponent component, OnActivityResultCallback callback) {
-        ThreadUtil.checkMainThread();
+        ThreadUtil.checkIsMainThread();
         sComponentCallbackMap.computeIfAbsent(component, o -> new ArrayList<>()).add(callback);
     }
 
     public static List<OnActivityResultCallback> getActivityResultCallbacks(UiComponent component) {
-        ThreadUtil.checkMainThread();
+        ThreadUtil.checkIsMainThread();
         return sComponentCallbackMap.computeIfAbsent(component, o -> new ArrayList<>());
     }
 
     public static void unregisterActivityResultCallbacks(UiComponent component) {
-        ThreadUtil.checkMainThread();
+        ThreadUtil.checkIsMainThread();
         sComponentCallbackMap.remove(component);
     }
 

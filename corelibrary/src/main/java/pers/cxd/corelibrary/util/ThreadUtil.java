@@ -15,9 +15,20 @@ public class ThreadUtil {
      *
      * @throws IllegalStateException if current thread is not main thread
      */
-    public static void checkMainThread() {
+    public static void checkIsMainThread() {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw new IllegalStateException("cur thread is " + Thread.currentThread().getName() + ", not main thread");
+        }
+    }
+
+    /**
+     * check current thread not main thread
+     *
+     * @throws IllegalStateException if current thread is main thread
+     */
+    public static void throwIfMainThread() {
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            throw new IllegalStateException("cur thread is main thread");
         }
     }
 
