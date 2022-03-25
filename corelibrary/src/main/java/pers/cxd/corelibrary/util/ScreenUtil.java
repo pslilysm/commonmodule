@@ -66,9 +66,14 @@ public class ScreenUtil {
         return dm.heightPixels;
     }
 
-    public static int dip2px(float dpValue){
+    public static int dip2px(float dp){
         final float scale = sApplication.getResources().getDisplayMetrics().density;
-        return (int)(dpValue * scale + 0.5f);
+        return (int) (dp * scale + 0.5f);
+    }
+
+    public static int pxToDip(float px){
+        final float scale = sApplication.getResources().getDisplayMetrics().density;
+        return (int) (px / scale + 0.5f);
     }
 
     public static int spToPx(float sp) {

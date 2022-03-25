@@ -8,7 +8,7 @@ package pers.cxd.corelibrary.util;
  */
 public class ExceptionUtil {
 
-    public static Throwable getRealCause(Throwable throwable){
+    public static Throwable getRealCause(Throwable throwable) {
         Throwable cause = throwable;
         while (cause.getCause() != null){
             cause = cause.getCause();
@@ -16,7 +16,7 @@ public class ExceptionUtil {
         return cause;
     }
 
-    public static void rethrow(Throwable throwable){
+    public static void rethrow(Throwable throwable) {
         if (throwable instanceof RuntimeException){
             throw (RuntimeException) throwable;
         }else {

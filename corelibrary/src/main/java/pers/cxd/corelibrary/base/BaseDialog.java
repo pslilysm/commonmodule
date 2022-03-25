@@ -78,6 +78,11 @@ public abstract class BaseDialog implements UiComponent, DialogInterface.OnDismi
         }, 200);
     }
 
+    public void hideSoftKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager) mBase.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
     @Override
     public Context getContext() {
         return mBase.getContext();
