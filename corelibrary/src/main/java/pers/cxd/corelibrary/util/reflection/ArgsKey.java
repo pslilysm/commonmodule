@@ -10,6 +10,7 @@ public class ArgsKey {
     private static int sPoolSize;
     Object[] args;
     private ArgsKey next;
+
     private ArgsKey(Object[] args) {
         this.args = args;
     }
