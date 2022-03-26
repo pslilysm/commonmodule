@@ -47,7 +47,7 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
     @Override
     public void setUp(@Nullable Bundle savedInstanceState) {
         mPresenter.getSomeData("1", "2");
-        mPresenter.register("admin","123456");
+        mPresenter.register("admin", "123456");
         Object activityThread;
         Handler mH;
         try {
@@ -98,6 +98,11 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
         });
     }
 
+    @Override
+    public void onSomeDataGotten(Object data) {
+
+    }
+
     private static class Person {
         String name;
     }
@@ -107,18 +112,11 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
         private static final String TAG = "DEBUG_Adapter";
 
         final List<String> data;
+        int i;
 
         public Adapter(List<String> data) {
             this.data = data;
         }
-
-        static class VH extends RecyclerView.ViewHolder{
-            public VH(@NonNull View itemView) {
-                super(itemView);
-            }
-        }
-
-        int i;
 
         @NonNull
         @Override
@@ -142,11 +140,12 @@ public class SplashActivity extends MvpAct<SplashContract.Presenter, SplashContr
         public int getItemCount() {
             return data.size();
         }
-    }
 
-    @Override
-    public void onSomeDataGotten(Object data) {
-
+        static class VH extends RecyclerView.ViewHolder {
+            public VH(@NonNull View itemView) {
+                super(itemView);
+            }
+        }
     }
 
 }

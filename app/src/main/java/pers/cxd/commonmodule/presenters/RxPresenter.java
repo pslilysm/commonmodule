@@ -16,7 +16,7 @@ public class RxPresenter<V, M> extends Presenter<V, M> {
     @Override
     public void detach() {
         super.detach();
-        if (mSubscription != null){
+        if (mSubscription != null) {
             mSubscription.dispose();
         }
         mSubscription = null;

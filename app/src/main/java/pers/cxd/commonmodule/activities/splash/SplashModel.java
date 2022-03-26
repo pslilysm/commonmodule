@@ -27,7 +27,7 @@ class SplashModel implements SplashContract.Model {
 
     @Override
     public void clearSomeDataModel() {
-        if (someDataMap != null){
+        if (someDataMap != null) {
             someDataMap.clear();
             someDataMap = null;
         }

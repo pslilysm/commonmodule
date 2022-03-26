@@ -4,15 +4,15 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import pers.cxd.rxlibrary.BaseObserverImpl;
 import pers.cxd.rxlibrary.RxUtil;
 
-class SplashPresenter extends SplashContract.Presenter{
+class SplashPresenter extends SplashContract.Presenter {
 
     @Override
     void getSomeData(String arg1, String arg2) {
-        if (mModel.someDataModelAvailable()){
+        if (mModel.someDataModelAvailable()) {
             RxUtil.execute(mModel.someDataModel(arg1, arg2), new BaseObserverImpl<Object>(mSubscription) {
                 @Override
                 public void onNext(@io.reactivex.rxjava3.annotations.NonNull Object o) {
-                    if (notDetach()){
+                    if (notDetach()) {
                         mView.onSomeDataGotten(o);
                     }
                 }
@@ -25,7 +25,7 @@ class SplashPresenter extends SplashContract.Presenter{
                 @Override
                 public void onComplete() {
                     super.onComplete();
-                    if (notDetach()){
+                    if (notDetach()) {
                         mModel.clearSomeDataModel();
                     }
                 }

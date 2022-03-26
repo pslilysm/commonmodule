@@ -1,3 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pers.cxd.corelibrary">
-</manifest>
+<manifest package="pers.cxd.corelibrary" />

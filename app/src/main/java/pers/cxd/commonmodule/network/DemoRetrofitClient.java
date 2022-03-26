@@ -18,7 +18,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class DemoRetrofitClient extends RetrofitClient {
 
-    public static DemoRetrofitClient getInstance(){
+    public static DemoRetrofitClient getInstance() {
         return SingletonFactory.findOrCreate(DemoRetrofitClient.class);
     }
 
@@ -41,9 +41,10 @@ public class DemoRetrofitClient extends RetrofitClient {
     protected OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(20, TimeUnit.SECONDS);
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             builder.addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 final String TAG = DemoRetrofitClient.class.getSimpleName();
+
                 @Override
                 public void log(@NonNull String s) {
                     Log.d(TAG, s);
