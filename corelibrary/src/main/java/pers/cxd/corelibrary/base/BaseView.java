@@ -8,6 +8,7 @@ package pers.cxd.corelibrary.base;
  */
 public interface BaseView {
 
-    default void releaseView() {}
+    default void releaseView() {
+    }
 
 }

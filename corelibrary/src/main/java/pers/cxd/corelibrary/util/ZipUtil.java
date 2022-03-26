@@ -26,11 +26,11 @@ public class ZipUtil {
 
     /**
      * Multi threads unzip Zip file
-     * @see #unzip(File, File)
      *
-     * @param srcPath the Zip file path
+     * @param srcPath  the Zip file path
      * @param destPath the output dir path
      * @throws IOException if any I/O errors occurs
+     * @see #unzip(File, File)
      */
     public static void unzip(String srcPath, String destPath) throws IOException {
         unzip(new File(srcPath), new File(destPath));
@@ -38,11 +38,11 @@ public class ZipUtil {
 
     /**
      * Multi threads unzip Zip file
-     * @see #unzip(File, File, ExecutorService, int)
      *
-     * @param src the Zip file
+     * @param src  the Zip file
      * @param dest the output dir
      * @throws IOException if any I/O errors occurs
+     * @see #unzip(File, File, ExecutorService, int)
      */
     public static void unzip(File src, File dest) throws IOException {
         ExecutorService es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 5);
@@ -56,9 +56,9 @@ public class ZipUtil {
     /**
      * Multi threads unzip Zip file
      *
-     * @param src the Zip file
-     * @param dest the output dir
-     * @param es the ExecutorService to run unzip task
+     * @param src     the Zip file
+     * @param dest    the output dir
+     * @param es      the ExecutorService to run unzip task
      * @param threads the num of threads to run unzip task
      * @throws IOException if any I/O errors occurs
      */
@@ -84,7 +84,7 @@ public class ZipUtil {
                         && !Thread.currentThread().isInterrupted()) {
                     File f = new File(dest, zipEntry.getName());
                     try (InputStream is = zf.getInputStream(zipEntry);
-                         FileOutputStream fos = new FileOutputStream(f)){
+                         FileOutputStream fos = new FileOutputStream(f)) {
                         IOUtils.copy(is, fos);
                     } catch (IOException e) {
                         cur.interrupt();

@@ -1,13 +1,11 @@
 package pers.cxd.corelibrary.util.concurrent;
 
-import java.util.Queue;
-
 /**
  * The ResourcePool obtains resources or store resources
  *
+ * @param <R> the type of resource
  * @author pslilysm
  * @since 1.0.0
- * @param <R> the type of resource
  */
 public interface ResourcePool<R> {
 

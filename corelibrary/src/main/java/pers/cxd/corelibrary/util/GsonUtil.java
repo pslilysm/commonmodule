@@ -30,6 +30,9 @@ import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
  */
 public class GsonUtil {
 
+    private static final Gson sPrettyGson;
+    private static final Gson sGson;
+
     static {
         ExclusionStrategy strategy = new ExclusionStrategy() {
             @Override
@@ -46,51 +49,46 @@ public class GsonUtil {
         sGson = new GsonBuilder().disableHtmlEscaping().setExclusionStrategies(strategy).create();
     }
 
-    private static final Gson sPrettyGson;
-
-    private static final Gson sGson;
-
     /**
-     * @see #objToJson(Object, boolean)
-     *
      * @return a json string without pretty
+     * @see #objToJson(Object, boolean)
      */
-    public static String objToJson(Object obj){
+    public static String objToJson(Object obj) {
         return objToJson(obj, false);
     }
 
     /**
      * Serialize object to json
      *
-     * @param obj to serialize
+     * @param obj    to serialize
      * @param pretty ture we'll returned a pretty json string
      * @return json string
      */
-    public static String objToJson(Object obj, boolean pretty){
+    public static String objToJson(Object obj, boolean pretty) {
         return pretty ? sPrettyGson.toJson(obj) : sGson.toJson(obj);
     }
 
     /**
      * Deserialize json to object
      *
-     * @param json json string
+     * @param json   json string
      * @param tClass class of object will returned
-     * @param <T> the type of the object returned
+     * @param <T>    the type of the object returned
      * @return a object deserialize of json string
      */
-    public static <T> T jsonToObject(String json, Class<T> tClass){
+    public static <T> T jsonToObject(String json, Class<T> tClass) {
         return sGson.fromJson(json, tClass);
     }
 
     /**
      * Deserialize json to {@link Set}
      *
-     * @param json json string
+     * @param json   json string
      * @param tClass Set's elements class
-     * @param <T> the type of the Set's element
+     * @param <T>    the type of the Set's element
      * @return a empty Set if json is empty string or empty array
      */
-    public static <T> Set<T> jsonToSet(String json, Class<T> tClass){
+    public static <T> Set<T> jsonToSet(String json, Class<T> tClass) {
         Set<T> list = new ArraySet<>();
         if (!TextUtils.isEmpty(json)) {
             JsonArray array = JsonParser.parseString(json).getAsJsonArray();
@@ -104,12 +102,12 @@ public class GsonUtil {
     /**
      * Deserialize json to {@link List}
      *
-     * @param json json string
+     * @param json   json string
      * @param tClass List's elements class
-     * @param <T> the type of the List's element
+     * @param <T>    the type of the List's element
      * @return a empty List if json is empty string or empty array
      */
-    public static <T> List<T> jsonToList(String json, Class<T> tClass){
+    public static <T> List<T> jsonToList(String json, Class<T> tClass) {
         List<T> list = new ArrayList<>();
         if (!TextUtils.isEmpty(json)) {
             JsonArray array = JsonParser.parseString(json).getAsJsonArray();
@@ -149,7 +147,7 @@ public class GsonUtil {
      * @param jsonStr raw json string
      * @return a prettied json string
      */
-    public static String prettyJson(String jsonStr){
+    public static String prettyJson(String jsonStr) {
         JsonElement je = JsonParser.parseString(jsonStr);
         return sPrettyGson.toJson(je);
     }

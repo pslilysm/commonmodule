@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class MethodKey {
 
+    private static final int MAX_POOL_SIZE = 10;
+    private static MethodKey sPool;
+    private static int sPoolSize;
     Class<?> clazz;
     String methodName;
     Class<?>[] parameterTypes;
@@ -15,6 +18,22 @@ public class MethodKey {
         this.clazz = clazz;
         this.methodName = methodName;
         this.parameterTypes = parameterTypes;
+    }
+
+    public static MethodKey obtain(Class<?> clazz, String methodName, Class<?>[] parameterTypes) {
+        synchronized (MethodKey.class) {
+            if (sPool != null) {
+                MethodKey mk = sPool;
+                sPool = mk.next;
+                mk.next = null;
+                sPoolSize--;
+                mk.clazz = clazz;
+                mk.methodName = methodName;
+                mk.parameterTypes = parameterTypes;
+                return mk;
+            }
+        }
+        return new MethodKey(clazz, methodName, parameterTypes);
     }
 
     @Override
@@ -38,28 +57,8 @@ public class MethodKey {
         inUse = true;
     }
 
-    private static MethodKey sPool;
-    private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 10;
-
-    public static MethodKey obtain(Class<?> clazz, String methodName, Class<?>[] parameterTypes){
-        synchronized (MethodKey.class) {
-            if (sPool != null) {
-                MethodKey mk = sPool;
-                sPool = mk.next;
-                mk.next = null;
-                sPoolSize--;
-                mk.clazz = clazz;
-                mk.methodName = methodName;
-                mk.parameterTypes = parameterTypes;
-                return mk;
-            }
-        }
-        return new MethodKey(clazz, methodName, parameterTypes);
-    }
-
-    public void recycle(){
-        if (inUse){
+    public void recycle() {
+        if (inUse) {
             throw new IllegalStateException(this + " is in use, can't recycle");
         }
         clazz = null;

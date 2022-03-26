@@ -7,9 +7,9 @@ import java.util.concurrent.locks.LockSupport;
 /**
  * Default implementation of {@link ResourcePool}
  *
+ * @param <R> the type of resource
  * @author pslilysm
  * @since 1.0.0
- * @param <R> the type of resource
  */
 public class ResourcePoolImpl<R> implements ResourcePool<R> {
 

@@ -18,10 +18,10 @@ public class AppHolder {
         AppHolder.sApplication = sApplication;
     }
 
-    public static Application get(){
-        if (sApplication == null){
-            synchronized (AppHolder.class){
-                if (sApplication == null){
+    public static Application get() {
+        if (sApplication == null) {
+            synchronized (AppHolder.class) {
+                if (sApplication == null) {
                     try {
                         Object activityThread = ReflectionUtil.getStaticFieldValue("android.app.ActivityThread", "sCurrentActivityThread");
                         sApplication = ReflectionUtil.getFieldValue(activityThread, "mInitialApplication");

@@ -14,24 +14,24 @@ import pers.cxd.corelibrary.EventHandler;
  */
 public class ToastUtil {
 
-    public static void showShort(CharSequence text){
+    public static void showShort(CharSequence text) {
         showToast(text, Toast.LENGTH_SHORT);
     }
 
-    public static void showLong(CharSequence text){
+    public static void showLong(CharSequence text) {
         showToast(text, Toast.LENGTH_LONG);
     }
 
-    private static void showToast(CharSequence text, int duration){
+    private static void showToast(CharSequence text, int duration) {
         ShowToastRunnable runnable = new ShowToastRunnable(text, duration);
-        if (Looper.myLooper() == null){
+        if (Looper.myLooper() == null) {
             EventHandler.getDefault().post(runnable);
-        }else {
+        } else {
             runnable.run();
         }
     }
 
-    private static class ShowToastRunnable implements Runnable{
+    private static class ShowToastRunnable implements Runnable {
 
         private final CharSequence text;
         private final int length;

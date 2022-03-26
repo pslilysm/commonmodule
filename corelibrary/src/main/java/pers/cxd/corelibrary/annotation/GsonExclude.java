@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * A annotation support make field be ignore when use Gson to serialize or deserialize
  *
- * @since 1.0.0
  * @author pslilysm
+ * @since 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})

@@ -37,14 +37,14 @@ public class ExecutorsHolder {
     /**
      * @return a global io executor, the core pool size is {@code cpu cores * 5}
      */
-    public static ScheduledExecutorService io(){
+    public static ScheduledExecutorService io() {
         return sGlobalIOExecutor.getInstance();
     }
 
     /**
      * @return a global compute executor, the core pool size is cpu cores
      */
-    public static ScheduledExecutorService compute(){
+    public static ScheduledExecutorService compute() {
         return sGlobalComputeExecutor.getInstance();
     }
 

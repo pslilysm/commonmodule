@@ -11,43 +11,43 @@ import java.util.Map;
  */
 public class DataStructureUtil {
 
-    public static boolean isEmpty(Collection<?> collection){
+    public static boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
 
-    public static boolean haveElement(Collection<?> collection){
+    public static boolean haveElement(Collection<?> collection) {
         return !isEmpty(collection);
     }
 
-    public static boolean haveElement(Map<?, ?> map){
+    public static boolean haveElement(Map<?, ?> map) {
         return map != null && !map.isEmpty();
     }
 
-    public static boolean haveElement(boolean[] arr){
+    public static boolean haveElement(boolean[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(byte[] arr){
+    public static boolean haveElement(byte[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(char[] arr){
+    public static boolean haveElement(char[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(short[] arr){
+    public static boolean haveElement(short[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(int[] arr){
+    public static boolean haveElement(int[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(float[] arr){
+    public static boolean haveElement(float[] arr) {
         return arr != null && arr.length > 0;
     }
 
-    public static boolean haveElement(long[] arr){
+    public static boolean haveElement(long[] arr) {
         return arr != null && arr.length > 0;
     }
 
@@ -55,7 +55,7 @@ public class DataStructureUtil {
         return arr != null && arr.length > 0;
     }
 
-    public static <T> boolean haveElement(T[] arr){
+    public static <T> boolean haveElement(T[] arr) {
         return arr != null && arr.length > 0;
     }
 

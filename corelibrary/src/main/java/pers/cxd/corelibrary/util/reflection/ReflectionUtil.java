@@ -29,7 +29,7 @@ public class ReflectionUtil {
      * Split parameter types and args, their size of the two is always the same,
      * otherwise the {@code IllegalArgumentException} will throw
      *
-     * @param classLoader for load class by {@code String}
+     * @param classLoader           for load class by {@code String}
      * @param parameterTypesAndArgs their size of the two is always the same
      * @return A wrapped {@code Pair}, {@link Pair#first()} is parameter types, {@link Pair#second()} is args
      * @throws ClassNotFoundException when classloader load class failure
@@ -60,26 +60,26 @@ public class ReflectionUtil {
     /**
      * Find in the cache or create {@code Constructor} by class and parameterTypes
      */
-    private static <T> Constructor<T> findOrCreateConstructor(Class<T> clazz, Class<?>[] parameterTypes) throws ReflectiveOperationException{
+    private static <T> Constructor<T> findOrCreateConstructor(Class<T> clazz, Class<?>[] parameterTypes) throws ReflectiveOperationException {
         ConstructorKey constructorKey = ConstructorKey.obtain(clazz, parameterTypes);
         Constructor<T> constructor = (Constructor<T>) sConstructors.get(constructorKey);
-        if (constructor == null){
-            synchronized (sConstructors){
-                if ((constructor = (Constructor<T>) sConstructors.get(constructorKey)) == null){
+        if (constructor == null) {
+            synchronized (sConstructors) {
+                if ((constructor = (Constructor<T>) sConstructors.get(constructorKey)) == null) {
                     try {
                         constructor = clazz.getDeclaredConstructor(parameterTypes);
-                    }catch (NoSuchMethodException ex){
+                    } catch (NoSuchMethodException ex) {
                         constructorKey.recycle();
                         throw ex;
                     }
                     constructor.setAccessible(true);
                     constructorKey.markInUse();
                     sConstructors.put(constructorKey, constructor);
-                }else {
+                } else {
                     constructorKey.recycle();
                 }
             }
-        }else {
+        } else {
             constructorKey.recycle();
         }
         return constructor;
@@ -88,31 +88,31 @@ public class ReflectionUtil {
     /**
      * Recursive find in the cache or create {@code Field} by class and fieldName
      */
-    private static Field findOrCreateField(Class<?> clazz, String fieldName) throws ReflectiveOperationException{
+    private static Field findOrCreateField(Class<?> clazz, String fieldName) throws ReflectiveOperationException {
         FieldKey fieldKey = FieldKey.obtain(clazz, fieldName);
         Field field = sFields.get(fieldKey);
-        if (field == null){
-            synchronized (sFields){
-                if ((field = sFields.get(fieldKey)) == null){
+        if (field == null) {
+            synchronized (sFields) {
+                if ((field = sFields.get(fieldKey)) == null) {
                     try {
                         field = clazz.getDeclaredField(fieldName);
-                    }catch (NoSuchFieldException ex){
+                    } catch (NoSuchFieldException ex) {
                         fieldKey.recycle();
                         Class<?> superClazz = clazz.getSuperclass();
-                        if (superClazz != null && superClazz != Object.class){
+                        if (superClazz != null && superClazz != Object.class) {
                             return findOrCreateField(superClazz, fieldName);
-                        }else {
+                        } else {
                             throw ex;
                         }
                     }
                     field.setAccessible(true);
                     fieldKey.markInUse();
                     sFields.put(fieldKey, field);
-                }else {
+                } else {
                     fieldKey.recycle();
                 }
             }
-        }else {
+        } else {
             fieldKey.recycle();
         }
         return field;
@@ -121,53 +121,53 @@ public class ReflectionUtil {
     /**
      * Recursive find in the cache or create {@code Method} by class and methodName and parameterTypes
      */
-    private static Method findOrCreateMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws ReflectiveOperationException{
+    private static Method findOrCreateMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws ReflectiveOperationException {
         MethodKey methodKey = MethodKey.obtain(clazz, methodName, parameterTypes);
         Method method = sMethods.get(methodKey);
-        if (method == null){
-            synchronized (sMethods){
-                if ((method = sMethods.get(methodKey)) == null){
+        if (method == null) {
+            synchronized (sMethods) {
+                if ((method = sMethods.get(methodKey)) == null) {
                     try {
                         method = clazz.getDeclaredMethod(methodName, parameterTypes);
-                    }catch (NoSuchMethodException ex){
+                    } catch (NoSuchMethodException ex) {
                         methodKey.recycle();
                         Class<?> superClazz = clazz.getSuperclass();
-                        if (superClazz != null && superClazz != Object.class){
+                        if (superClazz != null && superClazz != Object.class) {
                             return findOrCreateMethod(superClazz, methodName, parameterTypes);
-                        }else {
+                        } else {
                             throw ex;
                         }
                     }
                     method.setAccessible(true);
                     methodKey.markInUse();
                     sMethods.put(methodKey, method);
-                }else {
+                } else {
                     methodKey.recycle();
                 }
             }
-        }else {
+        } else {
             methodKey.recycle();
         }
         return method;
     }
 
-    public static <T> T newInstance(String className) throws ReflectiveOperationException{
+    public static <T> T newInstance(String className) throws ReflectiveOperationException {
         return (T) newInstance(className, ClassLoader.getSystemClassLoader(), sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(String className, ClassLoader classLoader) throws ReflectiveOperationException{
+    public static <T> T newInstance(String className, ClassLoader classLoader) throws ReflectiveOperationException {
         return (T) newInstance(className, classLoader, sEmptyParameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(String className, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+    public static <T> T newInstance(String className, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
         return (T) newInstance(className, ClassLoader.getSystemClassLoader(), parameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(String className, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+    public static <T> T newInstance(String className, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
         return (T) newInstance(classLoader.loadClass(className), classLoader, parameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(Class<T> clazz) throws ReflectiveOperationException{
+    public static <T> T newInstance(Class<T> clazz) throws ReflectiveOperationException {
         return newInstance(clazz, sEmptyParameterTypesAndArgs);
     }
 
@@ -176,7 +176,7 @@ public class ReflectionUtil {
         return newInstance(clazz, classLoader, parameterTypesAndArgs);
     }
 
-    public static <T> T newInstance(Class<T> clazz, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException{
+    public static <T> T newInstance(Class<T> clazz, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
         Pair<Class<?>[], Object[]> splitParameterTypesAndArgs = splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs);
         T instance = findOrCreateConstructor(clazz, splitParameterTypesAndArgs.first()).newInstance(splitParameterTypesAndArgs.second());
         splitParameterTypesAndArgs.recycle();
@@ -191,7 +191,7 @@ public class ReflectionUtil {
         findOrCreateField(object.getClass(), fieldName).set(object, fieldValue);
     }
 
-    public static <T> T invokeMethod(Object object, String methodName) throws ReflectiveOperationException{
+    public static <T> T invokeMethod(Object object, String methodName) throws ReflectiveOperationException {
         return invokeMethod(object, methodName, sEmptyParameterTypesAndArgs);
     }
 

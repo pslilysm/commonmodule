@@ -30,5 +30,5 @@ public interface SimpleAnimatorListener extends Animator.AnimatorListener {
     default void onAnimationRepeat(Animator animation) {
 
     }
-    
+
 }

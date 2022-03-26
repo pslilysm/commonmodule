@@ -23,8 +23,6 @@ import pers.cxd.corelibrary.util.reflection.ReflectionUtil;
  */
 public class UiComponentPlugins {
 
-    private static final String TAG = "DEBUG_" + UiComponentPlugins.class.getSimpleName();
-
     public static final FragmentFinder sSimpleFinder = new FragmentFinder() {
         @Nullable
         @Override
@@ -33,7 +31,6 @@ public class UiComponentPlugins {
             return (T) manager.findFragmentByTag(fmtClass.getName());
         }
     };
-
     public static final FragmentFinder sViewPager2Finder = new FragmentFinder() {
         @Nullable
         @Override
@@ -43,7 +40,7 @@ public class UiComponentPlugins {
             return (T) manager.findFragmentByTag("f" + position);
         }
     };
-
+    private static final String TAG = "DEBUG_" + UiComponentPlugins.class.getSimpleName();
     private static final Map<UiComponent, List<OnActivityResultCallback>> sComponentCallbackMap = new ArrayMap<>();
 
     public static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, Object... args) {
@@ -60,7 +57,7 @@ public class UiComponentPlugins {
     public static <T extends Fragment> T findOrCreateFmt(Class<T> fmtClass, FragmentFinder finder, FragmentCreator<T> creator, Object... args) {
         T fmt = finder.findFragment(fmtClass, args);
         Log.i(TAG, "findOrCreateFmt: " + fmt);
-        if (fmt == null){
+        if (fmt == null) {
             fmt = creator.create(fmtClass);
         }
         return fmt;

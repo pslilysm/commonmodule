@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class FieldKey {
 
+    private static final int MAX_POOL_SIZE = 10;
+    private static FieldKey sPool;
+    private static int sPoolSize;
     Class<?> clazz;
     String filedName;
     private boolean inUse;
@@ -12,6 +15,21 @@ public class FieldKey {
     private FieldKey(Class<?> clazz, String filedName) {
         this.clazz = clazz;
         this.filedName = filedName;
+    }
+
+    public static FieldKey obtain(Class<?> clazz, String filedName) {
+        synchronized (FieldKey.class) {
+            if (sPool != null) {
+                FieldKey fk = sPool;
+                sPool = fk.next;
+                fk.next = null;
+                sPoolSize--;
+                fk.clazz = clazz;
+                fk.filedName = filedName;
+                return fk;
+            }
+        }
+        return new FieldKey(clazz, filedName);
     }
 
     @Override
@@ -32,27 +50,8 @@ public class FieldKey {
         inUse = true;
     }
 
-    private static FieldKey sPool;
-    private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 10;
-
-    public static FieldKey obtain(Class<?> clazz, String filedName){
-        synchronized (FieldKey.class) {
-            if (sPool != null) {
-                FieldKey fk = sPool;
-                sPool = fk.next;
-                fk.next = null;
-                sPoolSize--;
-                fk.clazz = clazz;
-                fk.filedName = filedName;
-                return fk;
-            }
-        }
-        return new FieldKey(clazz, filedName);
-    }
-
-    public void recycle(){
-        if (inUse){
+    public void recycle() {
+        if (inUse) {
             throw new IllegalStateException(this + " is in use, can't recycle");
         }
         clazz = null;

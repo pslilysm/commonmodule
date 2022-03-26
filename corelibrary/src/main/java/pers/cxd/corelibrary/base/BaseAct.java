@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
  */
 public abstract class BaseAct extends AppCompatActivity implements UiComponent, FragmentFinder {
 
-    protected final String TAG = "DEBUG_"+ this.getClass().getSimpleName();
+    protected final String TAG = "DEBUG_" + this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

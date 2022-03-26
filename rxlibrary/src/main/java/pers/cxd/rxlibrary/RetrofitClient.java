@@ -16,10 +16,10 @@ import retrofit2.Retrofit;
  */
 public abstract class RetrofitClient {
 
-    protected Retrofit mRetrofitClient;
     private final Map<Class<?>, Object> mApiMap = new ConcurrentHashMap<>();
+    protected Retrofit mRetrofitClient;
 
-    protected RetrofitClient(){
+    protected RetrofitClient() {
         buildRetrofit();
     }
 
@@ -27,7 +27,7 @@ public abstract class RetrofitClient {
      * Provide api service by {@code apiClass}
      *
      * @param apiClass the class of api service
-     * @param <I> the type of {@code apiClass}
+     * @param <I>      the type of {@code apiClass}
      * @return A created or cached api service by Retrofit
      */
     public <I> I getApi(Class<I> apiClass) {
@@ -35,8 +35,11 @@ public abstract class RetrofitClient {
     }
 
     protected abstract String getBaseUrl();
+
     protected abstract CallAdapter.Factory[] getCallAdapterFactories();
+
     protected abstract Converter.Factory[] getConvertFactories();
+
     protected abstract OkHttpClient createOkHttpClient();
 
     /**
@@ -46,7 +49,7 @@ public abstract class RetrofitClient {
         mRetrofitClient = createRetrofitClient();
     }
 
-    protected Retrofit createRetrofitClient(){
+    protected Retrofit createRetrofitClient() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(getBaseUrl())
                 .client(createOkHttpClient());

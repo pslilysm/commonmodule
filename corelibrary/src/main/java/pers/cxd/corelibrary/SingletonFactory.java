@@ -21,31 +21,31 @@ public class SingletonFactory {
 
     /**
      * Find or create the singleton instance by {@code clazz}
-     * @see #findOrCreate(Class, Class[], Object...)
      *
      * @param clazz singleton's class
-     * @param <T> the type of singleton
+     * @param <T>   the type of singleton
      * @return a cached or created singleton
+     * @see #findOrCreate(Class, Class[], Object...)
      */
-    public static <T> T findOrCreate(Class<T> clazz){
+    public static <T> T findOrCreate(Class<T> clazz) {
         return findOrCreate(clazz, null);
     }
 
     /**
      * Find or create the singleton instance by {@code clazz}, {@code parameterTypes}, {@code args},
      *
-     * @param clazz singleton's class
+     * @param clazz          singleton's class
      * @param parameterTypes singleton's constructor parameterTypes
-     * @param args for init singleton's constructor
-     * @param <T> the type of singleton
+     * @param args           for init singleton's constructor
+     * @param <T>            the type of singleton
      * @return a cached or created singleton
      */
     public static <T> T findOrCreate(Class<T> clazz, Class<?>[] parameterTypes, Object... args) {
         Pair<ConstructorKey, ArgsKey> pair = Pair.obtain(ConstructorKey.obtain(clazz, parameterTypes), ArgsKey.obtain(args));
         T singleton = (T) sSingletonCache.get(pair);
-        if (singleton == null){
-            synchronized (sSingletonCache){
-                if ((singleton = (T) sSingletonCache.get(pair)) == null){
+        if (singleton == null) {
+            synchronized (sSingletonCache) {
+                if ((singleton = (T) sSingletonCache.get(pair)) == null) {
                     try {
                         Constructor<T> constructor = clazz.getDeclaredConstructor(parameterTypes);
                         constructor.setAccessible(true);
@@ -54,11 +54,11 @@ public class SingletonFactory {
                     } catch (ReflectiveOperationException e) {
                         throw new RuntimeException(e);
                     }
-                }else{
+                } else {
                     pair.recycle();
                 }
             }
-        }else {
+        } else {
             pair.recycle();
         }
         return singleton;

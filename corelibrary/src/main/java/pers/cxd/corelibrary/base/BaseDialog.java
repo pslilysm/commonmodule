@@ -31,7 +31,7 @@ public abstract class BaseDialog implements UiComponent, DialogInterface.OnDismi
 
     protected AlertDialog mDialog;
 
-    protected BaseDialog(UiComponent component){
+    protected BaseDialog(UiComponent component) {
         mBase = component;
         mContentView = getLayoutInflater().inflate(getLayoutId(), null);
         mBuilder = new AlertDialog.Builder(component.getContext())
@@ -41,7 +41,7 @@ public abstract class BaseDialog implements UiComponent, DialogInterface.OnDismi
         setUp(null);
     }
 
-    public <V extends View> V findViewById(int id){
+    public <V extends View> V findViewById(int id) {
         return mContentView.findViewById(id);
     }
 
@@ -50,7 +50,7 @@ public abstract class BaseDialog implements UiComponent, DialogInterface.OnDismi
         performOnDestroy();
     }
 
-    public void show(){
+    public void show() {
         if (mDialog == null) {
             mDialog = mBuilder.create();
         }
@@ -62,18 +62,18 @@ public abstract class BaseDialog implements UiComponent, DialogInterface.OnDismi
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    public void dismiss(){
-        if (mDialog != null){
+    public void dismiss() {
+        if (mDialog != null) {
             mDialog.dismiss();
         }
     }
-    
+
     public void showSoftKeyboard(EditText editText) {
         editText.postDelayed(() -> {
             editText.setFocusableInTouchMode(true);
             editText.requestFocus();
             InputMethodManager imm = (InputMethodManager) mBase.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(editText,  InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
             editText.setSelection(editText.getText().length());
         }, 200);
     }

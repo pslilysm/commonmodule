@@ -12,11 +12,11 @@ import android.view.animation.TranslateAnimation;
  * @since 1.0.0
  */
 public class ViewAnimUtil {
-    
+
     private static final int DEFAULT_ANIM_DURATION = 250;
 
-    public static void showViewWithAlpha(View v){
-        if (v.getVisibility() != View.VISIBLE){
+    public static void showViewWithAlpha(View v) {
+        if (v.getVisibility() != View.VISIBLE) {
             AlphaAnimation alphaAnim = new AlphaAnimation(0, 1);
             alphaAnim.setDuration(DEFAULT_ANIM_DURATION);
             alphaAnim.setFillAfter(true);
@@ -24,8 +24,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void hideViewWithAlpha(View v){
-        if (v.getVisibility() == View.VISIBLE){
+    public static void hideViewWithAlpha(View v) {
+        if (v.getVisibility() == View.VISIBLE) {
             AlphaAnimation alphaAnim = new AlphaAnimation(1, 0);
             alphaAnim.setDuration(DEFAULT_ANIM_DURATION);
 //            alphaAnim.setFillAfter(true);
@@ -33,8 +33,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void showViewWithTranslateFromBottomToTop(View v){
-        if (v.getVisibility() != View.VISIBLE){
+    public static void showViewWithTranslateFromBottomToTop(View v) {
+        if (v.getVisibility() != View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -43,8 +43,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void hideViewWithTranslateFromTopToBottom(View v){
-        if (v.getVisibility() == View.VISIBLE){
+    public static void hideViewWithTranslateFromTopToBottom(View v) {
+        if (v.getVisibility() == View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -52,7 +52,7 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void translateFromLeftToRight(View v){
+    public static void translateFromLeftToRight(View v) {
         TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
                 Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
         transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -60,7 +60,7 @@ public class ViewAnimUtil {
         v.startAnimation(transAnim);
     }
 
-    public static void translateFromRightToLeft(View v){
+    public static void translateFromRightToLeft(View v) {
         TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0,
                 Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
         transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -68,8 +68,8 @@ public class ViewAnimUtil {
         v.startAnimation(transAnim);
     }
 
-    public static void hideViewWithTranslateFromRightToLeft(View v){
-        if (v.getVisibility() == View.VISIBLE){
+    public static void hideViewWithTranslateFromRightToLeft(View v) {
+        if (v.getVisibility() == View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, -1,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -77,8 +77,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void showViewWithTranslateFromRightToLeft(View v){
-        if (v.getVisibility() != View.VISIBLE){
+    public static void showViewWithTranslateFromRightToLeft(View v) {
+        if (v.getVisibility() != View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -86,8 +86,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void hideViewWithTranslateFromLeftToRight(View v){
-        if (v.getVisibility() == View.VISIBLE){
+    public static void hideViewWithTranslateFromLeftToRight(View v) {
+        if (v.getVisibility() == View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);
@@ -95,8 +95,8 @@ public class ViewAnimUtil {
         }
     }
 
-    public static void showViewWithTranslateFromLeftToRight(View v){
-        if (v.getVisibility() != View.VISIBLE){
+    public static void showViewWithTranslateFromLeftToRight(View v) {
+        if (v.getVisibility() != View.VISIBLE) {
             TranslateAnimation transAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1, Animation.RELATIVE_TO_SELF, 0,
                     Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
             transAnim.setDuration(DEFAULT_ANIM_DURATION);

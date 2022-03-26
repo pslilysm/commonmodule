@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class ConstructorKey {
 
+    private static final int MAX_POOL_SIZE = 10;
+    private static ConstructorKey sPool;
+    private static int sPoolSize;
     Class<?> clazz;
     Class<?>[] parameterTypes;
     private boolean inUse;
@@ -13,6 +16,21 @@ public class ConstructorKey {
     private ConstructorKey(Class<?> clazz, Class<?>[] parameterTypes) {
         this.clazz = clazz;
         this.parameterTypes = parameterTypes;
+    }
+
+    public static ConstructorKey obtain(Class<?> clazz, Class<?>[] parameterTypes) {
+        synchronized (ConstructorKey.class) {
+            if (sPool != null) {
+                ConstructorKey m = sPool;
+                sPool = m.next;
+                m.next = null;
+                sPoolSize--;
+                m.clazz = clazz;
+                m.parameterTypes = parameterTypes;
+                return m;
+            }
+        }
+        return new ConstructorKey(clazz, parameterTypes);
     }
 
     @Override
@@ -35,27 +53,8 @@ public class ConstructorKey {
         inUse = true;
     }
 
-    private static ConstructorKey sPool;
-    private static int sPoolSize;
-    private static final int MAX_POOL_SIZE = 10;
-
-    public static ConstructorKey obtain(Class<?> clazz, Class<?>[] parameterTypes){
-        synchronized (ConstructorKey.class) {
-            if (sPool != null) {
-                ConstructorKey m = sPool;
-                sPool = m.next;
-                m.next = null;
-                sPoolSize--;
-                m.clazz = clazz;
-                m.parameterTypes = parameterTypes;
-                return m;
-            }
-        }
-        return new ConstructorKey(clazz, parameterTypes);
-    }
-
-    public void recycle(){
-        if (inUse){
+    public void recycle() {
+        if (inUse) {
             throw new IllegalStateException(this + " is in use, can't recycle");
         }
         clazz = null;

@@ -23,14 +23,14 @@ public abstract class BaseFmt extends Fragment implements UiComponent, FragmentF
 
     protected ViewGroup mContentView;
 
-    protected  <V extends View> V findViewById(int id){
+    protected <V extends View> V findViewById(int id) {
         return mContentView.findViewById(id);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mContentView == null){
+        if (mContentView == null) {
             int layoutId = getLayoutId();
             if (layoutId != 0) {
                 mContentView = (ViewGroup) inflater.inflate(layoutId, container, false);

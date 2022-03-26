@@ -21,11 +21,11 @@ public abstract class BaseObserverImpl<D> implements Observer<D> {
     public BaseObserverImpl(@Nullable CompositeDisposable subscription) {
         this.mSubscription = subscription;
     }
-    
+
     @Override
     public void onSubscribe(@NonNull Disposable disposable) {
         this.disposable = disposable;
-        if (mSubscription != null){
+        if (mSubscription != null) {
             mSubscription.add(disposable);
         }
     }
@@ -38,8 +38,8 @@ public abstract class BaseObserverImpl<D> implements Observer<D> {
     /**
      * cancel the subscribe to prevent mem leak;
      */
-    protected void dispose(){
-        if (disposable != null && !disposable.isDisposed()){
+    protected void dispose() {
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
     }
