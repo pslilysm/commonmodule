@@ -29,7 +29,7 @@ public class ZipUtil {
      *
      * @param srcPath  the Zip file path
      * @param destPath the output dir path
-     * @throws IOException if any I/O errors occurs
+     * @throws IOException if an I/O errors occurs
      * @see #unzip(File, File)
      */
     public static void unzip(String srcPath, String destPath) throws IOException {
@@ -41,7 +41,7 @@ public class ZipUtil {
      *
      * @param src  the Zip file
      * @param dest the output dir
-     * @throws IOException if any I/O errors occurs
+     * @throws IOException if an I/O errors occurs
      * @see #unzip(File, File, ExecutorService, int)
      */
     public static void unzip(File src, File dest) throws IOException {
@@ -60,7 +60,7 @@ public class ZipUtil {
      * @param dest    the output dir
      * @param es      the ExecutorService to run unzip task
      * @param threads the num of threads to run unzip task
-     * @throws IOException if any I/O errors occurs
+     * @throws IOException if an I/O errors occurs
      */
     public static void unzip(File src, File dest, ExecutorService es, int threads) throws IOException {
         ZipFile zf = new ZipFile(src);

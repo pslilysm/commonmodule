@@ -48,9 +48,8 @@ public class UiComponentPlugins {
             try {
                 return ReflectionUtil.newInstance(fmtClazz);
             } catch (ReflectiveOperationException e) {
-                ExceptionUtil.rethrow(e);
+                throw ExceptionUtil.rethrow(e);
             }
-            return null;
         }, args);
     }
 

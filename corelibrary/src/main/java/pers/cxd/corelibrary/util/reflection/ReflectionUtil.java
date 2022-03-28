@@ -152,15 +152,15 @@ public class ReflectionUtil {
     }
 
     public static <T> T newInstance(String className) throws ReflectiveOperationException {
-        return (T) newInstance(className, ClassLoader.getSystemClassLoader(), sEmptyParameterTypesAndArgs);
+        return newInstance(className, ClassLoader.getSystemClassLoader(), sEmptyParameterTypesAndArgs);
     }
 
     public static <T> T newInstance(String className, ClassLoader classLoader) throws ReflectiveOperationException {
-        return (T) newInstance(className, classLoader, sEmptyParameterTypesAndArgs);
+        return newInstance(className, classLoader, sEmptyParameterTypesAndArgs);
     }
 
     public static <T> T newInstance(String className, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
-        return (T) newInstance(className, ClassLoader.getSystemClassLoader(), parameterTypesAndArgs);
+        return newInstance(className, ClassLoader.getSystemClassLoader(), parameterTypesAndArgs);
     }
 
     public static <T> T newInstance(String className, ClassLoader classLoader, Object... parameterTypesAndArgs) throws ReflectiveOperationException {
