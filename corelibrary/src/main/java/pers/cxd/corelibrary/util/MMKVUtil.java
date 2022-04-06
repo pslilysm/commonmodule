@@ -16,11 +16,11 @@ import pers.cxd.corelibrary.AppHolder;
  */
 public class MMKVUtil {
 
-    private static final MMKV sDefault = MMKV.defaultMMKV();
-
     static {
         MMKV.initialize(AppHolder.get());
     }
+
+    private static final MMKV sDefault = MMKV.defaultMMKV();
 
     /**
      * encode a non-null value
