@@ -16,13 +16,13 @@ import pers.cxd.corelibrary.Singleton;
  * @author pslilysm
  * @since 1.0.0
  */
-public class AesUtils {
+public class AesUtil {
+
+    private static final String sAesMode = "AES/CFB/NOPadding";
 
     public static final String sAesKey = "NV9MCANO5VVCMUASPSLILYSM19990127";
 
     private static final String sIvKey = "PSLILYSM19990127";
-
-    private static final String sAesMode = "AES/CFB/NOPadding";
 
     private static final Singleton<Cipher> sDefaultEncryptCipher = new Singleton<Cipher>() {
         @Override
@@ -51,8 +51,10 @@ public class AesUtils {
     };
 
     /**
-     * @param str 原始字符串
-     * @return 加密的字符串
+     * 使用默认的AES配置进行加密
+     *
+     * @param str 要加密的字符串
+     * @return 加密好的字符串，最后会BASE64编码一下
      */
     public static String encrypt(String str) {
         try {
@@ -64,8 +66,10 @@ public class AesUtils {
     }
 
     /**
-     * @param str 加密的字符串
-     * @return 解密后的字符串
+     * 使用默认的AES配置进行解密
+     *
+     * @param str 要解密的字符串，一定要是BASE64格式的
+     * @return 解密好的字符串
      */
     public static String decrypt(String str) {
         try {
@@ -75,10 +79,19 @@ public class AesUtils {
         }
     }
 
-    public static String encrypt(String str, String key) {
+    /**
+     * AES加密
+     *
+     * @param str     要加密的字符串
+     * @param aesMode AES模式
+     * @param aesKey  AES加密的Key
+     * @param ivKey   AES加密的向量
+     * @return 加密好的字符串，最后会BASE64编码一下
+     */
+    public static String encrypt(String str, String aesMode, String aesKey, String ivKey) {
         try {
-            Cipher cipher = Cipher.getInstance(sAesMode);
-            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(sIvKey.getBytes()));
+            Cipher cipher = Cipher.getInstance(aesMode);
+            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(aesKey.getBytes(), "AES"), new IvParameterSpec(ivKey.getBytes()));
             byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
             return Base64.encodeToString(bytes, Base64.NO_WRAP);
         } catch (Exception e) {
@@ -86,9 +99,18 @@ public class AesUtils {
         }
     }
 
-    public static String decrypt(String str, String key) throws Exception {
-        Cipher cipher = Cipher.getInstance(sAesMode);
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(sIvKey.getBytes()));
+    /**
+     * AES解密
+     *
+     * @param str     要解密的字符串，一定要是BASE64格式的
+     * @param aesMode AES模式
+     * @param aesKey  AES加密的Key
+     * @param ivKey   AES加密的向量
+     * @return 解密好的字符串
+     */
+    public static String decrypt(String str, String aesMode, String aesKey, String ivKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(aesMode);
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(aesKey.getBytes(), "AES"), new IvParameterSpec(ivKey.getBytes()));
         return new String(cipher.doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8);
     }
 

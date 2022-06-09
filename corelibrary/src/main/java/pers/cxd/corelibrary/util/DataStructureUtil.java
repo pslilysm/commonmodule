@@ -15,6 +15,10 @@ public class DataStructureUtil {
         return collection == null || collection.isEmpty();
     }
 
+    public static boolean isEmpty(Map<?, ?> map) {
+        return map == null || map.isEmpty();
+    }
+
     public static boolean haveElement(Collection<?> collection) {
         return !isEmpty(collection);
     }

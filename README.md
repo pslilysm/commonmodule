@@ -13,13 +13,23 @@ allprojects {
     }
 }
 ```
+    or in gradle 7 and above
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        // Add it in your root build.gradle at the end of repositories:
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
 * step 2
 ```groovy
 dependencies {
     // add core lib to your dependencies
-    implementation 'com.github.pslilysm.commonmodule:corelibrary:1.1.7'
+    implementation 'com.github.pslilysm.commonmodule:corelibrary:1.1.8'
     // add rx lib to your dependencies
-    implementation 'com.github.pslilysm.commonmodule:rxlibrary:1.1.7'
+    implementation 'com.github.pslilysm.commonmodule:rxlibrary:1.1.8'
 }
 ```
 

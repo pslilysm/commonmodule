@@ -12,9 +12,11 @@ import pers.cxd.corelibrary.Singleton;
  * @author pslilysm
  * @since 1.0.0
  */
-public class ExecutorsHolder {
+public class GlobalExecutors {
 
     private static final AtomicInteger sIONum = new AtomicInteger();
+
+    private static final AtomicInteger sComputeNum = new AtomicInteger();
 
     private static final Singleton<ScheduledExecutorService> sGlobalIOExecutor = new Singleton<ScheduledExecutorService>() {
         @Override
@@ -24,13 +26,12 @@ public class ExecutorsHolder {
         }
     };
 
-    private static final AtomicInteger sComputeNum = new AtomicInteger();
 
     private static final Singleton<ScheduledExecutorService> sGlobalComputeExecutor = new Singleton<ScheduledExecutorService>() {
         @Override
         protected ScheduledExecutorService create() {
             return Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors(),
-                    r -> new Thread(r, "g-computation-" + sComputeNum.incrementAndGet() + "-thread"));
+                    r -> new Thread(r, "g-compute-" + sComputeNum.incrementAndGet() + "-thread"));
         }
     };
 
