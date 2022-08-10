@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    compileOnly 'androidx.appcompat:appcompat:1.4.2'
 
     compileOnly 'com.google.code.gson:gson:2.9.0'
     compileOnly 'com.tencent:mmkv:1.2.13'
