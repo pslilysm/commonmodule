@@ -27,6 +27,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+    compileOnly 'androidx.core:core-ktx:1.8.0'
+
     compileOnly 'com.squareup.okhttp3:okhttp:3.14.9'
     compileOnly 'com.squareup.okhttp3:logging-interceptor:3.14.9'
 
