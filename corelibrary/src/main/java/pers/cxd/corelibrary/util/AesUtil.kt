@@ -58,6 +58,7 @@ object AesUtil {
      * @param str 要加密的字符串
      * @return 加密好的字符串，最后会BASE64编码一下
      */
+    @kotlin.jvm.JvmStatic
     fun encrypt(str: String): String {
         return try {
             val bytes =
@@ -74,6 +75,7 @@ object AesUtil {
      * @param str 要解密的字符串，一定要是BASE64格式的
      * @return 解密好的字符串
      */
+    @kotlin.jvm.JvmStatic
     fun decrypt(str: String?): String {
         return try {
             String(
@@ -94,6 +96,7 @@ object AesUtil {
      * @param ivKey   AES加密的向量
      * @return 加密好的字符串，最后会BASE64编码一下
      */
+    @kotlin.jvm.JvmStatic
     fun encrypt(str: String, aesMode: String?, aesKey: String, ivKey: String): String {
         return try {
             val cipher = Cipher.getInstance(aesMode)
@@ -118,7 +121,7 @@ object AesUtil {
      * @param ivKey   AES加密的向量
      * @return 解密好的字符串
      */
-    @Throws(Exception::class)
+    @kotlin.jvm.JvmStatic
     fun decrypt(str: String?, aesMode: String?, aesKey: String, ivKey: String): String {
         val cipher = Cipher.getInstance(aesMode)
         cipher.init(

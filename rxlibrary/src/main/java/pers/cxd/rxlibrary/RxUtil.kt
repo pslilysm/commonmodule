@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * @since 1.0.0
  */
 object RxUtil {
+    @kotlin.jvm.JvmStatic
     fun <D : Any> execute(
         observable: Observable<D>,
         observer: Observer<D>,
@@ -29,18 +30,25 @@ object RxUtil {
                     .observeOn(AndroidSchedulers.mainThread())
             }
         private val IO: ObservableTransformer<Any, Any> =
-            ObservableTransformer<Any, Any> { upstream: Observable<Any> -> upstream.subscribeOn(Schedulers.io()) }
+            ObservableTransformer<Any, Any> { upstream: Observable<Any> ->
+                upstream.subscribeOn(
+                    Schedulers.io()
+                )
+            }
         private val NON: ObservableTransformer<Any, Any> =
             ObservableTransformer<Any, Any> { upstream: Observable<Any> -> upstream }
 
+        @kotlin.jvm.JvmStatic
         fun <T> IOToMain(): ObservableTransformer<T, T> {
             return IOToMain as ObservableTransformer<T, T>
         }
 
+        @kotlin.jvm.JvmStatic
         fun <T> IO(): ObservableTransformer<T, T> {
             return IO as ObservableTransformer<T, T>
         }
 
+        @kotlin.jvm.JvmStatic
         fun <T> NON(): ObservableTransformer<T, T> {
             return NON as ObservableTransformer<T, T>
         }

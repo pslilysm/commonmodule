@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.lifecycle.LifecycleOwner
+import androidx.viewbinding.ViewBinding
 
 /**
  * UI components are usually implemented by Activity, Fragment, and Dialog.
@@ -12,19 +14,16 @@ import android.view.LayoutInflater
  * @author pslilysm
  * @since 1.0.0
  */
-interface UiComponent {
-    val layoutId: Int
+interface UIComponent<VB : ViewBinding>: LifecycleOwner {
+
+    val mViewBinding: VB?
     fun setUp(savedInstanceState: Bundle?)
     fun getContext(): Context
     fun startActivity(intent: Intent)
     fun startActivityForResult(intent: Intent, requestCode: Int)
     fun getLayoutInflater(): LayoutInflater
-    fun registerActivityResultCallback(callback: OnActivityResultCallback) {
-        UiComponentPlugins.registerActivityResultCallback(this, callback)
-    }
 
     fun performOnDestroy() {
-        UiComponentPlugins.unregisterActivityResultCallbacks(this)
         if (this is BaseView) {
             (this as BaseView).releaseView()
         }

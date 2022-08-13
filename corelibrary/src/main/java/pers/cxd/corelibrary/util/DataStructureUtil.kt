@@ -20,7 +20,7 @@ object DataStructureUtil {
     }
 
     fun haveElement(map: Map<*, *>?): Boolean {
-        return map != null && !map.isEmpty()
+        return map != null && map.isNotEmpty()
     }
 
     fun haveElement(arr: BooleanArray?): Boolean {

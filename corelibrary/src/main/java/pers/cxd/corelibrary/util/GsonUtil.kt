@@ -16,6 +16,7 @@ import pers.cxd.corelibrary.util.reflection.ReflectionUtil
 object GsonUtil {
     private val sPrettyGson: Gson
     private val sGson: Gson
+
     /**
      * Serialize object to json
      *
@@ -23,11 +24,8 @@ object GsonUtil {
      * @param pretty ture we'll returned a pretty json string
      * @return json string
      */
-    /**
-     * @return a json string without pretty
-     * @see .objToJson
-     */
     @JvmOverloads
+    @kotlin.jvm.JvmStatic
     fun objToJson(obj: Any?, pretty: Boolean = false): String {
         return if (pretty) sPrettyGson.toJson(obj) else sGson.toJson(obj)
     }
@@ -39,7 +37,8 @@ object GsonUtil {
      * @param tClass class of object will returned
      * @param <T>    the type of the object returned
      * @return a object deserialize of json string
-    </T> */
+     */
+    @kotlin.jvm.JvmStatic
     fun <T> jsonToObject(json: String?, tClass: Class<T>?): T {
         return sGson.fromJson(json, tClass)
     }
@@ -51,7 +50,8 @@ object GsonUtil {
      * @param tClass Set's elements class
      * @param <T>    the type of the Set's element
      * @return a empty Set if json is empty string or empty array
-    </T> */
+     */
+    @kotlin.jvm.JvmStatic
     fun <T> jsonToSet(json: String?, tClass: Class<T>?): Set<T> {
         val list: MutableSet<T> = ArraySet()
         if (!TextUtils.isEmpty(json)) {
@@ -70,8 +70,9 @@ object GsonUtil {
      * @param tClass List's elements class
      * @param <T>    the type of the List's element
      * @return a empty List if json is empty string or empty array
-    </T> */
-    fun <T> jsonToList(json: String?, tClass: Class<T>?): List<T> {
+     */
+    @kotlin.jvm.JvmStatic
+    fun <T> jsonToList(json: String?, tClass: Class<T>?): MutableList<T> {
         val list: MutableList<T> = ArrayList()
         if (!TextUtils.isEmpty(json)) {
             val array = JsonParser.parseString(json).asJsonArray
@@ -88,9 +89,9 @@ object GsonUtil {
      * @param json json string
      * @param <V>> the type of the Map's value
      * @return a empty Map if json is empty
-    </V> */
+     */
     @kotlin.jvm.JvmStatic
-    fun <V> jsonToMap(json: String?, vClass: Class<V>?): Map<String, V> {
+    fun <V> jsonToMap(json: String?, vClass: Class<V>?): MutableMap<String, V> {
         val result: MutableMap<String, V> = LinkedTreeMap()
         if (TextUtils.isEmpty(json)) {
             return result
@@ -117,6 +118,7 @@ object GsonUtil {
      * @param jsonStr raw json string
      * @return a prettied json string
      */
+    @kotlin.jvm.JvmStatic
     fun prettyJson(jsonStr: String?): String {
         val je = JsonParser.parseString(jsonStr)
         return sPrettyGson.toJson(je)

@@ -16,7 +16,7 @@ object AppHolder {
         AppHolder.sApplication = sApplication
     }
 
-    fun get(): Application? {
+    fun get(): Application {
         if (sApplication == null) {
             synchronized(AppHolder::class.java) {
                 if (sApplication == null) {
@@ -38,6 +38,6 @@ object AppHolder {
                 }
             }
         }
-        return sApplication
+        return sApplication!!
     }
 }

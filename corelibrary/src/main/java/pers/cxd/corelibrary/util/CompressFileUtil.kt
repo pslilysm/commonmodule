@@ -14,22 +14,19 @@ import java.util.zip.ZipFile
 /**
  * Miscellaneous compress file utility methods.
  *
- * @author cxd
+ * @author pslilysm
  * @since 1.1.8
  * Created on 2022/6/9 10:43
  */
 object CompressFileUtil {
-    /**
-     * @see .concurrentDecompressZip
-     */
+
+    @kotlin.jvm.JvmStatic
     @Throws(IOException::class)
-    fun concurrentDecompressZip(srcFilePath: String?, outputDirPath: String?) {
+    fun concurrentDecompressZip(srcFilePath: String, outputDirPath: String) {
         concurrentDecompressZip(File(srcFilePath), File(outputDirPath))
     }
 
-    /**
-     * @see .concurrentDecompressZip
-     */
+    @kotlin.jvm.JvmStatic
     @Throws(IOException::class)
     fun concurrentDecompressZip(srcFile: File, outputDir: File) {
         val es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 5)
@@ -40,13 +37,11 @@ object CompressFileUtil {
         }
     }
 
-    /**
-     * @see .concurrentDecompressZip
-     */
+    @kotlin.jvm.JvmStatic
     @Throws(IOException::class)
     fun concurrentDecompressZip(
-        srcFilePath: String?,
-        outputDirPath: String?,
+        srcFilePath: String,
+        outputDirPath: String,
         es: ExecutorService,
         threads: Int
     ) {
@@ -62,6 +57,7 @@ object CompressFileUtil {
      * @param threads   the num of threads to run unzip task
      * @throws IOException if an I/O errors occurs
      */
+    @kotlin.jvm.JvmStatic
     @Throws(IOException::class)
     fun concurrentDecompressZip(srcFile: File, outputDir: File, es: ExecutorService, threads: Int) {
         require(!srcFile.isDirectory) { "please check if the srcFile is a file" }
@@ -82,10 +78,10 @@ object CompressFileUtil {
             val cur = Thread.currentThread()
             for (i in 0 until threads) {
                 es.execute {
-                    var zipEntry: ZipEntry
+                    var zipEntry: ZipEntry?
                     while (entryFileQueue.poll().also { zipEntry = it } != null
                         && !Thread.currentThread().isInterrupted) {
-                        val f = File(outputDir, zipEntry.name)
+                        val f = File(outputDir, zipEntry!!.name)
                         try {
                             zf.getInputStream(zipEntry).use { `is` ->
                                 FileOutputStream(f).use { fos ->
@@ -111,19 +107,13 @@ object CompressFileUtil {
         }
     }
 
-    /**
-     * @see .concurrentDecompress7z
-     */
     @Deprecated("")
     @Throws(IOException::class)
-    fun concurrentDecompress7z(srcFilePath: String?, outputDirPath: String?) {
+    fun concurrentDecompress7z(srcFilePath: String, outputDirPath: String) {
         concurrentDecompress7z(File(srcFilePath), File(outputDirPath))
     }
 
-    /**
-     * @see .concurrentDecompress7z
-     */
-    @Deprecated("")
+    @Deprecated("not impl the concurrent method")
     @Throws(IOException::class)
     fun concurrentDecompress7z(srcFile: File, outputDir: File) {
         val es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 5)
@@ -134,14 +124,11 @@ object CompressFileUtil {
         }
     }
 
-    /**
-     * @see .concurrentDecompress7z
-     */
     @Deprecated("")
     @Throws(IOException::class)
     fun concurrentDecompress7z(
-        srcFilePath: String?,
-        outputDirPath: String?,
+        srcFilePath: String,
+        outputDirPath: String,
         es: ExecutorService,
         threads: Int
     ) {
@@ -157,7 +144,7 @@ object CompressFileUtil {
      * @param threads   the num of threads to run unzip task
      * @throws IOException if an I/O errors occurs
      */
-    @Deprecated("")
+    @Deprecated("not impl the concurrent method")
     @Throws(IOException::class)
     fun concurrentDecompress7z(srcFile: File, outputDir: File, es: ExecutorService, threads: Int) {
         require(!srcFile.isDirectory) { "please check if the srcFile is a file" }
@@ -175,10 +162,10 @@ object CompressFileUtil {
             val curThread = Thread.currentThread()
             for (i in 0 until threads) {
                 es.execute {
-                    var entry: SevenZArchiveEntry
+                    var entry: SevenZArchiveEntry?
                     while (entryFileQueue.poll().also { entry = it } != null
                         && !Thread.currentThread().isInterrupted) {
-                        val f = File(outputDir, entry.name)
+                        val f = File(outputDir, entry!!.name)
                         try {
                             sevenZFile.getInputStream(entry).use { `is` ->
                                 FileOutputStream(f).use { fos ->
@@ -211,6 +198,7 @@ object CompressFileUtil {
      * @param outputDir the output dir
      * @throws IOException if an I/O errors occurs
      */
+    @kotlin.jvm.JvmStatic
     @Throws(IOException::class)
     fun decompress7z(srcFile: File, outputDir: File) {
         require(!srcFile.isDirectory) { "please check if the srcFile is a file" }

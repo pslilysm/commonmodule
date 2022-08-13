@@ -73,6 +73,7 @@ class Pair<F, S> private constructor(first: F, second: S) : Recyclable {
         private val sPoolLock = Any()
         private var sPool: Pair<*, *>? = null
         private var sPoolSize = 0
+        @kotlin.jvm.JvmStatic
         fun <F, S> obtain(first: F, second: S): Pair<F, S> {
             synchronized(sPoolLock) {
                 if (sPool != null) {

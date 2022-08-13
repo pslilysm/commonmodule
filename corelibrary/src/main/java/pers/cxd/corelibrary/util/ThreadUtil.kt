@@ -14,6 +14,7 @@ object ThreadUtil {
      *
      * @throws IllegalStateException if current thread is not main thread
      */
+    @kotlin.jvm.JvmStatic
     fun checkIsMainThread() {
         check(Looper.myLooper() == Looper.getMainLooper()) { "cur thread is " + Thread.currentThread().name + ", not main thread" }
     }
@@ -23,6 +24,7 @@ object ThreadUtil {
      *
      * @throws IllegalStateException if current thread is main thread
      */
+    @kotlin.jvm.JvmStatic
     fun throwIfMainThread() {
         check(Looper.getMainLooper() != Looper.myLooper()) { "cur thread is main thread" }
     }

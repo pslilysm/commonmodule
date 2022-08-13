@@ -6,12 +6,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import pers.cxd.corelibrary.util.ScreenUtil
+import androidx.lifecycle.Lifecycle
+import androidx.viewbinding.ViewBinding
 
 /**
  * A Base Dialog implements UiComponent, DialogInterface.OnDismissListener.
@@ -20,17 +20,27 @@ import pers.cxd.corelibrary.util.ScreenUtil
  * @author pslilysm
  * @since 1.1.0
  */
-abstract class BaseDialog protected constructor(protected val mBase: UiComponent) : UiComponent,
+abstract class BaseDialog<VB : ViewBinding> protected constructor(protected val mBase: UIComponent<*>) : UIComponent<VB>,
     DialogInterface.OnDismissListener {
     protected val mBuilder: AlertDialog.Builder
-    private val mContentView: View
     protected var mDialog: AlertDialog? = null
-    fun <V : View?> findViewById(id: Int): V {
-        return mContentView.findViewById(id)
+
+    abstract fun initWindowLp(lp: WindowManager.LayoutParams)
+
+    init {
+        mBuilder = AlertDialog.Builder(mBase.getContext())
+            .setView(mViewBinding!!.root)
+            .setCancelable(true)
+            .setOnDismissListener(this)
+        setUp(null)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         performOnDestroy()
+    }
+
+    override fun getLifecycle(): Lifecycle {
+        throw UnsupportedOperationException("dialog not have a lifecycle")
     }
 
     fun show() {
@@ -40,7 +50,7 @@ abstract class BaseDialog protected constructor(protected val mBase: UiComponent
         mDialog!!.show()
         val lp = WindowManager.LayoutParams()
         lp.copyFrom(mDialog!!.window!!.attributes)
-        lp.width = ScreenUtil.width - ScreenUtil.dip2px((36 * 2).toFloat())
+        initWindowLp(lp)
         mDialog!!.window!!.attributes = lp
         mDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
@@ -83,16 +93,4 @@ abstract class BaseDialog protected constructor(protected val mBase: UiComponent
         mBase.startActivity(intent)
     }
 
-    override fun registerActivityResultCallback(callback: OnActivityResultCallback) {
-        mBase.registerActivityResultCallback(callback)
-    }
-
-    init {
-        mContentView = getLayoutInflater().inflate(layoutId, null)
-        mBuilder = AlertDialog.Builder(mBase.getContext()!!)
-            .setView(mContentView)
-            .setCancelable(true)
-            .setOnDismissListener(this)
-        setUp(null)
-    }
 }

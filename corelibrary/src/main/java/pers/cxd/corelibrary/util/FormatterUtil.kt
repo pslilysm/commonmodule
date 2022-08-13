@@ -30,12 +30,14 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely SimpleDateFormat
      */
+    @kotlin.jvm.JvmStatic
     val simpleDateFormatter: SimpleDateFormat
         get() = sDateFormatTLS.get()!!
 
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"yyyy-MM-dd HH:mm:ss"}
      */
+    @kotlin.jvm.JvmStatic
     fun getyyyyMMddHHmmssFormatter(): SimpleDateFormat {
         val sdf = sDateFormatTLS.get()
         sdf!!.applyPattern(syyyyMMddHHmmssPatter)
@@ -45,6 +47,7 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"MM-dd"}
      */
+    @kotlin.jvm.JvmStatic
     val mMddFormatter: SimpleDateFormat
         get() {
             val sdf = sDateFormatTLS.get()
@@ -55,6 +58,7 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely SimpleDateFormat with pattern {"HH:mm:ss"}
      */
+    @kotlin.jvm.JvmStatic
     val hHmmssFormatter: SimpleDateFormat
         get() {
             val sdf = sDateFormatTLS.get()
@@ -65,12 +69,14 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely DecimalFormat
      */
+    @kotlin.jvm.JvmStatic
     val decimalFormat: DecimalFormat
         get() = sDecimalFormatTLS.get()
 
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.000"}
      */
+    @kotlin.jvm.JvmStatic
     fun get_0dot000Formatter(): DecimalFormat {
         val decimalFormat = sDecimalFormatTLS.get()
         decimalFormat!!.applyPattern("0.000")
@@ -80,6 +86,7 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.00"}
      */
+    @kotlin.jvm.JvmStatic
     fun get_0dot00Formatter(): DecimalFormat {
         val decimalFormat = sDecimalFormatTLS.get()
         decimalFormat!!.applyPattern("0.00")
@@ -89,6 +96,7 @@ object FormatterUtil {
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.0"}
      */
+    @kotlin.jvm.JvmStatic
     fun get_0dot0Formatter(): DecimalFormat {
         val decimalFormat = sDecimalFormatTLS.get()
         decimalFormat!!.applyPattern("0.0")

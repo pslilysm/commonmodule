@@ -11,17 +11,17 @@ import androidx.lifecycle.LifecycleOwner
  * @author pslilysm
  * @since 1.0.0
 </M></V> */
-open class Presenter<out V : BaseView, M : Any> : LifecycleOwner {
+open class Presenter<V : BaseView, M> : LifecycleOwner {
 
     @kotlin.jvm.JvmField
-    protected var mView: @UnsafeVariance V? = null
+    protected var mView: V? = null
     @kotlin.jvm.JvmField
     protected var mModel: M? = null
     override fun getLifecycle(): Lifecycle {
         return mView!!.lifecycle
     }
 
-    open fun attach(v: @UnsafeVariance V, m: M) {
+    open fun attach(v: V, m: M) {
         mView = v
         mModel = m
     }

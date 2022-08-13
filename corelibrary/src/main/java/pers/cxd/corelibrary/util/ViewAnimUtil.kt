@@ -13,6 +13,8 @@ import android.view.animation.TranslateAnimation
  */
 object ViewAnimUtil {
     private const val DEFAULT_ANIM_DURATION = 250
+
+    @kotlin.jvm.JvmStatic
     fun showViewWithAlpha(v: View) {
         if (v.visibility != View.VISIBLE) {
             val alphaAnim = AlphaAnimation(0f, 1f)
@@ -22,6 +24,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun hideViewWithAlpha(v: View) {
         if (v.visibility == View.VISIBLE) {
             val alphaAnim = AlphaAnimation(1f, 0f)
@@ -31,6 +34,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun showViewWithTranslateFromBottomToTop(v: View) {
         if (v.visibility != View.VISIBLE) {
             val transAnim = TranslateAnimation(
@@ -43,6 +47,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun hideViewWithTranslateFromTopToBottom(v: View) {
         if (v.visibility == View.VISIBLE) {
             val transAnim = TranslateAnimation(
@@ -54,6 +59,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun translateFromLeftToRight(v: View) {
         val transAnim = TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 1f,
@@ -64,6 +70,7 @@ object ViewAnimUtil {
         v.startAnimation(transAnim)
     }
 
+    @kotlin.jvm.JvmStatic
     fun translateFromRightToLeft(v: View) {
         val transAnim = TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 0f,
@@ -74,6 +81,7 @@ object ViewAnimUtil {
         v.startAnimation(transAnim)
     }
 
+    @kotlin.jvm.JvmStatic
     fun hideViewWithTranslateFromRightToLeft(v: View) {
         if (v.visibility == View.VISIBLE) {
             val transAnim = TranslateAnimation(
@@ -85,6 +93,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun showViewWithTranslateFromRightToLeft(v: View) {
         if (v.visibility != View.VISIBLE) {
             val transAnim = TranslateAnimation(
@@ -96,6 +105,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun hideViewWithTranslateFromLeftToRight(v: View) {
         if (v.visibility == View.VISIBLE) {
             val transAnim = TranslateAnimation(
@@ -107,6 +117,7 @@ object ViewAnimUtil {
         }
     }
 
+    @kotlin.jvm.JvmStatic
     fun showViewWithTranslateFromLeftToRight(v: View) {
         if (v.visibility != View.VISIBLE) {
             val transAnim = TranslateAnimation(

@@ -39,14 +39,16 @@ object GlobalExecutors {
     /**
      * @return a global io executor, the core pool size is `cpu cores * 5`
      */
-    fun io(): ScheduledExecutorService? {
+    @kotlin.jvm.JvmStatic
+    fun io(): ScheduledExecutorService {
         return sGlobalIOExecutor.get()
     }
 
     /**
      * @return a global compute executor, the core pool size is cpu cores
      */
-    fun compute(): ScheduledExecutorService? {
+    @kotlin.jvm.JvmStatic
+    fun compute(): ScheduledExecutorService {
         return sGlobalComputeExecutor.get()
     }
 }

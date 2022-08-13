@@ -19,6 +19,7 @@ object ViewUtil {
      *
      * @param v the margin you wanna to set with
      */
+    @kotlin.jvm.JvmStatic
     fun setStatusBarMargin(v: View) {
         val lp = v.layoutParams as MarginLayoutParams
         lp.topMargin += ScreenUtil.statusBarHeight
@@ -30,6 +31,7 @@ object ViewUtil {
      *
      * @param v the padding you wanna to set with
      */
+    @kotlin.jvm.JvmStatic
     fun setStatusBarPadding(v: View) {
         v.setPadding(
             v.paddingLeft,
@@ -44,6 +46,7 @@ object ViewUtil {
      *
      * @param v the listener you wanna to set with
      */
+    @kotlin.jvm.JvmStatic
     fun setDoFinishOnClickListener(v: View) {
         v.setOnClickListener(sFinishListener)
     }

@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.function.Consumer
 
 /**
- * EventHandler is designed to send event between [pers.cxd.corelibrary.base.UiComponent]
+ * EventHandler is designed to send event between [pers.cxd.corelibrary.base.UIComponent]
  *
  * @author pslilysm
  * @since 1.0.0
@@ -63,14 +63,16 @@ class EventHandler @JvmOverloads constructor(looper: Looper, callback: Callback?
     }
 
     companion object {
-        private val sConstructorClasses = arrayOf<Class<*>>(
-            Looper::class.java
-        )
+        private val sDefault = object : Singleton<EventHandler>() {
+            override fun create(): EventHandler {
+                return EventHandler(Looper.getMainLooper())
+            }
+        }
 
         /**
          * @return a default EventHandler which bind MainLooper;
          */
         val default: EventHandler
-            get() = EventHandler(Looper.getMainLooper())
+            get() = sDefault.get()
     }
 }

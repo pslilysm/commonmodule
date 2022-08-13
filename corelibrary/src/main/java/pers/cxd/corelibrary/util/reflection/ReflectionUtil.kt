@@ -32,8 +32,8 @@ object ReflectionUtil {
     @Throws(ClassNotFoundException::class)
     private fun splitParameterTypesAndArgs(
         classLoader: ClassLoader,
-        vararg parameterTypesAndArgs: Any
-    ): Pair<Array<out Class<*>?>, Array<Any>> {
+        vararg parameterTypesAndArgs: Any?
+    ): Pair<Array<out Class<*>?>, Array<Any?>> {
         require(parameterTypesAndArgs.size % 2 == 0) { "check your parameterTypesAndArgs length -> " + parameterTypesAndArgs.size }
         if (parameterTypesAndArgs.isEmpty()) {
             return Pair.obtain(emptyArray(), emptyArray())
@@ -55,7 +55,7 @@ object ReflectionUtil {
                     parameterTypes[i] = pt
                 }
                 else -> {
-                    throw IllegalArgumentException("check your parameterTypes at pos " + i + ", type is " + pt.javaClass)
+                    throw IllegalArgumentException("check your parameterTypes at pos " + i + ", type is " + pt!!.javaClass)
                 }
             }
         }
@@ -74,7 +74,7 @@ object ReflectionUtil {
         var constructor = sConstructors[constructorKey] as Constructor<T>?
         if (constructor == null) {
             synchronized(sConstructors) {
-                if ((sConstructors[constructorKey] as Constructor<T>?). also {
+                if ((sConstructors[constructorKey] as Constructor<T>?).also {
                         constructor = it
                     } == null) {
                     constructor = try {
@@ -117,7 +117,7 @@ object ReflectionUtil {
                             throw ex
                         }
                     }
-                    field!!.setAccessible(true)
+                    field!!.isAccessible = true
                     fieldKey.markInUse()
                     sFields.put(fieldKey, field!!)
                 } else {
@@ -155,7 +155,7 @@ object ReflectionUtil {
                             throw ex
                         }
                     }
-                    method!!.setAccessible(true)
+                    method!!.isAccessible = true
                     methodKey.markInUse()
                     sMethods.put(methodKey, method!!)
                 } else {
@@ -168,25 +168,28 @@ object ReflectionUtil {
         return method!!
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(className: String?): T {
         return newInstance(
             className,
-            ClassLoader.getSystemClassLoader(),
             *sEmptyParameterTypesAndArgs
         )
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(className: String?, classLoader: ClassLoader): T {
         return newInstance(className, classLoader, *sEmptyParameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(className: String?, vararg parameterTypesAndArgs: Any?): T {
         return newInstance(className, ClassLoader.getSystemClassLoader(), *parameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(
         className: String?,
@@ -195,16 +198,17 @@ object ReflectionUtil {
     ): T {
         return newInstance(
             classLoader.loadClass(className),
-            classLoader,
             *parameterTypesAndArgs
         ) as T
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(clazz: Class<T>): T {
         return newInstance(clazz, *sEmptyParameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(clazz: Class<T>, vararg parameterTypesAndArgs: Any?): T {
         val classLoader =
@@ -212,6 +216,7 @@ object ReflectionUtil {
         return newInstance(clazz, classLoader, *parameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> newInstance(
         clazz: Class<T>,
@@ -219,11 +224,14 @@ object ReflectionUtil {
         vararg parameterTypesAndArgs: Any?
     ): T {
         val splitParameterTypesAndArgs =
-            splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs)
-        val instance = splitParameterTypesAndArgs.first()!!.let {
-            findOrCreateConstructor(clazz, *it)
-                .newInstance(splitParameterTypesAndArgs.second())
-        }
+            splitParameterTypesAndArgs(classLoader, *parameterTypesAndArgs)
+        val instance =
+            splitParameterTypesAndArgs.first()!!.let { paramTypes ->
+                splitParameterTypesAndArgs.second()!!.let { args ->
+                    findOrCreateConstructor(clazz, *paramTypes)
+                        .newInstance(*args)
+                }
+            }
         splitParameterTypesAndArgs.recycle()
         return instance
     }
@@ -234,56 +242,66 @@ object ReflectionUtil {
         return findOrCreateField(`object`!!.javaClass, fieldName)[`object`] as T
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun setFieldValue(`object`: Any, fieldName: String, fieldValue: Any?) {
         findOrCreateField(`object`.javaClass, fieldName)[`object`] = fieldValue
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeMethod(`object`: Any, methodName: String): T {
         return invokeMethod(`object`, methodName, *sEmptyParameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeMethod(`object`: Any, methodName: String, vararg parameterTypesAndArgs: Any?): T {
         val clazz: Class<*> = `object`.javaClass
         val classLoader =
             if (clazz.classLoader == null) ClassLoader.getSystemClassLoader() else clazz.classLoader
         val splitParameterTypesAndArgs =
-            splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs)
+            splitParameterTypesAndArgs(classLoader, *parameterTypesAndArgs)
         val result =
-            splitParameterTypesAndArgs.first()!!.let {
-                findOrCreateMethod(clazz, methodName, *it)
-                    .invoke(`object`, splitParameterTypesAndArgs.second()) as T
+            splitParameterTypesAndArgs.first()!!.let { paramTypes ->
+                splitParameterTypesAndArgs.second()!!.let { args ->
+                    findOrCreateMethod(clazz, methodName, *paramTypes)
+                        .invoke(`object`, *args) as T
+                }
             }
         splitParameterTypesAndArgs.recycle()
         return result
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
-    fun <T> getStaticFieldValue(className: String?, fieldName: String): T {
+    fun <T> getStaticFieldValue(className: String, fieldName: String): T {
         return getStaticFieldValue(Class.forName(className), fieldName)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> getStaticFieldValue(
-        className: String?,
+        className: String,
         classLoader: ClassLoader,
         fieldName: String
     ): T {
         return getStaticFieldValue(classLoader.loadClass(className), fieldName)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> getStaticFieldValue(clazz: Class<*>, fieldName: String): T {
-        return findOrCreateField(clazz, fieldName)!![null] as T
+        return findOrCreateField(clazz, fieldName)[null] as T
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
-    fun setStaticFiledValue(className: String?, fieldName: String, fieldValue: Any?) {
+    fun setStaticFiledValue(className: String, fieldName: String, fieldValue: Any?) {
         setStaticFiledValue(Class.forName(className), fieldName, fieldValue)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun setStaticFiledValue(
         className: String?,
@@ -294,13 +312,15 @@ object ReflectionUtil {
         setStaticFiledValue(classLoader.loadClass(className), fieldName, fieldValue)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun setStaticFiledValue(clazz: Class<*>, fieldName: String, fieldValue: Any?) {
-        findOrCreateField(clazz, fieldName)!![null] = fieldValue
+        findOrCreateField(clazz, fieldName)[null] = fieldValue
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
-    fun <T> invokeStaticMethod(className: String?, methodName: String): T {
+    fun <T : Any> invokeStaticMethod(className: String, methodName: String): T {
         return invokeStaticMethod(
             ClassLoader.getSystemClassLoader().loadClass(className),
             methodName,
@@ -308,9 +328,10 @@ object ReflectionUtil {
         )
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeStaticMethod(
-        className: String?,
+        className: String,
         classLoader: ClassLoader,
         methodName: String
     ): T {
@@ -321,14 +342,16 @@ object ReflectionUtil {
         )
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeStaticMethod(clazz: Class<*>, methodName: String): T {
         return invokeStaticMethod(clazz, methodName, *sEmptyParameterTypesAndArgs)
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeStaticMethod(
-        className: String?,
+        className: String,
         classLoader: ClassLoader,
         methodName: String,
         vararg parameterTypesAndArgs: Any?
@@ -340,6 +363,7 @@ object ReflectionUtil {
         )
     }
 
+    @kotlin.jvm.JvmStatic
     @Throws(ReflectiveOperationException::class)
     fun <T> invokeStaticMethod(
         clazz: Class<*>,
@@ -348,11 +372,14 @@ object ReflectionUtil {
     ): T {
         val classLoader =
             if (clazz.classLoader == null) ClassLoader.getSystemClassLoader() else clazz.classLoader
-        val splitParameterTypesAndArgs = splitParameterTypesAndArgs(classLoader, parameterTypesAndArgs)
+        val splitParameterTypesAndArgs =
+            splitParameterTypesAndArgs(classLoader, *parameterTypesAndArgs)
         val result =
-            splitParameterTypesAndArgs.first()!!.let {
-                findOrCreateMethod(clazz, methodName, *it)
-                    .invoke(null, splitParameterTypesAndArgs.second()) as T
+            splitParameterTypesAndArgs.first()!!.let { paramTypes ->
+                splitParameterTypesAndArgs.second()!!.let { args ->
+                    findOrCreateMethod(clazz, methodName, *paramTypes)
+                        .invoke(null, *args) as T
+                }
             }
         splitParameterTypesAndArgs.recycle()
         return result

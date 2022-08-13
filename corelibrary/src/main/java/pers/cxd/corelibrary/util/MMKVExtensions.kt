@@ -4,19 +4,19 @@ import android.os.Parcelable
 import com.tencent.mmkv.MMKV
 
 /**
+ * Extensions for [MMKV]
  *
- *
- * @author cxd
+ * @author pslilysm
+ * @since 2.0.0
  * Created on 2022/8/11 18:15
  */
-object MMKVExtension {
+object MMKVExtensions {
 
     /**
      * encode a non-null value
      *
      * @param key   mapped value
      * @param value mapped key
-     * @see .encode
      */
     fun MMKV.encode(key: String, value: Any?) {
         encode(key, value, null)
@@ -27,13 +27,12 @@ object MMKVExtension {
      *
      * @param key        mapped value
      * @param valueClass value's class(such as String, Integer, Double}
-     * @see .encode
      */
     fun MMKV.encode(key: String, valueClass: Class<*>?) {
         encode(key, null, valueClass)
     }
-    
-    fun MMKV.encode(key: String, value: Any?, valueClass: Class<*>?) {
+
+    private fun MMKV.encode(key: String, value: Any?, valueClass: Class<*>?) {
         val clazz = value?.javaClass ?: valueClass!!
         if (clazz == Int::class.java) {
             this.encode(key, (value as Int?)!!)
@@ -64,7 +63,6 @@ object MMKVExtension {
      * @param key          mapped value
      * @param defaultValue will be return if not find the key
      * @return saved value by key
-     * @see .decode
      */
     fun <T> MMKV.decode(key: String, defaultValue: T): T {
         return decode<T>(key, defaultValue, null)
@@ -76,7 +74,6 @@ object MMKVExtension {
      * @param key        mapped value
      * @param valueClass the returned value will instance of valueClass
      * @return null if not found the key
-     * @see .decode
      */
     fun <T> MMKV.decode(key: String, valueClass: Class<T?>?): T? {
         return decode(key, null, valueClass)
@@ -85,7 +82,7 @@ object MMKVExtension {
     private fun <T> MMKV.decode(key: String, defaultValue: T?, valueClass: Class<T>?): T {
         val clazz: Class<*> = if (defaultValue != null) {
             defaultValue!!::class.java
-        } else{
+        } else {
             valueClass!!
         }
         return if (clazz == Int::class.java) {
@@ -146,7 +143,7 @@ object MMKVExtension {
      * @param <T>    the type of the value and must extends [Parcelable]
      * @return a parcelable value by the key
      * @see .decodeParcelable
-    </T> */
+     */
     fun <T : Parcelable?> MMKV.decodeParcelable(key: String?, tClass: Class<T?>?): T? {
         return decodeParcelable(key, tClass, null)
     }
@@ -159,9 +156,13 @@ object MMKVExtension {
      * @param defaultValue if we didn't find the value by the key, then `defaultValue` returned
      * @param <T>          the type of the value and must extends [Parcelable]
      * @return a parcelable value by the key
-    </T> */
-    fun <T : Parcelable?> MMKV.decodeParcelable(key: String?, tClass: Class<T>?, defaultValue: T): T? {
+     */
+    fun <T : Parcelable?> MMKV.decodeParcelable(
+        key: String?,
+        tClass: Class<T>?,
+        defaultValue: T
+    ): T? {
         return this.decodeParcelable(key, tClass, defaultValue)
     }
-    
+
 }

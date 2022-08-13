@@ -19,44 +19,55 @@ import pers.cxd.corelibrary.AppHolder
  */
 object ScreenUtil {
     private val sApplication = AppHolder.get()
+
+    @kotlin.jvm.JvmStatic
     val isDarkMode: Boolean
-        get() = (sApplication!!.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        get() = (sApplication.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                 == Configuration.UI_MODE_NIGHT_YES)
+
+    @kotlin.jvm.JvmStatic
     val statusBarHeight: Int
         get() {
             var result = 0
             val resourceId =
-                sApplication!!.resources.getIdentifier("status_bar_height", "dimen", "android")
+                sApplication.resources.getIdentifier("status_bar_height", "dimen", "android")
             if (resourceId > 0) {
                 result = sApplication.resources.getDimensionPixelSize(resourceId)
             }
             return result
         }
+
     @kotlin.jvm.JvmStatic
     val width: Int
         get() {
-            val wm = sApplication!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val wm = sApplication.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             wm.defaultDisplay.getMetrics(dm)
             return dm.widthPixels
         }
+
+    @kotlin.jvm.JvmStatic
     val height: Int
         get() {
-            val wm = sApplication!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val wm = sApplication.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             wm.defaultDisplay.getMetrics(dm)
             return dm.heightPixels
         }
+
+    @kotlin.jvm.JvmStatic
     val realWidth: Int
         get() {
-            val wm = sApplication!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val wm = sApplication.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             wm.defaultDisplay.getRealMetrics(dm)
             return dm.widthPixels
         }
+
+    @kotlin.jvm.JvmStatic
     val realHeight: Int
         get() {
-            val wm = sApplication!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val wm = sApplication.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val dm = DisplayMetrics()
             wm.defaultDisplay.getRealMetrics(dm)
             return dm.heightPixels
@@ -64,34 +75,40 @@ object ScreenUtil {
 
     @kotlin.jvm.JvmStatic
     fun dip2px(dp: Float): Int {
-        val scale = sApplication!!.resources.displayMetrics.density
+        val scale = sApplication.resources.displayMetrics.density
         return (dp * scale + 0.5f).toInt()
     }
 
+    @kotlin.jvm.JvmStatic
     fun pxToDip(px: Float): Int {
-        val scale = sApplication!!.resources.displayMetrics.density
+        val scale = sApplication.resources.displayMetrics.density
         return (px / scale + 0.5f).toInt()
     }
 
+    @kotlin.jvm.JvmStatic
     fun spToPx(sp: Float): Int {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_SP,
             sp,
-            sApplication!!.resources.displayMetrics
+            sApplication.resources.displayMetrics
         ).toInt()
     }
 
+    @kotlin.jvm.JvmStatic
     val navBarHeight: Int
         get() {
-            val resources = sApplication!!.resources
+            val resources = sApplication.resources
             val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
             return if (resourceId > 0) {
                 resources.getDimensionPixelSize(resourceId)
             } else 0
         }
-    val screenDensityDpi: Int
-        get() = sApplication!!.resources.displayMetrics.densityDpi
 
+    @kotlin.jvm.JvmStatic
+    val screenDensityDpi: Int
+        get() = sApplication.resources.displayMetrics.densityDpi
+
+    @kotlin.jvm.JvmStatic
     fun setSystemUiFlag(
         window: Window,
         layoutFullScreen: Boolean,
@@ -118,6 +135,7 @@ object ScreenUtil {
         window.statusBarColor = Color.TRANSPARENT
     }
 
+    @kotlin.jvm.JvmStatic
     fun keepScreenOn(window: Window) {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
