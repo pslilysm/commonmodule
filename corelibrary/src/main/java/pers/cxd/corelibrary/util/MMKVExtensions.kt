@@ -67,7 +67,7 @@ object MMKVExtensions {
      * @return saved value by key
      */
     @kotlin.jvm.JvmStatic
-    fun <T> MMKV.decode(key: String, defaultValue: T): T {
+    fun <T> MMKV.decode(key: String, defaultValue: T): T? {
         return decode<T>(key, defaultValue, null)
     }
 
@@ -83,7 +83,7 @@ object MMKVExtensions {
         return decode(key, null, valueClass)
     }
 
-    private fun <T> MMKV.decode(key: String, defaultValue: T?, valueClass: Class<T>?): T {
+    private fun <T> MMKV.decode(key: String, defaultValue: T?, valueClass: Class<T>?): T? {
         val clazz: Class<*> = if (defaultValue != null) {
             defaultValue!!::class.java
         } else {
@@ -136,7 +136,7 @@ object MMKVExtensions {
             this.decodeBytes(key, defaultValue as ByteArray?) as T?
         } else {
             throw java.lang.UnsupportedOperationException("$clazz can't decode")
-        })!!
+        })
     }
 
     /**
