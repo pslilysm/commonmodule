@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 include ':corelibrary'
-include ':rxlibrary'
 include ':app'
 rootProject.name = "commonmodule"

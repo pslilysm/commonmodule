@@ -54,29 +54,21 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.multidex:multidex:2.0.1"
 
     implementation project(":corelibrary")
-    implementation project(':rxlibrary')
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'org.jetbrains:annotations:15.0'
 
-    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.9'
-
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    // Because RxAndroid releases are few and far between, it is recommended you also
-    // explicitly depend on RxJava's latest version for bug fixes and new features.
-    // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
-
+    // retrofit and okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.google.android.material:material:1.4.0'
+
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
 

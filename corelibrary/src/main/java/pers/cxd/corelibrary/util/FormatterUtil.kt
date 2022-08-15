@@ -71,7 +71,7 @@ object FormatterUtil {
      */
     @kotlin.jvm.JvmStatic
     val decimalFormat: DecimalFormat
-        get() = sDecimalFormatTLS.get()
+        get() = sDecimalFormatTLS.get()!!
 
     /**
      * @return a Thread-Safely DecimalFormat with pattern {"#.000"}

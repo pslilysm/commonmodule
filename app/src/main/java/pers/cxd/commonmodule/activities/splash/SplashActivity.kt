@@ -2,7 +2,6 @@ package pers.cxd.commonmodule.activities.splash
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -15,18 +14,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonElement
 import pers.cxd.commonmodule.ReflectionTest
-import pers.cxd.commonmodule.activities.main.MainActivity
 import pers.cxd.commonmodule.databinding.ActivitySplashBinding
 import pers.cxd.corelibrary.Singleton
 import pers.cxd.corelibrary.base.MvpUIComponent
 import pers.cxd.corelibrary.base.UIComponentPlugins
-import pers.cxd.corelibrary.util.GlobalExecutors
 import pers.cxd.corelibrary.util.GsonUtil
 import pers.cxd.corelibrary.util.ScreenUtil
 import pers.cxd.corelibrary.util.ToastUtil
 import pers.cxd.corelibrary.util.reflection.ReflectionUtil
-import java.util.concurrent.TimeUnit
 
 
 @SuppressLint("CustomSplashScreen")
@@ -71,8 +68,7 @@ class SplashActivity: AppCompatActivity(),
     @SuppressLint("HardwareIds")
     override fun setup(savedInstanceState: Bundle?) {
         super.setup(savedInstanceState)
-        getPresenter().getSomeData("1", "2")
-        getPresenter().register("admin", "123456")
+        getPresenter().test()
         testReflection()
         val rv = mViewBinding.rv
         val data: MutableList<String> = ArrayList()
@@ -97,9 +93,9 @@ class SplashActivity: AppCompatActivity(),
             Log.i(TAG, "accept: $s")
             Log.i(TAG, "accept: " + obj.javaClass)
         }
-        GlobalExecutors.io().schedule({
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-        }, 1, TimeUnit.SECONDS)
+//        GlobalExecutors.io().schedule({
+//            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+//        }, 1, TimeUnit.SECONDS)
     }
 
     private fun testReflection() {
@@ -162,10 +158,8 @@ class SplashActivity: AppCompatActivity(),
         }
     }
 
-    override fun onSomeDataGotten(data: Any) {}
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    override fun updateTestUI(data: JsonElement) {
+        Log.d(TAG, "updateTestUI() called with: data = $data")
     }
 
     private class Adapter(val data: List<String>) : RecyclerView.Adapter<Adapter.VH>() {

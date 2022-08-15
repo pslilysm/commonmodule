@@ -1,5 +1,6 @@
-package pers.cxd.rxlibrary
+package pers.cxd.corelibrary.network
 
+import pers.cxd.corelibrary.util.function.SuspendFunction
 import retrofit2.Retrofit
 import java.util.concurrent.ConcurrentHashMap
 
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @author pslilysm
  * @since 1.0.0
  */
-abstract class RetrofitClient protected constructor() {
+abstract class AbstractRetrofit protected constructor() {
     private val mApiMap: MutableMap<Class<*>, Any> = ConcurrentHashMap()
     protected val mRetrofitClient: Retrofit
 
@@ -24,6 +25,14 @@ abstract class RetrofitClient protected constructor() {
         return mApiMap.computeIfAbsent(apiClass) { aClass: Class<*>? ->
             mRetrofitClient.create(aClass)
         } as I
+    }
+
+    suspend fun <Data> fetchData(function: SuspendFunction<Data>): Result<Data> {
+        return try {
+            Result.success(function.invoke())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     /**

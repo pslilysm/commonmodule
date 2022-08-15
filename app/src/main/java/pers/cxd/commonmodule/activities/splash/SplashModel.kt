@@ -1,33 +1,16 @@
 package pers.cxd.commonmodule.activities.splash
 
-import androidx.collection.ArrayMap
-import io.reactivex.rxjava3.core.Observable
+import com.google.gson.JsonElement
 import pers.cxd.commonmodule.network.DemoApiInterface
 import pers.cxd.commonmodule.network.DemoRetrofitClient
+import pers.cxd.corelibrary.util.function.SuspendFunction
 
 internal object SplashModel : SplashContract.Model {
-    var someDataMap: ArrayMap<String, String>? = null
-    override fun someDataModelAvailable(): Boolean {
-        return someDataMap == null
-    }
-
-    override fun someDataModel(arg1: String, arg2: String): Observable<Any> {
-        someDataMap = ArrayMap(4)
-        someDataMap!!["arg1"] = arg1
-        someDataMap!!["arg2"] = arg2
-        return DemoRetrofitClient.getApi(DemoApiInterface::class.java)
-            .postSample(someDataMap)
-    }
-
-    override fun clearSomeDataModel() {
-        if (someDataMap != null) {
-            someDataMap!!.clear()
-            someDataMap = null
-        }
-    }
-
-    override fun registerModel(accountName: String, password: String): Observable<Void> {
-        return DemoRetrofitClient.getApi(DemoApiInterface::class.java)
-            .register(accountName, password)
+    override suspend fun testModel(): Result<JsonElement> {
+        return DemoRetrofitClient.fetchData(object : SuspendFunction<JsonElement> {
+            override suspend fun invoke(): JsonElement {
+                return DemoRetrofitClient.getApi(DemoApiInterface::class.java).testGet()
+            }
+        })
     }
 }
