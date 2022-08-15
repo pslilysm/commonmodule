@@ -61,7 +61,7 @@ class SplashActivity: AppCompatActivity(),
     }
 
     override val mViewBinding: ActivitySplashBinding
-        get() = mBindingSingleton.get()
+        get() = mBindingSingleton.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         UIComponentPlugins.initUIComponent(this)

@@ -16,6 +16,7 @@ object AppHolder {
         AppHolder.sApplication = sApplication
     }
 
+    @kotlin.jvm.JvmStatic
     fun get(): Application {
         if (sApplication == null) {
             synchronized(AppHolder::class.java) {

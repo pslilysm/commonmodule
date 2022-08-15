@@ -18,6 +18,7 @@ object MMKVExtensions {
      * @param key   mapped value
      * @param value mapped key
      */
+    @kotlin.jvm.JvmStatic
     fun MMKV.encode(key: String, value: Any?) {
         encode(key, value, null)
     }
@@ -28,6 +29,7 @@ object MMKVExtensions {
      * @param key        mapped value
      * @param valueClass value's class(such as String, Integer, Double}
      */
+    @kotlin.jvm.JvmStatic
     fun MMKV.encode(key: String, valueClass: Class<*>?) {
         encode(key, null, valueClass)
     }
@@ -64,6 +66,7 @@ object MMKVExtensions {
      * @param defaultValue will be return if not find the key
      * @return saved value by key
      */
+    @kotlin.jvm.JvmStatic
     fun <T> MMKV.decode(key: String, defaultValue: T): T {
         return decode<T>(key, defaultValue, null)
     }
@@ -75,6 +78,7 @@ object MMKVExtensions {
      * @param valueClass the returned value will instance of valueClass
      * @return null if not found the key
      */
+    @kotlin.jvm.JvmStatic
     fun <T> MMKV.decode(key: String, valueClass: Class<T?>?): T? {
         return decode(key, null, valueClass)
     }
@@ -144,6 +148,7 @@ object MMKVExtensions {
      * @return a parcelable value by the key
      * @see .decodeParcelable
      */
+    @kotlin.jvm.JvmStatic
     fun <T : Parcelable?> MMKV.decodeParcelable(key: String?, tClass: Class<T?>?): T? {
         return decodeParcelable(key, tClass, null)
     }
@@ -157,6 +162,7 @@ object MMKVExtensions {
      * @param <T>          the type of the value and must extends [Parcelable]
      * @return a parcelable value by the key
      */
+    @kotlin.jvm.JvmStatic
     fun <T : Parcelable?> MMKV.decodeParcelable(
         key: String?,
         tClass: Class<T>?,

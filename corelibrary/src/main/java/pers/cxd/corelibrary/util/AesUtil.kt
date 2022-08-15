@@ -62,7 +62,7 @@ object AesUtil {
     fun encrypt(str: String): String {
         return try {
             val bytes =
-                sDefaultEncryptCipher.get().doFinal(str.toByteArray(StandardCharsets.UTF_8))
+                sDefaultEncryptCipher.getInstance().doFinal(str.toByteArray(StandardCharsets.UTF_8))
             Base64.encodeToString(bytes, Base64.NO_WRAP)
         } catch (e: Exception) {
             throw ExceptionUtil.rethrow(e)
@@ -79,7 +79,7 @@ object AesUtil {
     fun decrypt(str: String?): String {
         return try {
             String(
-                sDefaultDecryptCipher.get()
+                sDefaultDecryptCipher.getInstance()
                     .doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8
             )
         } catch (e: Exception) {

@@ -20,10 +20,10 @@ object ViewUtil {
      * @param v the margin you wanna to set with
      */
     @kotlin.jvm.JvmStatic
-    fun setStatusBarMargin(v: View) {
-        val lp = v.layoutParams as MarginLayoutParams
+    fun View.setStatusBarMargin() {
+        val lp = this.layoutParams as MarginLayoutParams
         lp.topMargin += ScreenUtil.statusBarHeight
-        v.layoutParams = lp
+        this.layoutParams = lp
     }
 
     /**
@@ -32,12 +32,12 @@ object ViewUtil {
      * @param v the padding you wanna to set with
      */
     @kotlin.jvm.JvmStatic
-    fun setStatusBarPadding(v: View) {
-        v.setPadding(
-            v.paddingLeft,
-            v.paddingTop + ScreenUtil.statusBarHeight,
-            v.paddingRight,
-            v.paddingBottom
+    fun View.setStatusBarPadding() {
+        this.setPadding(
+            this.paddingLeft,
+            this.paddingTop + ScreenUtil.statusBarHeight,
+            this.paddingRight,
+            this.paddingBottom
         )
     }
 
@@ -47,7 +47,7 @@ object ViewUtil {
      * @param v the listener you wanna to set with
      */
     @kotlin.jvm.JvmStatic
-    fun setDoFinishOnClickListener(v: View) {
-        v.setOnClickListener(sFinishListener)
+    fun View.setDoFinishOnClickListener() {
+        this.setOnClickListener(sFinishListener)
     }
 }

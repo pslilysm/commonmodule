@@ -41,7 +41,7 @@ object GlobalExecutors {
      */
     @kotlin.jvm.JvmStatic
     fun io(): ScheduledExecutorService {
-        return sGlobalIOExecutor.get()
+        return sGlobalIOExecutor.getInstance()
     }
 
     /**
@@ -49,6 +49,6 @@ object GlobalExecutors {
      */
     @kotlin.jvm.JvmStatic
     fun compute(): ScheduledExecutorService {
-        return sGlobalComputeExecutor.get()
+        return sGlobalComputeExecutor.getInstance()
     }
 }

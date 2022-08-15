@@ -29,7 +29,7 @@ class FirstFragment : Fragment(), UIComponent<FragmentFirstBinding> {
     }
 
     override val mViewBinding: FragmentFirstBinding
-        get() = mBindingSingleton.get()
+        get() = mBindingSingleton.getInstance()
 
     override fun getContext(): Context {
         val context = super.getContext()

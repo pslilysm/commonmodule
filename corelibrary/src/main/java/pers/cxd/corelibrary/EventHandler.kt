@@ -72,7 +72,8 @@ class EventHandler @JvmOverloads constructor(looper: Looper, callback: Callback?
         /**
          * @return a default EventHandler which bind MainLooper;
          */
+        @kotlin.jvm.JvmStatic
         val default: EventHandler
-            get() = sDefault.get()
+            get() = sDefault.getInstance()
     }
 }

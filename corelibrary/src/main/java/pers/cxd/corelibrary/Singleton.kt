@@ -9,9 +9,9 @@ package pers.cxd.corelibrary
  */
 abstract class Singleton<T> {
     @Volatile
-    var instance: T? = null
+    private var instance: T? = null
     protected abstract fun create(): T
-    fun get(): T {
+    fun getInstance(): T {
         if (instance == null) {
             synchronized(this) {
                 if (instance == null) {
