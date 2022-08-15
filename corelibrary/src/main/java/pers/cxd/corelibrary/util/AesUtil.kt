@@ -30,7 +30,7 @@ object AesUtil {
                 )
                 cipher
             } catch (ex: Exception) {
-                throw RuntimeException(ex)
+                throw ExceptionUtil.rethrow(ex)
             }
         }
     }
@@ -47,7 +47,7 @@ object AesUtil {
                 )
                 cipher
             } catch (ex: Exception) {
-                throw RuntimeException(ex)
+                throw ExceptionUtil.rethrow(ex)
             }
         }
     }
@@ -65,7 +65,7 @@ object AesUtil {
                 sDefaultEncryptCipher.get().doFinal(str.toByteArray(StandardCharsets.UTF_8))
             Base64.encodeToString(bytes, Base64.NO_WRAP)
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            throw ExceptionUtil.rethrow(e)
         }
     }
 
@@ -83,7 +83,7 @@ object AesUtil {
                     .doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8
             )
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            throw ExceptionUtil.rethrow(e)
         }
     }
 
@@ -108,7 +108,7 @@ object AesUtil {
             val bytes = cipher.doFinal(str.toByteArray(StandardCharsets.UTF_8))
             Base64.encodeToString(bytes, Base64.NO_WRAP)
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            throw ExceptionUtil.rethrow(e)
         }
     }
 
@@ -123,12 +123,16 @@ object AesUtil {
      */
     @kotlin.jvm.JvmStatic
     fun decrypt(str: String?, aesMode: String?, aesKey: String, ivKey: String): String {
-        val cipher = Cipher.getInstance(aesMode)
-        cipher.init(
-            Cipher.DECRYPT_MODE,
-            SecretKeySpec(aesKey.toByteArray(), "AES"),
-            IvParameterSpec(ivKey.toByteArray())
-        )
-        return String(cipher.doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8)
+        return try {
+            val cipher = Cipher.getInstance(aesMode)
+            cipher.init(
+                Cipher.DECRYPT_MODE,
+                SecretKeySpec(aesKey.toByteArray(), "AES"),
+                IvParameterSpec(ivKey.toByteArray())
+            )
+            String(cipher.doFinal(Base64.decode(str, Base64.NO_WRAP)), StandardCharsets.UTF_8)
+        } catch (e: Exception) {
+            throw ExceptionUtil.rethrow(e)
+        }
     }
 }

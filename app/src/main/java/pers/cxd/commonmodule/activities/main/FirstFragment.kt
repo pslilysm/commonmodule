@@ -48,7 +48,7 @@ class FirstFragment : Fragment(), UIComponent<FragmentFirstBinding> {
         return mViewBinding.root
     }
 
-    override fun setUp(savedInstanceState: Bundle?) {
+    override fun setup(savedInstanceState: Bundle?) {
         mViewBinding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }

@@ -7,10 +7,10 @@ import java.util.concurrent.locks.LockSupport
 /**
  * Default implementation of [ResourcePool]
  *
- * @param <R> the type of resource
+ * @param R the type of resource
  * @author pslilysm
  * @since 1.0.0
-</R> */
+ */
 class ResourcePoolImpl<R> : ResourcePool<R?> {
     val resourceQueue: Queue<R?> = ConcurrentLinkedQueue()
     val waitQueue: Queue<Thread> = ConcurrentLinkedQueue()

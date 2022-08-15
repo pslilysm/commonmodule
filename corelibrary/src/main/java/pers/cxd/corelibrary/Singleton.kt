@@ -6,7 +6,7 @@ package pers.cxd.corelibrary
  * @param <T> the type of the singleton instance
  * @author pslilysm
  * @since 1.0.0
-</T> */
+ */
 abstract class Singleton<T> {
     @Volatile
     var instance: T? = null

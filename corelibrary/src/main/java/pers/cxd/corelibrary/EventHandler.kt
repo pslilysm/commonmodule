@@ -54,8 +54,8 @@ class EventHandler @JvmOverloads constructor(looper: Looper, callback: Callback?
     }
 
     override fun handleMessage(msg: Message) {
-        val callbacks = mMultiCallbacks.getOrDefault(msg.what, mEmptyMutableList)
-        callbacks.forEach(Consumer { eventCallback: EventCallback -> eventCallback.handleEvent(msg) })
+        mMultiCallbacks.getOrDefault(msg.what, mEmptyMutableList)
+            .forEach(Consumer { eventCallback: EventCallback -> eventCallback.handleEvent(msg) })
     }
 
     interface EventCallback {

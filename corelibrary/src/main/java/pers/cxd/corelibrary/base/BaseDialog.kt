@@ -32,7 +32,7 @@ abstract class BaseDialog<VB : ViewBinding> protected constructor(protected val 
             .setView(mViewBinding!!.root)
             .setCancelable(true)
             .setOnDismissListener(this)
-        setUp(null)
+        setup(null)
     }
 
     override fun onDismiss(dialog: DialogInterface) {

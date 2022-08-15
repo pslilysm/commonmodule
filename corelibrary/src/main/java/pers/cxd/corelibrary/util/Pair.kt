@@ -10,11 +10,11 @@ import java.util.*
  * This object also implements a recyclable interface.
  * When it is reclaimed, if the tuple of two objects can be reclaimed, the tuple will also be reclaimed.
  *
- * @param <F> the type of the first object
- * @param <S> the type of the second object
+ * @param F the type of the first object
+ * @param S the type of the second object
  * @author pslilysm
  * @since 1.0.0
-</S></F> */
+ */
 class Pair<F, S> private constructor(first: F, second: S) : Recyclable {
     private var first: F?
     private var second: S?

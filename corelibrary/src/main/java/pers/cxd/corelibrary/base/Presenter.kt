@@ -6,11 +6,11 @@ import androidx.lifecycle.LifecycleOwner
 /**
  * Presenter is responsible for the interaction between the view and the model
  *
- * @param <V> the view provide interface to touch ui
- * @param <M> the model provide data source to view
+ * @param V the view provide interface to touch ui
+ * @param M the model provide data source to view
  * @author pslilysm
  * @since 1.0.0
-</M></V> */
+ */
 open class Presenter<V : BaseView, M> : LifecycleOwner {
 
     @kotlin.jvm.JvmField

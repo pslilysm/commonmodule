@@ -87,7 +87,7 @@ object UIComponentPlugins {
                             if (uiComponent.mViewBinding != null) {
                                 activity.setContentView(uiComponent.mViewBinding!!.root)
                             }
-                            uiComponent.setUp(savedInstanceState)
+                            uiComponent.setup(savedInstanceState)
                         }
                     }
 
@@ -109,7 +109,7 @@ object UIComponentPlugins {
                             if (!mLoaded) {
                                 mLoaded = true
                                 try {
-                                    uiComponent.setUp(ReflectionUtil.getFieldValue(uiComponent, "mSavedFragmentState"))
+                                    uiComponent.setup(ReflectionUtil.getFieldValue(uiComponent, "mSavedFragmentState"))
                                 } catch (e: ReflectiveOperationException) {
                                     throw ExceptionUtil.rethrow(e)
                                 }

@@ -69,8 +69,8 @@ class SplashActivity: AppCompatActivity(),
     }
 
     @SuppressLint("HardwareIds")
-    override fun setUp(savedInstanceState: Bundle?) {
-        super.setUp(savedInstanceState)
+    override fun setup(savedInstanceState: Bundle?) {
+        super.setup(savedInstanceState)
         getPresenter().getSomeData("1", "2")
         getPresenter().register("admin", "123456")
         testReflection()

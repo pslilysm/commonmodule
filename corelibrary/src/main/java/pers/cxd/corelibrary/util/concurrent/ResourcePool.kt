@@ -1,14 +1,12 @@
 package pers.cxd.corelibrary.util.concurrent
 
-import kotlin.Throws
-
 /**
  * The ResourcePool obtains resources or store resources
  *
- * @param <R> the type of resource
+ * @param R the type of resource
  * @author pslilysm
  * @since 1.0.0
-</R> */
+ */
 interface ResourcePool<R> {
     /**
      * Get a resource of the poll, this method will blocking if poll is empty until a resource was returned or
