@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * This class simplified the step when build [Retrofit]
+ * AbstractRetrofit is an extension of Retrofit, providing API service caching capabilities and basic data fetch capabilities
  *
  * @author pslilysm
  * @since 1.0.0
@@ -20,7 +20,7 @@ abstract class AbstractRetrofit protected constructor() {
      * @param apiClass the class of api service
      * @param <I>      the type of `apiClass`
      * @return A created or cached api service by Retrofit
-    </I> */
+     */
     fun <I> getApi(apiClass: Class<I>): I {
         return mApiMap.computeIfAbsent(apiClass) { aClass: Class<*>? ->
             mRetrofitClient.create(aClass)
