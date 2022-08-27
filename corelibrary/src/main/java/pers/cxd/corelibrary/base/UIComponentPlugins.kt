@@ -59,7 +59,7 @@ object UIComponentPlugins {
                     throw ExceptionUtil.rethrow(e)
                 }
             }
-        }, args)
+        }, *args)
     }
 
     @kotlin.jvm.JvmStatic

@@ -27,9 +27,9 @@ dependencyResolutionManagement {
 ```groovy
 dependencies {
     // add core lib to your dependencies
-    implementation 'com.github.pslilysm.commonmodule:corelibrary:2.0.0'
+    implementation 'com.github.pslilysm.commonmodule:corelibrary:2.0.1'
     // add rx lib to your dependencies
-    implementation 'com.github.pslilysm.commonmodule:rxlibrary:2.0.0'
+    implementation 'com.github.pslilysm.commonmodule:rxlibrary:2.0.1'
 }
 ```
 

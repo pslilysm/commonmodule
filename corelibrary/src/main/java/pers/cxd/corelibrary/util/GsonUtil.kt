@@ -39,7 +39,7 @@ object GsonUtil {
      * @return a object deserialize of json string
      */
     @kotlin.jvm.JvmStatic
-    fun <T> jsonToObject(json: String?, tClass: Class<T>?): T {
+    fun <T> jsonToObject(json: String, tClass: Class<T>?): T? {
         return sGson.fromJson(json, tClass)
     }
 
@@ -53,14 +53,14 @@ object GsonUtil {
      */
     @kotlin.jvm.JvmStatic
     fun <T> jsonToSet(json: String?, tClass: Class<T>?): Set<T> {
-        val list: MutableSet<T> = ArraySet()
+        val set: MutableSet<T> = ArraySet()
         if (!TextUtils.isEmpty(json)) {
             val array = JsonParser.parseString(json).asJsonArray
             for (elem in array) {
-                list.add(sGson.fromJson(elem, tClass))
+                set.add(sGson.fromJson(elem, tClass))
             }
         }
-        return list
+        return set
     }
 
     /**

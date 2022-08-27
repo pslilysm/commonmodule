@@ -25,7 +25,9 @@ abstract class BaseDialog<VB : ViewBinding> protected constructor(protected val 
     protected val mBuilder: AlertDialog.Builder
     protected var mDialog: AlertDialog? = null
 
-    abstract fun initWindowLp(lp: WindowManager.LayoutParams)
+    protected fun initWindowLp(lp: WindowManager.LayoutParams) {
+
+    }
 
     init {
         mBuilder = AlertDialog.Builder(mBase.getContext())
