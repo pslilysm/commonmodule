@@ -28,11 +28,11 @@ public class GlobalExecutors {
             int coolPoolSize = 1;
             int maxPoolSize = Runtime.getRuntime().availableProcessors() * 10;
             int keepAliveTimeSeconds = 2;
-            int maxQueueSize = 0xFFF;
-            ExecutorsLinkedBlockingQueue blockingQueue = new ExecutorsLinkedBlockingQueue(0xFFFF);
+            int maxQueueSize = maxPoolSize * 0xFF;
+            ExecutorsLinkedBlockingQueue workQueue = new ExecutorsLinkedBlockingQueue(maxQueueSize);
             ThreadFactory threadFactory = r -> new Thread(r, "g-io-" + sIONum.incrementAndGet() + "-thread");
             RejectedExecutionHandler rejectedExecutionHandler = (r, executor) -> {
-                if (blockingQueue.size() < maxQueueSize) {
+                if (workQueue.size() < maxQueueSize) {
                     executor.execute(r);
                 } else {
                     throw new RejectedExecutionException("Task " + r.toString() +
@@ -44,11 +44,11 @@ public class GlobalExecutors {
                     coolPoolSize,
                     maxPoolSize,
                     keepAliveTimeSeconds, TimeUnit.SECONDS,
-                    blockingQueue,
+                    workQueue,
                     threadFactory,
                     rejectedExecutionHandler
             );
-            blockingQueue.setExecutor(ioES);
+            workQueue.setExecutor(ioES);
             return new ScheduledThreadPoolExecutorWrapper(ioES);
         }
     };
@@ -60,11 +60,11 @@ public class GlobalExecutors {
             int coolPoolSize = 1;
             int maxPoolSize = Runtime.getRuntime().availableProcessors();
             int keepAliveTimeSeconds = 2;
-            int maxQueueSize = 0xFFF;
-            ExecutorsLinkedBlockingQueue blockingQueue = new ExecutorsLinkedBlockingQueue(0xFFFF);
+            int maxQueueSize = maxPoolSize * 0xF;
+            ExecutorsLinkedBlockingQueue workQueue = new ExecutorsLinkedBlockingQueue(maxQueueSize);
             ThreadFactory threadFactory = r -> new Thread(r, "g-compute-" + sComputeNum.incrementAndGet() + "-thread");
             RejectedExecutionHandler rejectedExecutionHandler = (r, executor) -> {
-                if (blockingQueue.size() < maxQueueSize) {
+                if (workQueue.size() < maxQueueSize) {
                     executor.execute(r);
                 } else {
                     throw new RejectedExecutionException("Task " + r.toString() +
@@ -76,24 +76,24 @@ public class GlobalExecutors {
                     coolPoolSize,
                     maxPoolSize,
                     keepAliveTimeSeconds, TimeUnit.SECONDS,
-                    blockingQueue,
+                    workQueue,
                     threadFactory,
                     rejectedExecutionHandler
             );
-            blockingQueue.setExecutor(computeES);
+            workQueue.setExecutor(computeES);
             return new ScheduledThreadPoolExecutorWrapper(computeES);
         }
     };
 
     /**
-     * @return a global io executor, the core pool size is {@code cpu cores * 5}
+     * @return a global io executor, the max pool size is {@code cpu cores * 10}
      */
     public static ScheduledExecutorService io() {
         return sGlobalIOExecutor.getInstance();
     }
 
     /**
-     * @return a global compute executor, the core pool size is cpu cores
+     * @return a global compute executor, the max pool size is cpu cores
      */
     public static ScheduledExecutorService compute() {
         return sGlobalComputeExecutor.getInstance();
