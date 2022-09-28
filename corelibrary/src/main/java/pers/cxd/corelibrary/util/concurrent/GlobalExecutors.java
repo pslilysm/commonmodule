@@ -25,7 +25,7 @@ public class GlobalExecutors {
     private static final Singleton<ScheduledExecutorService> sGlobalIOExecutor = new Singleton<ScheduledExecutorService>() {
         @Override
         protected ScheduledExecutorService create() {
-            int coolPoolSize = 1;
+            int corePoolSize = 1;
             int maxPoolSize = Runtime.getRuntime().availableProcessors() * 10;
             int keepAliveTimeSeconds = 2;
             int maxQueueSize = maxPoolSize * 0xFF;
@@ -41,7 +41,7 @@ public class GlobalExecutors {
                 }
             };
             ThreadPoolExecutor ioES = new ThreadPoolExecutor(
-                    coolPoolSize,
+                    corePoolSize,
                     maxPoolSize,
                     keepAliveTimeSeconds, TimeUnit.SECONDS,
                     workQueue,
@@ -57,7 +57,7 @@ public class GlobalExecutors {
     private static final Singleton<ScheduledExecutorService> sGlobalComputeExecutor = new Singleton<ScheduledExecutorService>() {
         @Override
         protected ScheduledExecutorService create() {
-            int coolPoolSize = 1;
+            int corePoolSize = 1;
             int maxPoolSize = Runtime.getRuntime().availableProcessors();
             int keepAliveTimeSeconds = 2;
             int maxQueueSize = maxPoolSize * 0xF;
@@ -73,7 +73,7 @@ public class GlobalExecutors {
                 }
             };
             ThreadPoolExecutor computeES = new ThreadPoolExecutor(
-                    coolPoolSize,
+                    corePoolSize,
                     maxPoolSize,
                     keepAliveTimeSeconds, TimeUnit.SECONDS,
                     workQueue,
